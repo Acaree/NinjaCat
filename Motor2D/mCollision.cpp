@@ -53,7 +53,7 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
+/*Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
 	
 }
@@ -63,4 +63,4 @@ Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Modu
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
 	
-}
+}*/
