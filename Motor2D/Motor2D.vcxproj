@@ -82,6 +82,8 @@
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1Scene.cpp" />
+    <ClCompile Include="mCollision.cpp" />
+    <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
@@ -92,6 +94,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Scene.h" />
+    <ClInclude Include="mCollision.h" />
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
