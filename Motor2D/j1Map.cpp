@@ -32,34 +32,37 @@ void j1Map::Draw()
 		return;
 	p2List_item<MapLayer*>* item_layer = data.layermap.start;
 	p2List_item<TileSet*>* item_set= data.tilesets.start;
-	
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	for (int x = 0; x < item_layer->data->width; x++)
+
+	while (item_layer != nullptr)
 	{
-		for (int y = 0; y < item_layer->data->height; y++)
+		for (int x = 0; x < item_layer->data->width; x++)
 		{
-			int tileID = 0;
-
-			if (x >item_layer->data->width || y > item_layer->data->height)
+			for (int y = 0; y < item_layer->data->height; y++)
 			{
-				tileID = 0;
-			}
-			else {
-				tileID = item_layer->data->Get(x,y);
-			}
+				int tileID = 0;
 
-			if (tileID > 0)
-			{
-				iPoint position = MapToWorld(x, y);
-				SDL_Rect rect = item_set->data->GetTileRect(tileID);
+				if (x > item_layer->data->width || y > item_layer->data->height)
+				{
+					tileID = 0;
+				}
+				else {
+					tileID = item_layer->data->Get(x, y);
+				}
 
-				App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+				if (tileID > 0)
+				{
+					iPoint position = MapToWorld(x, y);
+					SDL_Rect rect = item_set->data->GetTileRect(tileID);
+
+					App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+				}
+
 			}
-
 		}
+		item_layer = item_layer->next;
+		item_set = item_set->next;
 	}
-
-		// TODO 9: Complete the draw function
+	
 
 }
 
@@ -70,7 +73,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * data.tile_width;
-		ret.y = y * data.tile_height*0.5;
+		ret.y = y * data.tile_height;
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
@@ -84,12 +87,12 @@ iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret;
 	
-	/*ret.x = x / data.tile_width;
-	ret.y = y / data.tile_height;*/
+	ret.x = x / data.tile_width;
+	ret.y = y / data.tile_height;
 	//Not finish
 
-	ret.x =  x / data.tile_width + y/data.tile_width;
-	ret.y =  y / data.tile_height - x/data.tile_height;
+	/*ret.x =  x / data.tile_width + y/data.tile_width;
+	ret.y =  y / data.tile_height - x/data.tile_height;*/
 
 	return ret;
 
@@ -165,7 +168,6 @@ bool j1Map::Load(const char* file_name)
 	for(tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
 		TileSet* set = new TileSet();
-
 		if(ret == true)
 		{
 			ret = LoadTilesetDetails(tileset, set);

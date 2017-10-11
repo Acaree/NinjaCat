@@ -26,6 +26,6 @@
     <folder>maps/</folder>
   </map>
   <scene>
-    <map name ="isometric_grass_and_water.tmx"/> 
+    <map name ="NOMBRE.tmx"/> 
   </scene>
 </config>
