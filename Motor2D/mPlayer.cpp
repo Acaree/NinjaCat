@@ -72,6 +72,7 @@ bool ModulePlayer::Start()
 	position.x = 100;
 	position.y = 300;
 
+	colliderPlayer = App->collision->AddCollider({position.x,position.y,230,300},COLLIDER_PLAYER,this);
 
 	return true;
 }
@@ -81,7 +82,8 @@ bool ModulePlayer::CleanUp()
 {
 	
 	App->tex->UnLoad(graphics);
-
+	
+	colliderPlayer->to_delete = true;
 
 	return true;
 }
@@ -114,9 +116,9 @@ bool ModulePlayer::Update(float dt)
 		position.y += speed;
 		
 	}
-
+	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
-
+	
 	return true;
 }
 

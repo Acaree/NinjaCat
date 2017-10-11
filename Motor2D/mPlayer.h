@@ -32,6 +32,7 @@ public:
 	Animation climb;
 
 	iPoint position;
+	Collider* colliderPlayer;
 
 };
 
