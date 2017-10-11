@@ -24,6 +24,14 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 
+	Animation* currentAnimation = nullptr;
+	Animation idleRight;
+	Animation idleLeft;
+	Animation walkRight;
+	Animation walkLeft;
+	Animation climb;
+
+	iPoint position;
 
 };
 
