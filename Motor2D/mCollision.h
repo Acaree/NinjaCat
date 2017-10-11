@@ -4,7 +4,7 @@
 #define MAX_COLLIDERS 50
 
 #include "j1Module.h"
-#include "SDL\include\SDL_rect.h"
+
 
 enum COLLIDER_TYPE
 {
@@ -38,7 +38,7 @@ struct Collider
 		rect.y = y;
 	}
 
-	//bool CheckCollision(const SDL_Rect& r) const;
+	bool CheckCollision(const SDL_Rect& r) const;
 };
 
 class ModuleCollision : public j1Module
@@ -53,7 +53,7 @@ public:
 	//update_status PostUpdate();
 	bool CleanUp();
 
-//	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 
 private:
