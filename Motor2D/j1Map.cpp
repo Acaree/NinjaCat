@@ -59,8 +59,12 @@ void j1Map::Draw()
 
 			}
 		}
-		item_layer = item_layer->next;
-		item_set = item_set->next;
+		
+			item_layer = item_layer->next;
+			if (item_set->next != nullptr)
+			{
+				item_set = item_set->next;
+			}
 	}
 	
 

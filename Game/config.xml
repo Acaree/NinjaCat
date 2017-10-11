@@ -26,6 +26,6 @@
     <folder>maps/</folder>
   </map>
   <scene>
-    <map name ="NOMBRE.tmx"/> 
+    <map name ="test.tmx"/> 
   </scene>
 </config>
