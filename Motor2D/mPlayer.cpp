@@ -13,50 +13,61 @@
 
 ModulePlayer::ModulePlayer()
 {
-	idleRight.PushBack({ 0,904,231,438 });
-	idleRight.PushBack({ 233,904,231,438 });
-	idleRight.PushBack({ 466,904,231,438 });
-	idleRight.PushBack({ 699,904,231,438 });
-
-	idleLeft.PushBack({945,904,231,438});
-	idleLeft.PushBack({ 1177,904,231,438 });
-	idleLeft.PushBack({ 1409,904,231,438 });
-	idleLeft.PushBack({ 1641,904,231,438 });
-
-	walkRight.PushBack({35,0,319,446});
-	walkRight.PushBack({ 395,0,319,446 });
-	walkRight.PushBack({ 755,0,319,446 });
-	walkRight.PushBack({ 1115,0,319,446 });
-	walkRight.PushBack({ 1475,0,319,446 });
-	walkRight.PushBack({ 1835,0,319,446 });
-	walkRight.PushBack({2195,0,319,446 });
-	walkRight.PushBack({ 2555,0,319,446 });
-	walkRight.PushBack({ 2915,0,319,446 });
-	walkRight.PushBack({3275,0,319,446 });
-
-	walkLeft.PushBack({ 1,459,319,446 });
-	walkLeft.PushBack({ 370,459,319,446 });
-	walkLeft.PushBack({ 739,459,319,446 });
-	walkLeft.PushBack({ 1108,459,319,446 });
-	walkLeft.PushBack({ 1477,459,319,446 });
-	walkLeft.PushBack({ 1846,459,319,446 });
-	walkLeft.PushBack({ 2215,459,319,446 });
-	walkLeft.PushBack({ 2584,459,319,446 });
-	walkLeft.PushBack({ 2953,459,319,446 });
-	walkLeft.PushBack({ 3322,459,319,446 });
+	idleRight.PushBack({ 0,227,57,109 });
+	idleRight.PushBack({ 59,227,57,109 });
+	idleRight.PushBack({ 117,227,57,109 });
+	idleRight.PushBack({ 175,227,57,109 });
+	idleRight.speed = 0.1f;
 	
-	climb.PushBack({36,1374,219,368});
-	climb.PushBack({ 270,1374,219,368 });
-	climb.PushBack({ 504,1374,219,368 });
-	climb.PushBack({ 738,1374,219,368 });
-	climb.PushBack({ 972,1374,219,368 });
-	climb.PushBack({ 1206,1374,219,368 });
-	climb.PushBack({ 1440,1374,219,368 });
-	climb.PushBack({ 1674,1374,219,368 });
-	
-	idleRight.speed = idleLeft.speed = 0.03;
-	walkRight.speed = walkLeft.speed = 0.03;
-	climb.speed = 0.03;
+	idleLeft.PushBack({ 237,227,57,109 });
+	idleLeft.PushBack({ 295,227,57,109 });
+	idleLeft.PushBack({ 353,227,57,109 });
+	idleLeft.PushBack({ 411,227,57,109 });
+	idleLeft.speed = idleRight.speed;
+
+	walkRight.PushBack({ 9,3,81,107});
+	walkRight.PushBack({ 99,2,80,110 });
+	walkRight.PushBack({ 189,0,79,111 });
+	//walkRight.PushBack({ 273,1,87,105 });
+	//walkRight.PushBack({ 365,3,88,106 });
+	walkRight.PushBack({ 463,3,81,105 });
+	walkRight.PushBack({ 553,1,79,110 });
+	walkRight.PushBack({ 643,0,78,107 });
+	walkRight.PushBack({ 734,1,78,100 });
+	walkRight.PushBack({ 826,3,81,104 });
+	walkRight.speed = 0.2f;
+
+	walkLeft.PushBack({ 1,117,80,107 });
+	walkLeft.PushBack({ 93,115,80,112 });
+	walkLeft.PushBack({ 186,115,79,110 });
+	walkLeft.PushBack({ 275,115,87,104 });
+	walkLeft.PushBack({ 364,117,87,106 });
+	walkLeft.PushBack({ 455,117,80,105 });
+	walkLeft.PushBack({ 547,115,80,109 });
+	walkLeft.PushBack({ 640,114,78,107 });
+	walkLeft.PushBack({ 730,115,78,100 });
+	walkLeft.PushBack({ 818,117,80,104 });
+	walkLeft.speed = walkRight.speed;
+
+	climb.PushBack({ 9,344,52,94});
+	climb.PushBack({ 68,344,52,94 });
+	climb.PushBack({ 127,344,52,94 });
+	climb.PushBack({ 184,344,52,94 });
+	climb.PushBack({ 241,344,52,94 });
+	climb.PushBack({ 303,344,52,94 });
+	climb.PushBack({ 363,344,52,94 });
+	climb.PushBack({ 419,344,52,94 });
+	climb.speed = 0.2f;
+
+	glide.PushBack({ 472,225,102,107 });
+	glide.PushBack({ 579,224,102,107 });
+	glide.PushBack({ 686,224,102,107 });
+	glide.PushBack({ 793,227,102,107 });
+	glide.PushBack({ 472,341,102,107 });
+	glide.PushBack({ 579,341,102,107 });
+	glide.PushBack({ 687,344,102,107 });
+	glide.PushBack({ 795,345,102,107 });
+	glide.speed = 0.2f;
 
 	currentAnimation = &idleRight;
 }
@@ -115,6 +126,7 @@ bool ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && movement[3] == true)
 	{
 		position.y += speed;
+		currentAnimation = &glide;
 		
 	}
 	colliderPlayer->SetPos(position.x, position.y);

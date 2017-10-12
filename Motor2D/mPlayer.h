@@ -31,6 +31,7 @@ public:
 	Animation walkRight;
 	Animation walkLeft;
 	Animation climb;
+	Animation glide;
 
 	iPoint position;
 	Collider* colliderPlayer;
