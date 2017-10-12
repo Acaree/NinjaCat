@@ -93,7 +93,7 @@ bool ModulePlayer::Update(float dt)
 {
 	int speed = 1;
 
-	App->map->CollisionToWorld({ position.x,position.y }, speed);
+	App->map->CollisionToWorld(colliderPlayer->rect);
 	if (App->input->GetKey(SDL_SCANCODE_D)==KEY_REPEAT && movement[0] == true)
 	{
 		position.x += speed;

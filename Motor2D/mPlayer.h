@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 struct Collider;
+enum Direction { up=0, down ,left,right};
 
 class ModulePlayer : public j1Module
 {

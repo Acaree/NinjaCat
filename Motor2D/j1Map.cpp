@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include <math.h>
 #include "mPlayer.h"
+#include "mCollision.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -54,8 +55,15 @@ void j1Map::Draw()
 				{
 					iPoint position = MapToWorld(x, y);
 					SDL_Rect rect = item_set->data->GetTileRect(tileID);
-
-					App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+					if (tileID != 20)
+					{
+						App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+					}
+					else
+					{
+						//pintar colision
+						App->render->DrawQuad({position.x,position.y, 128,128}, 100, 100, 0);
+					}
 				}
 
 			}
@@ -374,68 +382,86 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	for (pugi::xml_node dataLayer = node.child("data").child("tile"); dataLayer; dataLayer = dataLayer.next_sibling("tile"))
 	{
 		layer->gid.add(dataLayer.attribute("gid").as_int());
-		//HOMEWORK LOG ALL LAYERS
+		
 		LOG("%i", dataLayer.attribute("gid").as_int());
 	}
 	return true;
 
 }
 
-bool j1Map::CollisionToWorld(iPoint position, int speed)
+void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 {
-	//rectangle collision player 
-	iPoint positionPlayer = WorldToMap(position.x, position.y);
-
-	iPoint positionRight = WorldToMap(position.x + 230, position.y);
-
-	iPoint positionDown = WorldToMap(position.x, position.y+300);
-
-	iPoint positionDownRight = WorldToMap(position.x + 230, position.y+300);
-
-	MapLayer* currentTile = data.layermap.start->next->data;
-
+	//collider wall gid 20
 	
-	//Next tile in all position
-	if (currentTile->Get(positionPlayer.x  , positionPlayer.y-1) == 20)
+	iPoint leftUp = WorldToMap(playerRect.x,playerRect.y);
+
+
+	MapLayer* layerCollision = data.layermap.start->next->data;
+
+	int colliderUp = layerCollision->Get(leftUp.x, leftUp.y);
+	int upPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+
+	if (colliderUp == 20)
 	{
-		LOG("COLLISION UP");
-		App->player->movement[2] = false;
+		if (colliderUp == upPlayer)
+		{
+			App->player->movement[2] = false;
+		}
+		
 	}
 	else
 	{
 		App->player->movement[2] = true;
 	}
 
-	 if (currentTile->Get(positionPlayer.x - 1, positionPlayer.y) == 20)
-	{
-		LOG("COLLISION LEFT");
-		App->player->movement[1] = false;
-	}
-	 else
-	 {
-		 App->player->movement[1] = true;
-	 }
+	iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+	int colliderDown = layerCollision->Get(leftDown.x, leftDown.y);
+	int downPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 
-	 if (currentTile->Get(positionRight.x + 1, positionRight.y) == 20)
+	if (colliderDown == 20)
 	{
-		LOG("COLLISION RIGHT");
-		App->player->movement[0] = false;
-		
-	}
-	 else
-	 {
-		 App->player->movement[0] = true;
-	 }
+		if (colliderDown == downPlayer)
+		{
+			App->player->movement[3] = false;
+		}
 
-	 if(currentTile->Get(positionDownRight.x, positionDownRight.y+1) == 20)
+	}
+	else
 	{
-		LOG("COLLISION RIGHT IN POINT DOWN");
-		App->player->movement[3] = false;
+		App->player->movement[3] = true;
 	}
-	 else
-	 {
-		 App->player->movement[3] = true;
-	 }
-	return true;
 
+	iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
+	int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
+	int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
+
+	if (colliderRightUp == 20)
+	{
+		if (colliderRightUp == rightUpPlayer)
+		{
+			App->player->movement[0] = false;
+		}
+
+	}
+	else
+	{
+		App->player->movement[0] = true;
+	}
+
+	iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y+ playerRect.h);
+	int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
+	int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+
+	if (colliderRightDown == 20)
+	{
+		if (colliderRightDown == rightDownPlayer)
+		{
+			App->player->movement[1] = false;
+		}
+
+	}
+	else
+	{
+		App->player->movement[1] = true;
+	}
 }
