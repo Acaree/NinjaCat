@@ -2,7 +2,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "mCollision.h"
-
+#include "j1Map.h"
 ModuleCollision::ModuleCollision()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; i++)
@@ -86,12 +86,41 @@ void ModuleCollision::DebugDraw()
 		case COLLIDER_PLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case COLLIDER_WALL: 
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
 		}
 
 	}
+	
+	//DRAW COLLISIONS
+	p2List_item<MapLayer*>* item_layer = App->map->data.layermap.start->next;
+	p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next;
+
+
+	for (int x = 0; x < item_layer->data->width; x++)
+	{
+		for (int y = 0; y < item_layer->data->height; y++)
+		{
+			int tileID = 0;
+
+			if (x > item_layer->data->width || y > item_layer->data->height)
+			{
+				tileID = 0;
+			}
+			else {
+				tileID = item_layer->data->Get(x, y);
+			}
+
+			if (tileID > 0)
+			{
+				iPoint position = App->map->MapToWorld(x, y);
+				SDL_Rect rect = item_set->data->GetTileRect(tileID);
+
+				App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+
+			}
+
+		}
+	}
+
 	
 }
 

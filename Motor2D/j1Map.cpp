@@ -35,8 +35,7 @@ void j1Map::Draw()
 	p2List_item<MapLayer*>* item_layer = data.layermap.start;
 	p2List_item<TileSet*>* item_set= data.tilesets.start;
 
-	while (item_layer != nullptr)
-	{
+	
 		for (int x = 0; x < item_layer->data->width; x++)
 		{
 			for (int y = 0; y < item_layer->data->height; y++)
@@ -55,26 +54,16 @@ void j1Map::Draw()
 				{
 					iPoint position = MapToWorld(x, y);
 					SDL_Rect rect = item_set->data->GetTileRect(tileID);
-					if (tileID != 20)
-					{
+					
 						App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
-					}
-					else
-					{
-						//pintar colision
-						App->render->DrawQuad({position.x,position.y, 128,128}, 100, 100, 0);
-					}
+					
 				}
 
 			}
 		}
 		
-			item_layer = item_layer->next;
-			if (item_set->next != nullptr)
-			{
-				item_set = item_set->next;
-			}
-	}
+	
+	
 	
 
 }
