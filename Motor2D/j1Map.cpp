@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
+#include "mPlayer.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -394,23 +395,47 @@ bool j1Map::CollisionToWorld(iPoint position, int speed)
 	MapLayer* currentTile = data.layermap.start->next->data;
 
 	
+	//Next tile in all position
+	if (currentTile->Get(positionPlayer.x  , positionPlayer.y-1) == 20)
+	{
+		LOG("COLLISION UP");
+		App->player->movement[2] = false;
+	}
+	else
+	{
+		App->player->movement[2] = true;
+	}
 
-	if (currentTile->Get(positionPlayer.x - 1, positionPlayer.y) == 20)
+	 if (currentTile->Get(positionPlayer.x - 1, positionPlayer.y) == 20)
 	{
 		LOG("COLLISION LEFT");
+		App->player->movement[1] = false;
 	}
+	 else
+	 {
+		 App->player->movement[1] = true;
+	 }
+
 	 if (currentTile->Get(positionRight.x + 1, positionRight.y) == 20)
 	{
 		LOG("COLLISION RIGHT");
+		App->player->movement[0] = false;
+		
 	}
-	 if (currentTile->Get(positionDown.x, positionDown.y + 1) == 20)
-	{
-		LOG("Collision DOWN");
-	}
-	 if(currentTile->Get(positionDownRight.x + 1, positionDownRight.y) == 20)
+	 else
+	 {
+		 App->player->movement[0] = true;
+	 }
+
+	 if(currentTile->Get(positionDownRight.x, positionDownRight.y+1) == 20)
 	{
 		LOG("COLLISION RIGHT IN POINT DOWN");
+		App->player->movement[3] = false;
 	}
+	 else
+	 {
+		 App->player->movement[3] = true;
+	 }
 	return true;
 
 }

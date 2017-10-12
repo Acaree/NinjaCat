@@ -34,6 +34,8 @@ public:
 	iPoint position;
 	Collider* colliderPlayer;
 
+	bool movement[4] = { true,true,true,true };
+
 };
 
 #endif

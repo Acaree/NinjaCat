@@ -94,25 +94,25 @@ bool ModulePlayer::Update(float dt)
 	int speed = 1;
 
 	App->map->CollisionToWorld({ position.x,position.y }, speed);
-	if (App->input->GetKey(SDL_SCANCODE_D)==KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D)==KEY_REPEAT && movement[0] == true)
 	{
 		position.x += speed;
 		currentAnimation = &walkRight;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && movement[1] == true)
 	{
 		position.x -= speed;
 		currentAnimation = &walkLeft;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && movement[2]==true)
 	{
 		position.y -= speed;
 		currentAnimation = &climb;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && movement[3] == true)
 	{
 		position.y += speed;
 		
