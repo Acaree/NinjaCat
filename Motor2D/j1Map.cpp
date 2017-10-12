@@ -35,8 +35,7 @@ void j1Map::Draw()
 	p2List_item<MapLayer*>* item_layer = data.layermap.start;
 	p2List_item<TileSet*>* item_set= data.tilesets.start;
 
-	while (item_layer != nullptr)
-	{
+	
 		for (int x = 0; x < item_layer->data->width; x++)
 		{
 			for (int y = 0; y < item_layer->data->height; y++)
@@ -55,26 +54,16 @@ void j1Map::Draw()
 				{
 					iPoint position = MapToWorld(x, y);
 					SDL_Rect rect = item_set->data->GetTileRect(tileID);
-					if (tileID != 20)
-					{
+					
 						App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
-					}
-					else
-					{
-						//pintar colision
-						App->render->DrawQuad({position.x,position.y, 128,128}, 100, 100, 0);
-					}
+					
 				}
 
 			}
 		}
 		
-			item_layer = item_layer->next;
-			if (item_set->next != nullptr)
-			{
-				item_set = item_set->next;
-			}
-	}
+	
+	
 	
 
 }
@@ -394,7 +383,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 	//collider wall gid 20
 	
 	iPoint leftUp = WorldToMap(playerRect.x,playerRect.y);
-
+	// 33 is wall , 34 climb, 35 death, 36 player start, 37 player end, 38 tree head
 
 	MapLayer* layerCollision;
 	if (data.layermap.start->next != nullptr)
@@ -403,7 +392,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 		int colliderUp = layerCollision->Get(leftUp.x, leftUp.y);
 		int upPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 
-		if (colliderUp == 20)
+		if (colliderUp == 33)
 		{
 			if (colliderUp == upPlayer)
 			{
@@ -420,7 +409,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 		int colliderDown = layerCollision->Get(leftDown.x, leftDown.y);
 		int downPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 
-		if (colliderDown == 20)
+		if (colliderDown == 33)
 		{
 			if (colliderDown == downPlayer)
 			{
@@ -437,7 +426,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
 		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
 
-		if (colliderRightUp == 20)
+		if (colliderRightUp == 33)
 		{
 			if (colliderRightUp == rightUpPlayer)
 			{
@@ -454,7 +443,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
 		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 
-		if (colliderRightDown == 20)
+		if (colliderRightDown == 33)
 		{
 			if (colliderRightDown == rightDownPlayer)
 			{
