@@ -396,72 +396,75 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 	iPoint leftUp = WorldToMap(playerRect.x,playerRect.y);
 
 
-	MapLayer* layerCollision = data.layermap.start->next->data;
-
-	int colliderUp = layerCollision->Get(leftUp.x, leftUp.y);
-	int upPlayer = layerCollision->Get(leftUp.x, leftUp.y);
-
-	if (colliderUp == 20)
+	MapLayer* layerCollision;
+	if (data.layermap.start->next != nullptr)
 	{
-		if (colliderUp == upPlayer)
+		layerCollision = data.layermap.start->next->data;
+		int colliderUp = layerCollision->Get(leftUp.x, leftUp.y);
+		int upPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+
+		if (colliderUp == 20)
 		{
-			App->player->movement[2] = false;
+			if (colliderUp == upPlayer)
+			{
+				App->player->movement[2] = false;
+			}
+
 		}
-		
-	}
-	else
-	{
-		App->player->movement[2] = true;
-	}
-
-	iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
-	int colliderDown = layerCollision->Get(leftDown.x, leftDown.y);
-	int downPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-
-	if (colliderDown == 20)
-	{
-		if (colliderDown == downPlayer)
+		else
 		{
-			App->player->movement[3] = false;
+			App->player->movement[2] = true;
 		}
 
-	}
-	else
-	{
-		App->player->movement[3] = true;
-	}
+		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+		int colliderDown = layerCollision->Get(leftDown.x, leftDown.y);
+		int downPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 
-	iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
-	int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
-	int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
-
-	if (colliderRightUp == 20)
-	{
-		if (colliderRightUp == rightUpPlayer)
+		if (colliderDown == 20)
 		{
-			App->player->movement[0] = false;
+			if (colliderDown == downPlayer)
+			{
+				App->player->movement[3] = false;
+			}
+
+		}
+		else
+		{
+			App->player->movement[3] = true;
 		}
 
-	}
-	else
-	{
-		App->player->movement[0] = true;
-	}
+		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
+		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
+		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
 
-	iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y+ playerRect.h);
-	int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
-	int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
-
-	if (colliderRightDown == 20)
-	{
-		if (colliderRightDown == rightDownPlayer)
+		if (colliderRightUp == 20)
 		{
-			App->player->movement[1] = false;
+			if (colliderRightUp == rightUpPlayer)
+			{
+				App->player->movement[0] = false;
+			}
+
+		}
+		else
+		{
+			App->player->movement[0] = true;
 		}
 
-	}
-	else
-	{
-		App->player->movement[1] = true;
+		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
+		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+
+		if (colliderRightDown == 20)
+		{
+			if (colliderRightDown == rightDownPlayer)
+			{
+				App->player->movement[1] = false;
+			}
+
+		}
+		else
+		{
+			App->player->movement[1] = true;
+		}
 	}
 }
