@@ -380,3 +380,37 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 }
 
+bool j1Map::CollisionToWorld(iPoint position, int speed)
+{
+	//rectangle collision player 
+	iPoint positionPlayer = WorldToMap(position.x, position.y);
+
+	iPoint positionRight = WorldToMap(position.x + 230, position.y);
+
+	iPoint positionDown = WorldToMap(position.x, position.y+300);
+
+	iPoint positionDownRight = WorldToMap(position.x + 230, position.y+300);
+
+	MapLayer* currentTile = data.layermap.start->next->data;
+
+	
+
+	if (currentTile->Get(positionPlayer.x - 1, positionPlayer.y) == 20)
+	{
+		LOG("COLLISION LEFT");
+	}
+	 if (currentTile->Get(positionRight.x + 1, positionRight.y) == 20)
+	{
+		LOG("COLLISION RIGHT");
+	}
+	 if (currentTile->Get(positionDown.x, positionDown.y + 1) == 20)
+	{
+		LOG("Collision DOWN");
+	}
+	 if(currentTile->Get(positionDownRight.x + 1, positionDownRight.y) == 20)
+	{
+		LOG("COLLISION RIGHT IN POINT DOWN");
+	}
+	return true;
+
+}

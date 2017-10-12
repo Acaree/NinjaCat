@@ -9,7 +9,7 @@
 #include "j1Module.h"
 #include "p2Log.h"
 #include "Animation.h"
-
+#include "j1Map.h"
 
 ModulePlayer::ModulePlayer()
 {
@@ -93,6 +93,7 @@ bool ModulePlayer::Update(float dt)
 {
 	int speed = 1;
 
+	App->map->CollisionToWorld({ position.x,position.y }, speed);
 	if (App->input->GetKey(SDL_SCANCODE_D)==KEY_REPEAT)
 	{
 		position.x += speed;
