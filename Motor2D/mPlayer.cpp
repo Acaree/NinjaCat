@@ -69,6 +69,19 @@ ModulePlayer::ModulePlayer()
 	glide.PushBack({ 795,345,102,107 });
 	glide.speed = 0.2f;
 
+	jump.PushBack({ 0,466,70,109 });
+	jump.PushBack({ 88,464,66,114 });
+	jump.PushBack({ 176,463,62,108 });
+	jump.PushBack({ 265,463,63,107 });
+	jump.PushBack({ 355,463,63,107 });
+	jump.PushBack({ 445,463,63,107 });
+	jump.PushBack({ 535,463,68,106 });
+	jump.PushBack({ 620,463,74,104 });
+	jump.PushBack({ 706,463,82,102 });
+	jump.PushBack({ 796,463,82,102 });
+	jump.speed = 0.1f;
+	jump.loop = true;
+
 	currentAnimation = &idleRight;
 }
 
@@ -128,6 +141,12 @@ bool ModulePlayer::Update(float dt)
 		position.y += speed;
 		currentAnimation = &glide;
 		
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && movement[3] == true)
+	{
+		currentAnimation = &jump;
+
 	}
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
