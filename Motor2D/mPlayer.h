@@ -15,6 +15,7 @@ public:
 	ModulePlayer();
 	~ModulePlayer();
 
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
@@ -35,6 +36,8 @@ public:
 	Animation jump;
 
 	iPoint position;
+	iPoint respawnTile;
+	bool needRespawn;
 	Collider* colliderPlayer;
 
 	bool movement[4] = { true,true,true,true };

@@ -13,6 +13,7 @@
 
 ModulePlayer::ModulePlayer()
 {
+	name.create("player");
 	idleRight.PushBack({ 0,227,57,109 });
 	idleRight.PushBack({ 59,227,57,109 });
 	idleRight.PushBack({ 117,227,57,109 });
@@ -83,20 +84,27 @@ ModulePlayer::ModulePlayer()
 	jump.loop = true;
 
 	currentAnimation = &idleRight;
+
+	
 }
 
 ModulePlayer::~ModulePlayer()
 {}
 
 // Load assets
+bool ModulePlayer::Awake(pugi::xml_node& config)
+{
+	
+	needRespawn = config.child("level1").attribute("needRespawn").as_bool();
+	respawnTile.x = config.child("level1").attribute("respawnX").as_int();
+	respawnTile.y = config.child("level1").attribute("respawnY").as_int();
+
+
+	return true;
+}
 bool ModulePlayer::Start()
 {
 	graphics = App->tex->Load("maps/spriteSheet.png");
-
-	position.x = 100;
-	position.y = 300;
-
-	colliderPlayer = App->collision->AddCollider({position.x,position.y,80,110},COLLIDER_PLAYER,this);
 
 	return true;
 }
@@ -115,6 +123,16 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
+	if (needRespawn == true)
+	{
+		iPoint respawnCordenate= App->map->MapToWorld(respawnTile.x, respawnTile.y);
+		position.x = respawnCordenate.x;
+		position.y = respawnCordenate.y;
+
+		colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
+
+		needRespawn = false;
+	}
 	int speed = 10;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
