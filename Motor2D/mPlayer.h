@@ -39,6 +39,12 @@ public:
 	iPoint respawnTile;
 	Collider* colliderPlayer;
 
+	float gravity = 1.0f;
+	float original_speed_jump=-20.0f;
+	float speed_jump;
+	bool jumping = false;
+	bool gliding = false;
+
 	bool needRespawn;
 	bool movement[4] = { true,true,true,true };
 

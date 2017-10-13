@@ -183,19 +183,42 @@ bool ModulePlayer::Update(float dt)
 
 		if (movement[down] == true)
 		{
-			position.y += speed;
+			gliding = true;
+			speed_jump = 3.0f;
 			currentAnimation = &glide;
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
 	{
-		App->map->CollisionToWorld(colliderPlayer->rect, jumpUp);
 
-		if (movement[jumpUp] == true)
+		//if (movement[down] == false)
 		{
+			jumping = true;
+			speed_jump = original_speed_jump;
+			position.y += speed_jump;
 			currentAnimation = &jump;
 		}
+	}
+
+	//	App->map->CollisionToWorld(colliderPlayer->rect, up);
+
+
+	App->map->CollisionToWorld(colliderPlayer->rect, down);
+
+	if (gliding == false || movement[down] == true) {
+		speed_jump += gravity;
+	}
+
+	if (movement[down] == true || jumping == true) {
+		position.y += speed_jump;
+	}
+
+
+	if (movement[down] == false && speed_jump > 0) {
+		jumping = false;
+		gliding = false;
+		speed_jump = 0;
 	}
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
