@@ -106,6 +106,9 @@ bool ModulePlayer::Start()
 {
 	graphics = App->tex->Load("maps/spriteSheet.png");
 
+	//NEED REVISION
+	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
+
 	return true;
 }
 
@@ -128,9 +131,6 @@ bool ModulePlayer::Update(float dt)
 		iPoint respawnCordenate= App->map->MapToWorld(respawnTile.x, respawnTile.y);
 		position.x = respawnCordenate.x;
 		position.y = respawnCordenate.y;
-
-		colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
-
 		needRespawn = false;
 	}
 	int speed = 10;

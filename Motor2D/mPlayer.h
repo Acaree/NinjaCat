@@ -37,9 +37,9 @@ public:
 
 	iPoint position;
 	iPoint respawnTile;
-	bool needRespawn;
 	Collider* colliderPlayer;
 
+	bool needRespawn;
 	bool movement[4] = { true,true,true,true };
 
 };
