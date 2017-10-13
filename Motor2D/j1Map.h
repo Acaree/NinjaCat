@@ -8,6 +8,7 @@
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
+enum Direction;
 struct MapLayer
 {
 	p2SString name = nullptr;
@@ -100,7 +101,7 @@ public:
 	
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-	void CollisionToWorld(SDL_Rect& playerRect);
+	void CollisionToWorld(SDL_Rect& playerRect, Direction direction);
 private:
 
 	bool LoadMap();

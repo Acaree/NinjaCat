@@ -378,17 +378,104 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 }
 
-void j1Map::CollisionToWorld(SDL_Rect& playerRect)
+void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 {
 	//collider wall gid 20
-	
-	iPoint leftUp = WorldToMap(playerRect.x,playerRect.y);
-	// 33 is wall , 34 climb, 35 death, 36 player start, 37 player end, 38 tree head
 
+	// 33 is wall , 34 climb, 35 death, 36 player start, 37 player end, 38 tree head
+	uint wall = 33, climb = 34, death = 35, playerStart = 36, playerEnd = 37, treeHead = 38;
 	MapLayer* layerCollision;
 	if (data.layermap.start->next != nullptr)
 	{
 		layerCollision = data.layermap.start->next->data;
+
+		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
+		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
+		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+
+		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
+		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
+		int colliderLeftUp = layerCollision->Get(leftUp.x, leftUp.y);
+		int colliderLeftDown = layerCollision->Get(leftDown.x, leftDown.y);
+
+		//test 
+
+		switch (direction)
+		{
+		case right:
+
+			if (colliderRightUp == wall && colliderRightDown == wall)
+			{
+				int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
+				int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+				
+				if (colliderRightUp == rightUpPlayer || colliderRightDown == rightDownPlayer)
+				{
+					App->player->movement[right] = false;
+				}
+			}
+			else if (App->player->movement[right] == false)
+			{
+				App->player->movement[right] = true;
+			}
+			break;
+
+		case left:
+
+			if (colliderLeftUp == wall && colliderLeftDown == wall)
+			{
+				int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+				int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+
+				if (colliderLeftUp == leftUpPlayer || colliderLeftDown ==leftDownPlayer)
+				{
+					App->player->movement[left] = false;
+				}
+			}
+			else if (App->player->movement[left] == false)
+			{
+				App->player->movement[left] = true;
+			}
+			break;
+
+
+		case down:
+			if (colliderLeftDown == wall && colliderRightDown == wall)
+			{
+				int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+				int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+
+				if (colliderLeftDown == leftDownPlayer || colliderRightDown == rightDownPlayer)
+				{
+					App->player->movement[down] = false;
+				}
+			}
+			else if (App->player->movement[down] == false)
+			{
+				App->player->movement[down] = true;
+			}
+			break;
+
+		case up:
+			if (colliderLeftUp == wall && colliderRightUp == wall)
+			{
+				int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+				int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
+
+				if (colliderLeftUp == leftUpPlayer || colliderLeftUp == rightUpPlayer)
+				{
+					App->player->movement[up] = false;
+				}
+			}
+			else if (App->player->movement[up] == false)
+			{
+				App->player->movement[up] = true;
+			}
+			break;
+		}
+
+		/*layerCollision = data.layermap.start->next->data;
 		int colliderUp = layerCollision->Get(leftUp.x, leftUp.y);
 		int upPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 
@@ -454,6 +541,6 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect)
 		else
 		{
 			App->player->movement[1] = true;
-		}
+		}*/
 	}
 }

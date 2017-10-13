@@ -96,7 +96,7 @@ bool ModulePlayer::Start()
 	position.x = 100;
 	position.y = 300;
 
-	colliderPlayer = App->collision->AddCollider({position.x,position.y,230,300},COLLIDER_PLAYER,this);
+	colliderPlayer = App->collision->AddCollider({position.x,position.y,80,110},COLLIDER_PLAYER,this);
 
 	return true;
 }
@@ -115,38 +115,69 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
-	int speed = 1;
+	int speed = 10;
 
-	App->map->CollisionToWorld(colliderPlayer->rect);
-	if (App->input->GetKey(SDL_SCANCODE_D)==KEY_REPEAT && movement[0] == true)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		position.x += speed;
-		currentAnimation = &walkRight;
+		App->map->CollisionToWorld(colliderPlayer->rect, right);
+
+		if (movement[right] == true)
+		{
+			position.x += speed;
+			currentAnimation = &walkRight;
+		}
+		else
+		{
+			currentAnimation = &idleRight;
+		}
+
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && movement[1] == true)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
-		currentAnimation = &walkLeft;
+		App->map->CollisionToWorld(colliderPlayer->rect, left);
+
+		if (movement[left] == true)
+		{
+			position.x -= speed;
+			currentAnimation = &walkLeft;
+		}
+		else
+		{
+			currentAnimation = &idleLeft;
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && movement[2]==true)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= speed;
-		currentAnimation = &climb;
+		App->map->CollisionToWorld(colliderPlayer->rect, up);
+
+		if (movement[up] == true)
+		{
+			position.y -= speed;
+			currentAnimation = &climb;
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && movement[3] == true)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed;
-		currentAnimation = &glide;
-		
+		App->map->CollisionToWorld(colliderPlayer->rect, down);
+
+		if (movement[down] == true)
+		{
+			position.y += speed;
+			currentAnimation = &glide;
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && movement[3] == true)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		currentAnimation = &jump;
+		App->map->CollisionToWorld(colliderPlayer->rect, jumpUp);
 
+		if (movement[jumpUp] == true)
+		{
+			currentAnimation = &jump;
+		}
 	}
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
