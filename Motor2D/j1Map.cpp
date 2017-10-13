@@ -405,14 +405,19 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 		{
 		case right:
 
-			if (colliderRightUp == wall && colliderRightDown == wall)
+			if (colliderRightUp == wall || colliderRightDown == wall)
 			{
 				int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
 				int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+				int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 				
-				if (colliderRightUp == rightUpPlayer || colliderRightDown == rightDownPlayer)
+				if (wall == rightUpPlayer ||( wall == rightDownPlayer && leftDownPlayer != wall))
 				{
 					App->player->movement[right] = false;
+				}
+				else
+				{
+					App->player->movement[right] = true;
 				}
 			}
 			else if (App->player->movement[right] == false)
@@ -423,14 +428,19 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 
 		case left:
 
-			if (colliderLeftUp == wall && colliderLeftDown == wall)
+			if (colliderLeftUp == wall || colliderLeftDown == wall)
 			{
 				int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 				int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+				int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 
-				if (colliderLeftUp == leftUpPlayer || colliderLeftDown ==leftDownPlayer)
+				if (wall == leftUpPlayer || (colliderLeftDown==leftDownPlayer && rightDownPlayer != wall) )
 				{
-					App->player->movement[left] = false;
+				App->player->movement[left] = false;
+				}
+				else
+				{
+					App->player->movement[left] = true;
 				}
 			}
 			else if (App->player->movement[left] == false)
@@ -445,7 +455,8 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 			{
 				int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 				int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-
+				iPoint pointTile = MapToWorld(rightDown.x, rightDown.y);
+				
 				if (colliderLeftDown == leftDownPlayer || colliderRightDown == rightDownPlayer)
 				{
 					App->player->movement[down] = false;
