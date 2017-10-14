@@ -150,12 +150,15 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
+	
+
 	if (needRespawn == true)
 	{
 		iPoint respawnCordenate= App->map->MapToWorld(respawnTile.x, respawnTile.y);
 		position.x = respawnCordenate.x;
 		position.y = respawnCordenate.y;
 		needRespawn = false;
+		movement[down] = true;
 	}
 	int speed = 10;
 
@@ -222,6 +225,15 @@ bool ModulePlayer::Update(float dt)
 		gliding = false;
 	}
 
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && movement[down] == true && gliding == false) {
+		currentAnimation = &jumpLeft;
+		lookingleft = true;
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && movement[down] == true && gliding == false) {
+		currentAnimation = &jumpRight;
+		lookingleft = false;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
 	{
 			jumping = true;
@@ -237,40 +249,33 @@ bool ModulePlayer::Update(float dt)
 			}
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && movement[down] == true && gliding==false) {
-		currentAnimation = &jumpLeft;
-		lookingleft = true;
-	}
-	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && movement[down] == true && gliding == false) {
-		currentAnimation = &jumpRight;
-		lookingleft = false;
-	}
 
+	
 	App->map->CollisionToWorld(colliderPlayer->rect, down);
-
-	if (gliding == false || movement[down] == true) {
+	if ( movement[down] == true) {
 		speed_jump += gravity;
 	}
 
-	if (movement[down] == true || jumping == true) {
-		position.y += speed_jump;
+	if (movement[down] == true && jumping == true) {
+			position.y += speed_jump;
 	}
-
-
-	if (movement[down] == false && speed_jump > 0) {
-
-			if (lookingleft == true && currentAnimation != &walkLeft) {
-				currentAnimation = &idleLeft;
-				lookingleft = true;
-			}
-			else if (lookingleft == false && currentAnimation != &walkRight) {
-				currentAnimation = &idleRight;
-				lookingleft = false;
-			}	
+	else if(movement[down] == false && speed_jump > 0)
+	{
+		if (lookingleft == true && currentAnimation != &walkLeft) {
+			currentAnimation = &idleLeft;
+			lookingleft = true;
+		}
+		else if (lookingleft == false && currentAnimation != &walkRight) {
+			currentAnimation = &idleRight;
+			lookingleft = false;
+		}
 		jumping = false;
 		gliding = false;
 		speed_jump = 0;
 	}
+
+
+	
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
 	
