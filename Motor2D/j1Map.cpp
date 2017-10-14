@@ -7,6 +7,7 @@
 #include <math.h>
 #include "mPlayer.h"
 #include "mCollision.h"
+#include "j1Input.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -400,16 +401,16 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 	//collider wall gid 20
 
 	// 130 is wall , 132 dead, 133 reespawn
-	uint wall = 141, dead = 143, playerStart = 144;
+	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 145;
 	MapLayer* layerCollision;
 	if (data.layermap.start->next->next != nullptr)
 	{
 		layerCollision = data.layermap.start->next->next->data;
 
 		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
-		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w-34, playerRect.y + playerRect.h);
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
-		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+		iPoint leftDown = WorldToMap(playerRect.x+34, playerRect.y + playerRect.h);
 
 		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
 		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
@@ -425,7 +426,8 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		switch (i)
 		{
 		case right:
-
+		
+			leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 			if (colliderRightUp == wall || colliderRightDown == wall)
 			{
 				
@@ -446,7 +448,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			break;
 
 		case left:
-
+			
 			if (colliderLeftUp == wall || colliderLeftDown == wall)
 			{
 				
@@ -467,6 +469,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 
 		case down:
+		
 			if (colliderLeftDown == wall && colliderRightDown == wall)
 			{	
 				if (colliderLeftDown == leftDownPlayer || colliderRightDown == rightDownPlayer)
@@ -522,6 +525,21 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 					App->player->movement[down] = false;
 				}
 			}
+		case nextLevel:
+
+			if (colliderRightDown == changeLvl || colliderRightUp == changeLvl)
+			{
+				App->player->changeLevel = true;
+				if (App->player->isLevel1 == false)
+				{
+					App->player->isLevel1 = true;
+				}
+				else
+				{
+					App->player->isLevel1 = false;
+				}
+			}
+
 
 		}
 

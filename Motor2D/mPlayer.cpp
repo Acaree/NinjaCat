@@ -179,10 +179,10 @@ bool ModulePlayer::Update(float dt)
 		movement[down] = true;
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || changeLevel == true)
 	{
 		App->map->CleanUp();
-		
+		changeLevel = false;
 		if (isLevel1 == true)
 		{
 			

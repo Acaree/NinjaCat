@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 struct Collider;
-enum Direction { up=0, down ,left,right, death};
+enum Direction { up=0, down ,left,right, nextLevel, death};
 
 class ModulePlayer : public j1Module
 {
@@ -62,7 +62,7 @@ public:
 	bool needRespawn2;
 	bool isLevel1;
 	bool movement[4] = { true,true,true,true };
-
+	bool changeLevel =false;
 };
 
 #endif
