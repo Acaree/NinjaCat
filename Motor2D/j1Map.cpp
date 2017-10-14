@@ -488,7 +488,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		case up:
 			if (colliderLeftUp == wall && colliderRightUp == wall)
 			{
-				if (colliderLeftUp == leftUpPlayer || colliderLeftUp == rightUpPlayer)
+				if (wall == leftUpPlayer || wall == rightUpPlayer)
 				{
 					App->player->movement[up] = false;
 				}

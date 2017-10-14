@@ -23,7 +23,7 @@
   </file_system>
   <player>
     <level1 respawnX ="2" respawnY ="8" needRespawn="true"/>
-    <level2  respawnX ="1" respawnY ="5" needRespawn ="false"/>
+    <level2  respawnX ="2" respawnY ="5" needRespawn ="false"/>
   </player>
   <map>
     <folder>maps/</folder>
