@@ -505,10 +505,13 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			{
 				if (now == 0) {
 					now = SDL_GetTicks();
+					
 				}
 				if (now + 800 > SDL_GetTicks()) {
 					App->player->currentAnimation = &App->player->dead;
 					movement[down] = false;
+					movement[left] = false;
+					movement[right] = false;
 				}
 				else {
 					App->player->currentAnimation = &App->player->idleRight;
