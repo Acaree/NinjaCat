@@ -119,11 +119,13 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Awake(pugi::xml_node& config)
 {
 	
-	needRespawn = config.child("level1").attribute("needRespawn").as_bool();
-	respawnTile.x = config.child("level1").attribute("respawnX").as_int();
-	respawnTile.y = config.child("level1").attribute("respawnY").as_int();
+	needRespawn1 = config.child("level1").attribute("needRespawn").as_bool();
+	respawnTile1.x = config.child("level1").attribute("respawnX").as_int();
+	respawnTile1.y = config.child("level1").attribute("respawnY").as_int();
 
-
+	needRespawn2 = config.child("level2").attribute("needRespawn").as_bool();
+	respawnTile2.x= config.child("level2").attribute("respawnX").as_int();
+	respawnTile2.y = config.child("level2").attribute("respawnY").as_int();
 	return true;
 }
 bool ModulePlayer::Start()
@@ -152,15 +154,48 @@ bool ModulePlayer::Update(float dt)
 {
 	App->map->CollisionToWorld(colliderPlayer->rect, movement);
 
-	if (needRespawn == true)
+	int speed = 10;
+
+	if (needRespawn1 == true || needRespawn2 == true)
 	{
-		iPoint respawnCordenate= App->map->MapToWorld(respawnTile.x, respawnTile.y);
-		position.x = respawnCordenate.x;
-		position.y = respawnCordenate.y;
-		needRespawn = false;
+		if (needRespawn1 == true)
+		{
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+			needRespawn1 = false;
+			isLevel1 = true;
+		}
+		else if(needRespawn2 == true)
+		{
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+			needRespawn2 = false;
+			isLevel1 = false;
+		}
+		
 		movement[down] = true;
 	}
-	int speed = 10;
+	
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		App->map->CleanUp();
+		
+		if (isLevel1 == true)
+		{
+			
+			App->map->Load("level2ND.tmx");
+			needRespawn2 = true;
+		}
+		else if (isLevel1 == false)
+		{
+			
+			App->map->Load("level1ND.tmx");
+			needRespawn1 = true;
+		}
+	}
+
 
 	//when dead animation introduced, it need to call idle animation
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {

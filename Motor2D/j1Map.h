@@ -4,7 +4,9 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
 #include "p2Point.h"
+#include "j1App.h"
 #include "j1Module.h"
+#include "j1Textures.h"
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
@@ -53,6 +55,11 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+
+	~TileSet()
+	{
+		App->tex->UnLoad(texture);
+	}
 };
 
 enum MapTypes
