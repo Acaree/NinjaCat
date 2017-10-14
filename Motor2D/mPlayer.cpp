@@ -131,7 +131,8 @@ bool ModulePlayer::Awake(pugi::xml_node& config)
 bool ModulePlayer::Start()
 {
 	graphics = App->tex->Load("maps/spriteSheet.png");
-
+	jumpsound=App->audio->LoadFx("audio/jump_fx.wav");
+	glidesound = App->audio->LoadFx("audio/glide.wav");
 	//NEED REVISION
 	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
 
@@ -243,14 +244,22 @@ bool ModulePlayer::Update(float dt)
 
 		if (movement[down] == true)
 		{
-			gliding = true;
+			
 			speed_jump = 3.0f;
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
 				currentAnimation = &glideLeft;
+				if (gliding == false) {
+					App->audio->PlayFx(glidesound, 1);
+					gliding = true;
+				}
 				lookingleft = true;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
 				currentAnimation = &glideRight;
+				if (gliding == false) {
+					App->audio->PlayFx(glidesound, 1);
+					gliding = true;
+				}
 				lookingleft = false;
 			}
 		}
@@ -276,10 +285,12 @@ bool ModulePlayer::Update(float dt)
 			position.y += speed_jump;
 
 			if (lookingleft == true) {
+				App->audio->PlayFx(jumpsound);
 				currentAnimation = &jumpLeft;
 			}
 
 			else {
+				App->audio->PlayFx(jumpsound);
 				currentAnimation = &jumpRight;
 			}
 	}

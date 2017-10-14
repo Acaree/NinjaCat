@@ -37,6 +37,9 @@ public:
 	Animation jumpRight;
 	Animation jumpLeft;
 
+	uint jumpsound;
+	uint glidesound;
+
 	iPoint position;
 	iPoint respawnTile1;
 	iPoint respawnTile2;
