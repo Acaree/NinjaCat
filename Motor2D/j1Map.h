@@ -74,6 +74,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	// TODO 2: Add a list/array of layers to the map!
 	p2List<MapLayer*>	layermap;
+
 };
 
 // ----------------------------------------------------

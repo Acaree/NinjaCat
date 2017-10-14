@@ -34,37 +34,54 @@ void j1Map::Draw()
 		return;
 	p2List_item<MapLayer*>* item_layer = data.layermap.start;
 	p2List_item<TileSet*>* item_set= data.tilesets.start;
+	while (item_layer->next != nullptr){
 
-	
-		for (int x = 0; x < item_layer->data->width; x++)
-		{
-			for (int y = 0; y < item_layer->data->height; y++)
+
+			for (int x = 0; x < item_layer->data->width; x++)
 			{
-				int tileID = 0;
-
-				if (x > item_layer->data->width || y > item_layer->data->height)
+				for (int y = 0; y < item_layer->data->height; y++)
 				{
-					tileID = 0;
-				}
-				else {
-					tileID = item_layer->data->Get(x, y);
-				}
+					int tileID = 0;
 
-				if (tileID > 0)
-				{
-					iPoint position = MapToWorld(x, y);
-					SDL_Rect rect = item_set->data->GetTileRect(tileID);
-					
-						App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
-					
-				}
+					if (x > item_layer->data->width || y > item_layer->data->height)
+					{
+						tileID = 0;
+					}
+					else {
+						tileID = item_layer->data->Get(x, y);
+					}
 
+					if (tileID > 0)
+					{
+						iPoint position = MapToWorld(x, y);
+						SDL_Rect rect = item_set->data->GetTileRect(tileID);
+						if (item_layer->data->name == "Background") {
+							if (App->player->movement[left]) {
+								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
+							}
+							else if (App->player->movement[right]) {
+								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
+							}
+							else {
+								App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+							}
+						}
+						else{
+							App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
+						}
+					}
+
+				}
+			}
+
+			if (item_layer->next != nullptr) {
+				item_layer = item_layer->next;
+
+				if (item_set->next != nullptr) {
+					item_set = item_set->next;
+				}
 			}
 		}
-		
-	
-	
-	
 
 }
 
@@ -382,17 +399,17 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 {
 	//collider wall gid 20
 
-	// 33 is wall , 34 climb, 35 death, 36 player start, 37 player end, 38 tree head
-	uint wall = 33, climb = 34, dead = 35, playerStart = 36, playerEnd = 37, treeHead = 38;
+	// 130 is wall , 132 dead, 133 reespawn
+	uint wall = 141, dead = 143, playerStart = 144;
 	MapLayer* layerCollision;
-	if (data.layermap.start->next != nullptr)
+	if (data.layermap.start->next->next != nullptr)
 	{
-		layerCollision = data.layermap.start->next->data;
+		layerCollision = data.layermap.start->next->next->data;
 
 		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
 		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
-		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+		iPoint leftDown = WorldToMap(playerRect.x+30, playerRect.y + playerRect.h);
 
 		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
 		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
@@ -404,7 +421,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 		int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 		//test 
-		for(int i = up; i < right; i++)
+		for(int i = up; i <= right; i++)
 		switch (i)
 		{
 		case right:

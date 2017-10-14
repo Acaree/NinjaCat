@@ -91,8 +91,8 @@ void ModuleCollision::DebugDraw()
 	}
 	
 	//DRAW COLLISIONS
-	p2List_item<MapLayer*>* item_layer = App->map->data.layermap.start->next;
-	p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next;
+	p2List_item<MapLayer*>* item_layer = App->map->data.layermap.start->next->next;
+	p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next->next;
 
 
 	for (int x = 0; x < item_layer->data->width; x++)

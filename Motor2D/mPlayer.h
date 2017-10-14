@@ -49,6 +49,11 @@ public:
 
 	bool lookingleft;
 
+	bool movingleft;
+	bool movingright;
+
+	int backgroundspeed;
+
 	bool needRespawn;
 	bool movement[4] = { true,true,true,true };
 
