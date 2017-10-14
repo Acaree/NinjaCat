@@ -155,7 +155,7 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 	data.layermap.clear();
-
+	
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -409,7 +409,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
 		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
-		iPoint leftDown = WorldToMap(playerRect.x+30, playerRect.y + playerRect.h);
+		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
 
 		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
 		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
@@ -421,7 +421,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 		int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 		//test 
-		for(int i = up; i <= right; i++)
+		for(int i = up; i <= death; i++)
 		switch (i)
 		{
 		case right:
@@ -443,17 +443,13 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				App->player->movement[right] = true;
 			}
 
-			if (rightUpPlayer == dead || rightDownPlayer == dead)
-			{
-
-				App->player->needRespawn = true;
-			}
 			break;
 
 		case left:
 
 			if (colliderLeftUp == wall || colliderLeftDown == wall)
 			{
+				
 				if (wall == leftUpPlayer || (colliderLeftDown==leftDownPlayer && rightDownPlayer != wall) )
 				{
 				App->player->movement[left] = false;
@@ -466,10 +462,6 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			else if (App->player->movement[left] == false)
 			{
 				App->player->movement[left] = true;
-			}
-			if (leftDownPlayer == dead || leftUpPlayer == dead )
-			{
-				App->player->needRespawn = true;
 			}
 			break;
 
@@ -488,11 +480,6 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				
 				App->player->movement[down] = true;
 			}
-
-			if (leftDownPlayer == dead || rightDownPlayer == dead)
-			{
-				App->player->needRespawn = true;
-			}
 			break;
 
 		case up:
@@ -509,12 +496,24 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			}
 			break;
 
-			if (leftUpPlayer == dead || rightUpPlayer == dead)
+		case death:
+
+			if (colliderLeftUp == dead || colliderRightUp == dead || colliderLeftDown == dead && colliderRightDown == dead)
 			{
-				App->player->needRespawn = true;
+				if (App->player->isLevel1)
+				{
+					App->player->needRespawn1 = true;
+				}
+				else
+				{
+					App->player->needRespawn2 = true;
+				}
+				App->player->movement[down] = false;
 			}
+
 		}
 
 		
+
 	}
 }

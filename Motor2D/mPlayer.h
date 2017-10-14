@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 struct Collider;
-enum Direction { up=0, down ,left,right};
+enum Direction { up=0, down ,left,right, death};
 
 class ModulePlayer : public j1Module
 {
@@ -38,7 +38,8 @@ public:
 	Animation jumpLeft;
 
 	iPoint position;
-	iPoint respawnTile;
+	iPoint respawnTile1;
+	iPoint respawnTile2;
 	Collider* colliderPlayer;
 
 	float gravity = 1.0f;
@@ -54,7 +55,9 @@ public:
 
 	int backgroundspeed;
 
-	bool needRespawn;
+	bool needRespawn1;
+	bool needRespawn2;
+	bool isLevel1;
 	bool movement[4] = { true,true,true,true };
 
 };
