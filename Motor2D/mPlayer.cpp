@@ -58,7 +58,7 @@ ModulePlayer::ModulePlayer()
 	dead.PushBack({ 647,860,109,64 });
 	dead.PushBack({ 767,860,110,64 });
 	dead.speed = 0.2f;
-	dead.loop = true;
+	dead.loop = false;
 
 	glideRight.PushBack({ 472,225,102,107 });
 	glideRight.PushBack({ 579,224,102,107 });
@@ -322,6 +322,16 @@ bool ModulePlayer::Update(float dt)
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
 	
+	if (currentAnimation != &jumpLeft) {
+		jumpLeft.Reset();
+	}
+	if (currentAnimation != &jumpRight) {
+		jumpRight.Reset();
+	}
+	if (currentAnimation != &dead) {
+		dead.Reset();
+	}
+
 	return true;
 }
 

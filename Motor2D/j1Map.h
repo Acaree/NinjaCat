@@ -123,7 +123,7 @@ public:
 	MapData data;
 
 private:
-
+	int now = 0;
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

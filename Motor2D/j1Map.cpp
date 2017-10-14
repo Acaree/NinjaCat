@@ -500,15 +500,27 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 			if (colliderLeftUp == dead || colliderRightUp == dead || colliderLeftDown == dead && colliderRightDown == dead)
 			{
-				if (App->player->isLevel1)
-				{
-					App->player->needRespawn1 = true;
+				if (now == 0) {
+					now = SDL_GetTicks();
 				}
-				else
-				{
-					App->player->needRespawn2 = true;
+				if (now + 800 > SDL_GetTicks()) {
+					App->player->currentAnimation = &App->player->dead;
+					movement[down] = false;
 				}
-				App->player->movement[down] = false;
+				else {
+					App->player->currentAnimation = &App->player->idleRight;
+					now = 0;
+					if (App->player->isLevel1)
+					{
+						App->player->needRespawn1 = true;
+
+					}
+					else
+					{
+						App->player->needRespawn2 = true;
+					}
+					App->player->movement[down] = false;
+				}
 			}
 
 		}
