@@ -252,13 +252,21 @@ bool ModulePlayer::Update(float dt)
 
 	
 	App->map->CollisionToWorld(colliderPlayer->rect, down);
+
 	if ( movement[down] == true) {
-		speed_jump += gravity;
+		//Trap for colliders work "good"
+		if (speed_jump <= 20)
+		{
+			speed_jump += gravity;
+		}
+		else
+		{
+			speed_jump = 10;
+		}
+		
+		position.y += speed_jump;
 	}
 
-	if (movement[down] == true && jumping == true) {
-			position.y += speed_jump;
-	}
 	else if(movement[down] == false && speed_jump > 0)
 	{
 		if (lookingleft == true && currentAnimation != &walkLeft) {

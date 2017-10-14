@@ -390,9 +390,9 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 		layerCollision = data.layermap.start->next->data;
 
 		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
-		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h+1);
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
-		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+		iPoint leftDown = WorldToMap(playerRect.x, playerRect.y + playerRect.h+1);
 
 		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
 		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
@@ -463,6 +463,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, Direction direction)
 				if (colliderLeftDown == leftDownPlayer || colliderRightDown == rightDownPlayer)
 				{
 					App->player->movement[down] = false;
+					App->player->jumping = false;
 				}
 			}
 			else if (App->player->movement[down] == false)
