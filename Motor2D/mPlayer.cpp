@@ -150,7 +150,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
-	
+	App->map->CollisionToWorld(colliderPlayer->rect, movement);
 
 	if (needRespawn == true)
 	{
@@ -176,7 +176,7 @@ bool ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		App->map->CollisionToWorld(colliderPlayer->rect, right);
+		
 		if (movement[down]==false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
 			currentAnimation = &walkRight;
 			lookingleft = false;
@@ -190,7 +190,7 @@ bool ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		App->map->CollisionToWorld(colliderPlayer->rect, left);
+		
 		if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
 			currentAnimation = &walkLeft;
 			lookingleft = true;
@@ -204,7 +204,7 @@ bool ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		App->map->CollisionToWorld(colliderPlayer->rect, down);
+		
 
 		if (movement[down] == true)
 		{
@@ -251,7 +251,7 @@ bool ModulePlayer::Update(float dt)
 
 
 	
-	App->map->CollisionToWorld(colliderPlayer->rect, down);
+	
 
 	if ( movement[down] == true) {
 		//Trap for colliders work "good"
@@ -282,8 +282,8 @@ bool ModulePlayer::Update(float dt)
 		speed_jump = 0;
 	}
 
-
-	
+	App->render->camera.x = 200 - position.x;
+	App->render->camera.y = 300 - position.y;
 	colliderPlayer->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
 	

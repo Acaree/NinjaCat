@@ -101,7 +101,7 @@ public:
 	
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-	void CollisionToWorld(SDL_Rect& playerRect, Direction direction);
+	void CollisionToWorld(SDL_Rect& playerRect, bool*movement);
 private:
 
 	bool LoadMap();
