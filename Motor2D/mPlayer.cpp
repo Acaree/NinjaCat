@@ -50,15 +50,15 @@ ModulePlayer::ModulePlayer()
 	walkLeft.PushBack({ 818,117,80,104 });
 	walkLeft.speed = walkRight.speed;
 
-	climb.PushBack({ 9,344,52,94});
-	climb.PushBack({ 68,344,52,94 });
-	climb.PushBack({ 127,344,52,94 });
-	climb.PushBack({ 184,344,52,94 });
-	climb.PushBack({ 241,344,52,94 });
-	climb.PushBack({ 303,344,52,94 });
-	climb.PushBack({ 363,344,52,94 });
-	climb.PushBack({ 419,344,52,94 });
-	climb.speed = 0.2f;
+	dead.PushBack({ 7,816,65,107});
+	dead.PushBack({ 80,820,83,106 });
+	dead.PushBack({ 169,835,94,91 });
+	dead.PushBack({ 288,850,102,94 });
+	dead.PushBack({ 408,855,108,69 });
+	dead.PushBack({ 647,860,109,64 });
+	dead.PushBack({ 767,860,110,64 });
+	dead.speed = 0.2f;
+	dead.loop = true;
 
 	glideRight.PushBack({ 472,225,102,107 });
 	glideRight.PushBack({ 579,224,102,107 });

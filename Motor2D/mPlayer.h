@@ -31,7 +31,7 @@ public:
 	Animation idleLeft;
 	Animation walkRight;
 	Animation walkLeft;
-	Animation climb;
+	Animation dead;
 	Animation glideRight;
 	Animation glideLeft;
 	Animation jumpRight;
