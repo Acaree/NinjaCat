@@ -60,30 +60,54 @@ ModulePlayer::ModulePlayer()
 	climb.PushBack({ 419,344,52,94 });
 	climb.speed = 0.2f;
 
-	glide.PushBack({ 472,225,102,107 });
-	glide.PushBack({ 579,224,102,107 });
-	glide.PushBack({ 686,224,102,107 });
-	glide.PushBack({ 793,227,102,107 });
-	glide.PushBack({ 472,341,102,107 });
-	glide.PushBack({ 579,341,102,107 });
-	glide.PushBack({ 687,344,102,107 });
-	glide.PushBack({ 795,345,102,107 });
-	glide.speed = 0.2f;
+	glideRight.PushBack({ 472,225,102,107 });
+	glideRight.PushBack({ 579,224,102,107 });
+	glideRight.PushBack({ 686,224,102,107 });
+	glideRight.PushBack({ 793,227,102,107 });
+	glideRight.PushBack({ 472,341,102,107 });
+	glideRight.PushBack({ 579,341,102,107 });
+	glideRight.PushBack({ 687,344,102,107 });
+	glideRight.PushBack({ 795,345,102,107 });
+	glideRight.speed = 0.2f;
 
-	jump.PushBack({ 0,466,70,109 });
-	jump.PushBack({ 88,464,66,114 });
-	jump.PushBack({ 176,463,62,108 });
-	jump.PushBack({ 265,463,63,107 });
-	jump.PushBack({ 355,463,63,107 });
-	jump.PushBack({ 445,463,63,107 });
-	jump.PushBack({ 535,463,68,106 });
-	jump.PushBack({ 620,463,74,104 });
-	jump.PushBack({ 706,463,82,102 });
-	jump.PushBack({ 796,463,82,102 });
-	jump.speed = 0.1f;
-	jump.loop = true;
+	glideLeft.PushBack({ 472,585,102,107 });
+	glideLeft.PushBack({ 579,584,102,107 });
+	glideLeft.PushBack({ 686,584,102,107 });
+	glideLeft.PushBack({ 793,587,102,107 });
+	glideLeft.PushBack({ 472,701,102,107 });
+	glideLeft.PushBack({ 579,700,102,107 });
+	glideLeft.PushBack({ 684,700,102,107 });
+	glideLeft.PushBack({ 790,703,102,107 });
+	glideLeft.speed = 0.2f;
+
+	jumpRight.PushBack({ 0,466,70,109 });
+	jumpRight.PushBack({ 88,464,66,114 });
+	jumpRight.PushBack({ 176,463,62,108 });
+	jumpRight.PushBack({ 265,463,63,107 });
+	jumpRight.PushBack({ 355,463,63,107 });
+	jumpRight.PushBack({ 445,463,63,107 });
+	jumpRight.PushBack({ 535,463,68,106 });
+	jumpRight.PushBack({ 620,463,74,104 });
+	jumpRight.PushBack({ 706,463,82,102 });
+	jumpRight.PushBack({ 796,463,82,102 });
+	jumpRight.speed = 0.1f;
+	jumpRight.loop = false;
+
+	jumpLeft.PushBack({ 364,586,66,114 });
+	jumpLeft.PushBack({ 279,584,62,108 });
+	jumpLeft.PushBack({ 195,583,63,107 });
+	jumpLeft.PushBack({ 105,583,63,107 });
+	jumpLeft.PushBack({ 15,583,63,107 });
+	jumpLeft.PushBack({ 371,699,68,106 });
+	jumpLeft.PushBack({ 276,699,74,104 });
+	jumpLeft.PushBack({ 185,699,82,102 });
+	jumpLeft.PushBack({ 91,699,82,102 });
+	jumpLeft.PushBack({ 2,699,82,102 });
+	jumpLeft.speed = 0.1f;
+	jumpLeft.loop = false;
 
 	currentAnimation = &idleRight;
+	lookingleft = false;
 
 	
 }
@@ -135,36 +159,46 @@ bool ModulePlayer::Update(float dt)
 	}
 	int speed = 10;
 
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
+		currentAnimation = &idleRight;
+		lookingleft = false;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
+	{
+		currentAnimation = &idleLeft;
+		lookingleft = true;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		App->map->CollisionToWorld(colliderPlayer->rect, right);
-
+		if (movement[down]==false) {
+			currentAnimation = &walkRight;
+			lookingleft = false;
+		}
 		if (movement[right] == true)
 		{
 			position.x += speed;
-			currentAnimation = &walkRight;
 		}
-		else
-		{
-			currentAnimation = &idleRight;
-		}
-
 	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		App->map->CollisionToWorld(colliderPlayer->rect, left);
-
+		if (movement[down] == false) {
+			currentAnimation = &walkLeft;
+			lookingleft = true;
+		}
 		if (movement[left] == true)
 		{
 			position.x -= speed;
-			currentAnimation = &walkLeft;
-		}
-		else
-		{
-			currentAnimation = &idleLeft;
 		}
 	}
+
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
@@ -185,24 +219,32 @@ bool ModulePlayer::Update(float dt)
 		{
 			gliding = true;
 			speed_jump = 3.0f;
-			currentAnimation = &glide;
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
+				currentAnimation = &glideLeft;
+				lookingleft = true;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
+				currentAnimation = &glideRight;
+				lookingleft = false;
+			}
 		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
 	{
-
-		//if (movement[down] == false)
-		{
 			jumping = true;
 			speed_jump = original_speed_jump;
 			position.y += speed_jump;
-			currentAnimation = &jump;
-		}
 	}
 
-	//	App->map->CollisionToWorld(colliderPlayer->rect, up);
-
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) && movement[down] == true) {
+		currentAnimation = &jumpLeft;
+		lookingleft = true;
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) && movement[down] == true) {
+		currentAnimation = &jumpRight;
+		lookingleft = false;
+	}
 
 	App->map->CollisionToWorld(colliderPlayer->rect, down);
 
@@ -216,6 +258,13 @@ bool ModulePlayer::Update(float dt)
 
 
 	if (movement[down] == false && speed_jump > 0) {
+
+			if (lookingleft == true) {
+				currentAnimation = &idleLeft;
+			}
+			else if (lookingleft == false) {
+				currentAnimation = &idleRight;
+			}	
 		jumping = false;
 		gliding = false;
 		speed_jump = 0;

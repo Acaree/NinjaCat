@@ -32,8 +32,10 @@ public:
 	Animation walkRight;
 	Animation walkLeft;
 	Animation climb;
-	Animation glide;
-	Animation jump;
+	Animation glideRight;
+	Animation glideLeft;
+	Animation jumpRight;
+	Animation jumpLeft;
 
 	iPoint position;
 	iPoint respawnTile;
@@ -44,6 +46,8 @@ public:
 	float speed_jump;
 	bool jumping = false;
 	bool gliding = false;
+
+	bool lookingleft;
 
 	bool needRespawn;
 	bool movement[4] = { true,true,true,true };
