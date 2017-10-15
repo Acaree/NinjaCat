@@ -280,11 +280,13 @@ void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
-	if (load_game.GetString() != "save_game.xml")
-	{
-		load_game = "save_game.xml";
+	if (App->player->currentAnimation != &App->player->dead) {
+		if (load_game.GetString() != "save_game.xml")
+		{
+			load_game = "save_game.xml";
+		}
+		want_to_load = true;
 	}
-	want_to_load = true;
 }
 
 // ---------------------------------------
