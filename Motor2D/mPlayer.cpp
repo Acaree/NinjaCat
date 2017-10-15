@@ -206,87 +206,88 @@ bool ModulePlayer::Update(float dt)
 
 
 	//when dead animation introduced, it need to call idle animation
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
-		currentAnimation = &idleRight;
-		lookingleft = false;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
-	{
-		currentAnimation = &idleLeft;
-		lookingleft = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		
-		if (movement[down]==false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
-			currentAnimation = &walkRight;
+	if (currentAnimation != &dead) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
+			currentAnimation = &idleRight;
 			lookingleft = false;
 		}
-		if (movement[right] == true)
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
 		{
-			position.x += speed;
-		}
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		
-		if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
-			currentAnimation = &walkLeft;
+			currentAnimation = &idleLeft;
 			lookingleft = true;
 		}
-		if (movement[left] == true)
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x -= speed;
-		}
-	}
 
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		
-
-		if (movement[down] == true)
-		{
-			
-			speed_jump = 3.0f;
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
-				currentAnimation = &glideLeft;
-				if (gliding == false) {
-					App->audio->PlayFx(glidesound, 1);
-					gliding = true;
-				}
-				lookingleft = true;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
-				currentAnimation = &glideRight;
-				if (gliding == false) {
-					App->audio->PlayFx(glidesound, 1);
-					gliding = true;
-				}
+			if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
+				currentAnimation = &walkRight;
 				lookingleft = false;
 			}
+			if (movement[right] == true)
+			{
+				position.x += speed;
+			}
 		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
-		gliding = false;
-	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && movement[down] == true && gliding == false) {
-		currentAnimation = &jumpLeft;
-		lookingleft = true;
-	}
-	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && movement[down] == true && gliding == false) {
-		currentAnimation = &jumpRight;
-		lookingleft = false;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
-	{
+			if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
+				currentAnimation = &walkLeft;
+				lookingleft = true;
+			}
+			if (movement[left] == true)
+			{
+				position.x -= speed;
+			}
+		}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+
+
+			if (movement[down] == true)
+			{
+
+				speed_jump = 3.0f;
+				if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
+					currentAnimation = &glideLeft;
+					if (gliding == false) {
+						App->audio->PlayFx(glidesound, 1);
+						gliding = true;
+					}
+					lookingleft = true;
+				}
+				if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
+					currentAnimation = &glideRight;
+					if (gliding == false) {
+						App->audio->PlayFx(glidesound, 1);
+						gliding = true;
+					}
+					lookingleft = false;
+				}
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
+			gliding = false;
+		}
+
+		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && movement[down] == true && gliding == false) {
+			currentAnimation = &jumpLeft;
+			lookingleft = true;
+		}
+		else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && movement[down] == true && gliding == false) {
+			currentAnimation = &jumpRight;
+			lookingleft = false;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
+		{
 			jumping = true;
 			speed_jump = original_speed_jump;
 			position.y += speed_jump;
@@ -300,55 +301,57 @@ bool ModulePlayer::Update(float dt)
 				App->audio->PlayFx(jumpsound);
 				currentAnimation = &jumpRight;
 			}
-	}
+		}
 
 
-	
-	
 
-	if ( movement[down] == true) {
-		//Trap for colliders work "good"
-		if (speed_jump <= 20)
+
+
+		if (movement[down] == true) {
+			//Trap for colliders work "good"
+			if (speed_jump <= 20)
+			{
+				speed_jump += gravity;
+			}
+			else
+			{
+				speed_jump = 10;
+			}
+
+			position.y += speed_jump;
+		}
+
+		else if (movement[down] == false && speed_jump > 0)
 		{
-			speed_jump += gravity;
+			if (lookingleft == true && currentAnimation != &walkLeft) {
+				currentAnimation = &idleLeft;
+				lookingleft = true;
+			}
+			else if (lookingleft == false && currentAnimation != &walkRight) {
+				currentAnimation = &idleRight;
+				lookingleft = false;
+			}
+			jumping = false;
+			gliding = false;
+			speed_jump = 0;
 		}
-		else
-		{
-			speed_jump = 10;
-		}
-		
-		position.y += speed_jump;
 	}
 
-	else if(movement[down] == false && speed_jump > 0)
-	{
-		if (lookingleft == true && currentAnimation != &walkLeft) {
-			currentAnimation = &idleLeft;
-			lookingleft = true;
-		}
-		else if (lookingleft == false && currentAnimation != &walkRight) {
-			currentAnimation = &idleRight;
-			lookingleft = false;
-		}
-		jumping = false;
-		gliding = false;
-		speed_jump = 0;
-	}
+		App->render->camera.x = 200 - position.x;
+		App->render->camera.y = 300 - position.y;
+		colliderPlayer->SetPos(position.x, position.y);
+		App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
 
-	App->render->camera.x = 200 - position.x;
-	App->render->camera.y = 300 - position.y;
-	colliderPlayer->SetPos(position.x, position.y);
-	App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
-	
-	if (currentAnimation != &jumpLeft) {
-		jumpLeft.Reset();
-	}
-	if (currentAnimation != &jumpRight) {
-		jumpRight.Reset();
-	}
-	if (currentAnimation != &dead) {
-		dead.Reset();
-	}
+		if (currentAnimation != &jumpLeft) {
+			jumpLeft.Reset();
+		}
+		if (currentAnimation != &jumpRight) {
+			jumpRight.Reset();
+		}
+		if (currentAnimation != &dead) {
+			dead.Reset();
+		}
+
 
 	return true;
 }
