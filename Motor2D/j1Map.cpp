@@ -412,11 +412,6 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
 		iPoint leftDown = WorldToMap(playerRect.x+34, playerRect.y + playerRect.h);
 
-		int colliderRightUp = layerCollision->Get(rightUp.x, rightUp.y);
-		int colliderRightDown = layerCollision->Get(rightDown.x, rightDown.y);
-		int colliderLeftUp = layerCollision->Get(leftUp.x, leftUp.y);
-		int colliderLeftDown = layerCollision->Get(leftDown.x, leftDown.y);
-
 		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
 		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
@@ -427,10 +422,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		{
 		case right:
 		
-			leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-			if (colliderRightUp == wall || colliderRightDown == wall)
-			{
-				
+			
 				if (wall == rightUpPlayer ||( wall == rightDownPlayer && leftDownPlayer != wall))
 				{
 					App->player->movement[right] = false;
@@ -439,20 +431,12 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				{
 					App->player->movement[right] = true;
 				}
-			}
-			else if (App->player->movement[right] == false)
-			{
-				App->player->movement[right] = true;
-			}
-
+			
 			break;
 
 		case left:
 			
-			if (colliderLeftUp == wall || colliderLeftDown == wall)
-			{
-				
-				if (wall == leftUpPlayer || (colliderLeftDown==leftDownPlayer && rightDownPlayer != wall) )
+				if (wall == leftUpPlayer || (wall==leftDownPlayer && rightDownPlayer != wall) )
 				{
 				App->player->movement[left] = false;
 				}
@@ -460,40 +444,30 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				{
 					App->player->movement[left] = true;
 				}
-			}
-			else if (App->player->movement[left] == false)
-			{
-				App->player->movement[left] = true;
-			}
+			
 			break;
 
 
 		case down:
 		
-			if (colliderLeftDown == wall && colliderRightDown == wall)
-			{	
-				if (colliderLeftDown == leftDownPlayer || colliderRightDown == rightDownPlayer)
+				if (wall== leftDownPlayer || wall == rightDownPlayer)
 				{
 					App->player->movement[down] = false;
 					App->player->jumping = false;
 				}
-			}
-			else if (App->player->movement[down] == false)
-			{
-				
-				App->player->movement[down] = true;
-			}
+				else
+				{
+					App->player->movement[down] = true;
+				}
 			break;
 
 		case up:
-			if (colliderLeftUp == wall && colliderRightUp == wall)
+		
+			if (wall == leftUpPlayer || wall == rightUpPlayer)
 			{
-				if (wall == leftUpPlayer || wall == rightUpPlayer)
-				{
 					App->player->movement[up] = false;
-				}
 			}
-			else if (App->player->movement[up] == false)
+			else 
 			{
 				App->player->movement[up] = true;
 			}
@@ -501,7 +475,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 		case death:
 
-			if (colliderLeftUp == dead || colliderRightUp == dead || colliderLeftDown == dead && colliderRightDown == dead)
+			if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead && rightDownPlayer == dead)
 			{
 				if (now == 0) {
 					now = SDL_GetTicks();
@@ -530,7 +504,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			}
 		case nextLevel:
 
-			if (colliderRightDown == changeLvl || colliderRightUp == changeLvl)
+			if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
 			{
 				App->player->changeLevel = true;
 				if (App->player->isLevel1 == false)
