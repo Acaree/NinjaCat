@@ -71,7 +71,7 @@ bool j1Audio::CleanUp()
 		Mix_FreeChunk(item->data);
 
 	fx.clear();
-
+//delete item
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
