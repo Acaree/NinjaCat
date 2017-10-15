@@ -95,7 +95,7 @@ bool j1App::Awake()
 			item = item->next;
 		}
 	}
-
+	load_game=save_game = "save_game.xml";
 	return ret;
 }
 
@@ -280,6 +280,10 @@ void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
+	if (load_game.GetString() != "save_game.xml")
+	{
+		load_game = "save_game.xml";
+	}
 	want_to_load = true;
 }
 
@@ -288,7 +292,10 @@ void j1App::SaveGame() const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
-
+	if (save_game.GetString() != "save_game.xml")
+	{
+		save_game = "save_game.xml";
+	}
 	want_to_save = true;
 }
 
