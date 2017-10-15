@@ -20,8 +20,8 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
-	
-
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -63,6 +63,7 @@ public:
 	bool isLevel1;
 	bool movement[4] = { true,true,true,true };
 	bool changeLevel =false;
+	bool loadRespawn = false;
 };
 
 #endif

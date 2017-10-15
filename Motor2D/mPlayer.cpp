@@ -161,21 +161,28 @@ bool ModulePlayer::Update(float dt)
 	{
 		if (needRespawn1 == true)
 		{
-			iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
-			position.x = respawnCordenate.x;
-			position.y = respawnCordenate.y;
+			if (loadRespawn == false)
+			{
+				iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
+				position.x = respawnCordenate.x;
+				position.y = respawnCordenate.y;
+			}
 			needRespawn1 = false;
 			isLevel1 = true;
 		}
 		else if(needRespawn2 == true)
 		{
-			iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
-			position.x = respawnCordenate.x;
-			position.y = respawnCordenate.y;
+			if (loadRespawn == false)
+			{
+				iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
+				position.x = respawnCordenate.x;
+				position.y = respawnCordenate.y;
+			}
 			needRespawn2 = false;
 			isLevel1 = false;
+			
 		}
-		
+		loadRespawn = false;
 		movement[down] = true;
 	}
 	
@@ -350,4 +357,29 @@ bool ModulePlayer::Update(float dt)
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
+}
+
+bool ModulePlayer::Save(pugi::xml_node& config) const
+{
+	pugi::xml_node player = config.append_child("player");
+
+	player.append_attribute("x") = position.x;
+	player.append_attribute("y") = position.y;
+	player.append_attribute("level1") = isLevel1;
+	return true;
+}
+
+bool ModulePlayer::Load(pugi::xml_node& data)
+{
+	bool tmp = data.child("player").attribute("level1").as_bool();
+		
+	if (tmp != isLevel1)
+	{
+		changeLevel = true;
+	}
+	position.x = data.child("player").attribute("x").as_int();
+	position.y = data.child("player").attribute("y").as_int();
+	loadRespawn = true;
+
+	return true;
 }
