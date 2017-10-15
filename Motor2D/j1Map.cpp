@@ -56,6 +56,7 @@ void j1Map::Draw()
 					{
 						iPoint position = MapToWorld(x, y);
 						SDL_Rect rect = item_set->data->GetTileRect(tileID);
+						// if name is background print first
 						if (item_layer->data->name == "Background") {
 							if (App->player->movement[left]) {
 								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
@@ -410,7 +411,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 		int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
-		//test 
+		
 		for(int i = up; i <= death; i++)
 		switch (i)
 		{
@@ -484,6 +485,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				}
 				if (now + 800 > SDL_GetTicks()) {
 					App->player->currentAnimation = &App->player->dead;
+					// stop all movement, else player go out of map, bug
 					movement[down] = false;
 					movement[left] = false;
 					movement[right] = false;

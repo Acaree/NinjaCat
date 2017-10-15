@@ -113,7 +113,7 @@ void ModuleCollision::DebugDraw()
 			{
 				iPoint position = App->map->MapToWorld(x, y);
 				SDL_Rect rect = item_set->data->GetTileRect(tileID);
-
+				
 				App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
 
 			}

@@ -274,10 +274,7 @@ bool ModulePlayer::Update(float dt)
 				currentAnimation = &jumpRight;
 			}
 		}
-
-
 	}
-
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
 		colliderPlayer->SetPos(position.x, position.y);
@@ -352,7 +349,7 @@ void ModulePlayer::CalculateGravity() {
 
 void ModulePlayer::Respawn()
 {
-
+	// set de level, clean up and load map
 	if (changeLevel == true) {
 		if (currentAnimation != &dead) {
 			App->map->CleanUp();
@@ -397,8 +394,9 @@ void ModulePlayer::Respawn()
 		isLevel1 = false;
 
 	}
-
+	//load respawn: if is true don't take the position of tile in config.xml take the position in save_game.xml
 	loadRespawn = false;
+	// movement true : collider respawn > collider player
 	movement[down] = true;
 
 	
