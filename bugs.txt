@@ -1,0 +1,1 @@
+- A veces el player se queda enganchado a la pared (segundo nivel, nada mas empezar si corres hacia la pared de detras pasa)

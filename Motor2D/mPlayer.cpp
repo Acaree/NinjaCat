@@ -157,56 +157,16 @@ bool ModulePlayer::Update(float dt)
 
 	int speed = 10;
 
-	if (needRespawn1 == true || needRespawn2 == true)
-	{
-		if (needRespawn1 == true)
-		{
-			if (loadRespawn == false)
-			{
-				iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
-				position.x = respawnCordenate.x;
-				position.y = respawnCordenate.y;
-			}
-			needRespawn1 = false;
-			isLevel1 = true;
-		}
-		else if(needRespawn2 == true)
-		{
-			if (loadRespawn == false)
-			{
-				iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
-				position.x = respawnCordenate.x;
-				position.y = respawnCordenate.y;
-			}
-			needRespawn2 = false;
-			isLevel1 = false;
-			
-		}
-		loadRespawn = false;
-		movement[down] = true;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || changeLevel == true)
-	{
-		App->map->CleanUp();
-		changeLevel = false;
-		if (isLevel1 == true)
-		{
-			
-			App->map->Load("level2ND.tmx");
-			needRespawn2 = true;
-		}
-		else if (isLevel1 == false)
-		{
-			
-			App->map->Load("level1ND.tmx");
-			needRespawn1 = true;
-		}
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		changeLevel = true;
 	}
 
-
+	if (needRespawn1 == true || needRespawn2 == true || changeLevel == true) {
+		Respawn();
+	}
 	
 	if (currentAnimation != &dead) {
+
 
 		if (movement[down] == true) {
 			CalculateGravity();
@@ -401,5 +361,56 @@ void ModulePlayer::CalculateGravity() {
 		jumping = false;
 		gliding = false;
 		speed_jump = 0;
+	}
+}
+
+void ModulePlayer::Respawn() {
+
+	if (needRespawn1 == true)
+	{
+		if (loadRespawn == false)
+		{
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+		}
+		needRespawn1 = false;
+		isLevel1 = true;
+	}
+	else if (needRespawn2 == true)
+	{
+		if (loadRespawn == false)
+		{
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+		}
+		needRespawn2 = false;
+		isLevel1 = false;
+
+	}
+	loadRespawn = false;
+	movement[down] = true;
+	if (changeLevel == true) {
+		if (currentAnimation != &dead) {
+			App->map->CleanUp();
+			changeLevel = false;
+			if (isLevel1 == true)
+			{
+
+				App->map->Load("level2ND.tmx");
+				needRespawn2 = true;
+			}
+			else if (isLevel1 == false)
+			{
+
+				App->map->Load("level1ND.tmx");
+				needRespawn1 = true;
+			}
+			currentAnimation = &idleRight;
+		}
+
+		
+
 	}
 }

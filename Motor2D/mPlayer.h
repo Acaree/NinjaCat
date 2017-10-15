@@ -21,6 +21,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 	void CalculateGravity();
+	void Respawn();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 public:
