@@ -376,10 +376,11 @@ bool ModulePlayer::Load(pugi::xml_node& data)
 	if (tmp != isLevel1)
 	{
 		changeLevel = true;
+		loadRespawn = true;
 	}
 	position.x = data.child("player").attribute("x").as_int();
 	position.y = data.child("player").attribute("y").as_int();
-	loadRespawn = true;
+	
 
 	return true;
 }
