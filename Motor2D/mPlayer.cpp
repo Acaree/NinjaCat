@@ -29,8 +29,6 @@ ModulePlayer::ModulePlayer()
 	walkRight.PushBack({ 9,3,81,107});
 	walkRight.PushBack({ 99,2,80,110 });
 	walkRight.PushBack({ 189,0,79,111 });
-	//walkRight.PushBack({ 273,1,87,105 });
-	//walkRight.PushBack({ 365,3,88,106 });
 	walkRight.PushBack({ 463,3,81,105 });
 	walkRight.PushBack({ 553,1,79,110 });
 	walkRight.PushBack({ 643,0,78,107 });
@@ -133,7 +131,7 @@ bool ModulePlayer::Start()
 	graphics = App->tex->Load("maps/spriteSheet.png");
 	jumpsound=App->audio->LoadFx("audio/jump_fx.wav");
 	glidesound = App->audio->LoadFx("audio/glide.wav");
-	//NEED REVISION
+	
 	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
 
 	return true;
@@ -203,9 +201,6 @@ bool ModulePlayer::Update(float dt)
 				position.x += speed;
 			}
 		}
-
-
-
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
 		{
@@ -335,7 +330,7 @@ bool ModulePlayer::Load(pugi::xml_node& data)
 }
 
 void ModulePlayer::CalculateGravity() {
-	//Trap for colliders work "good"
+	//Trap for colliders work "good" 
 	if (speed_jump < 20)
 	{
 		speed_jump += gravity;
@@ -349,48 +344,15 @@ void ModulePlayer::CalculateGravity() {
 
 	if (movement[down] == false && speed_jump > 0)
 	{
-		/*if (lookingleft == true && currentAnimation != &walkLeft) {
-			currentAnimation = &idleLeft;
-			lookingleft = true;
-		}
-		else if (lookingleft == false && currentAnimation != &walkRight) {
-			currentAnimation = &idleRight;
-			lookingleft = false;
-		}
-		*/
 		jumping = false;
 		gliding = false;
 		speed_jump = 0;
 	}
 }
 
-void ModulePlayer::Respawn() {
+void ModulePlayer::Respawn()
+{
 
-	if (needRespawn1 == true)
-	{
-		if (loadRespawn == false)
-		{
-			iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
-			position.x = respawnCordenate.x;
-			position.y = respawnCordenate.y;
-		}
-		needRespawn1 = false;
-		isLevel1 = true;
-	}
-	else if (needRespawn2 == true)
-	{
-		if (loadRespawn == false)
-		{
-			iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
-			position.x = respawnCordenate.x;
-			position.y = respawnCordenate.y;
-		}
-		needRespawn2 = false;
-		isLevel1 = false;
-
-	}
-	loadRespawn = false;
-	movement[down] = true;
 	if (changeLevel == true) {
 		if (currentAnimation != &dead) {
 			App->map->CleanUp();
@@ -409,8 +371,35 @@ void ModulePlayer::Respawn() {
 			}
 			currentAnimation = &idleRight;
 		}
+	}
 
-		
+	if (needRespawn1 == true)
+	{
+		if (loadRespawn == false)
+		{
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile1.x, respawnTile1.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+		}
+		needRespawn1 = false;
+		isLevel1 = true;
+	}
+	else if (needRespawn2 == true)
+	{
+		if (loadRespawn == false)
+		{
+
+			iPoint respawnCordenate = App->map->MapToWorld(respawnTile2.x, respawnTile2.y);
+			position.x = respawnCordenate.x;
+			position.y = respawnCordenate.y;
+		}
+		needRespawn2 = false;
+		isLevel1 = false;
 
 	}
+
+	loadRespawn = false;
+	movement[down] = true;
+
+	
 }

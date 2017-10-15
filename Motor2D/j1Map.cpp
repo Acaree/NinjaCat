@@ -109,13 +109,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	
 	ret.x = x / data.tile_width;
 	ret.y = y / data.tile_height;
-	//Not finish
-
-	/*ret.x =  x / data.tile_width + y/data.tile_width;
-	ret.y =  y / data.tile_height - x/data.tile_height;*/
 
 	return ret;
-
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -398,20 +393,19 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 {
-	//collider wall gid 20
-
-	// 130 is wall , 132 dead, 133 reespawn
+	
+	// number of gid, layer collision
 	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
 	MapLayer* layerCollision;
 	if (data.layermap.start->next->next != nullptr)
 	{
 		layerCollision = data.layermap.start->next->next->data;
-
+		//points rect player, +- 34 set de x  smaller rect than original, -- bug
 		iPoint rightUp = WorldToMap(playerRect.x + playerRect.w, playerRect.y);
 		iPoint rightDown = WorldToMap(playerRect.x + playerRect.w-34, playerRect.y + playerRect.h);
 		iPoint leftUp = WorldToMap(playerRect.x, playerRect.y);
 		iPoint leftDown = WorldToMap(playerRect.x+34, playerRect.y + playerRect.h);
-
+		//tiles in point of rect player
 		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
 		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
@@ -425,6 +419,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 			leftDown = WorldToMap(playerRect.x + 50, playerRect.y + playerRect.h);
 			leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+					//3 options: player in front of wall, player whit  "floor" , point rectangle player right down floor and rest don't collision
 				if ((wall == leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer != wall) )
 				{
 					App->player->movement[right] = false;
@@ -441,6 +436,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 			leftDown = WorldToMap(playerRect.x , playerRect.y + playerRect.h);
 			leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+			// same right but left
 				if ((wall == rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer != wall))
 				{
 				App->player->movement[left] = false;
@@ -479,7 +475,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			break;
 
 		case death:
-
+			//check all positions 
 			if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead && rightDownPlayer == dead)
 			{
 				if (now == 0) {
@@ -521,11 +517,6 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 					App->player->isLevel1 = false;
 				}
 			}
-
-
 		}
-
-		
-
 	}
 }

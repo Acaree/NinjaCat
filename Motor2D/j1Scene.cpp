@@ -57,8 +57,8 @@ bool j1Scene::Update(float dt)
 			App->player->changeLevel = true;
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
 	{
 		if (App->player->isLevel1 == true)
 		{
@@ -70,21 +70,15 @@ bool j1Scene::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN  && App->player->currentAnimation != &App->player->dead && App->player->jumping == false) 
+	{
 		App->LoadGame();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN  && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
 		App->SaveGame();
 
-
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
-
-
-
-	
-
 	
 	App->input->GetMousePosition(mouseCoordenates.x, mouseCoordenates.y);
 	
