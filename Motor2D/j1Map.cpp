@@ -401,7 +401,7 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 	//collider wall gid 20
 
 	// 130 is wall , 132 dead, 133 reespawn
-	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 145;
+	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
 	MapLayer* layerCollision;
 	if (data.layermap.start->next->next != nullptr)
 	{

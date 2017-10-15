@@ -17,8 +17,8 @@
   <tile id="17" terrain=",,0,0"/>
   <tile id="18" terrain=",0,0,0"/>
  </tileset>
- <tileset firstgid="141" name="colliders" tilewidth="128" tileheight="128" tilecount="6" columns="3">
-  <image source="colliders.png" width="384" height="256"/>
+ <tileset firstgid="141" name="colliders" tilewidth="128" tileheight="128" tilecount="6" columns="4">
+  <image source="colliders.png" width="512" height="128"/>
  </tileset>
  <layer name="Background" width="90" height="12">
   <data>
@@ -2970,7 +2970,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="145"/>
+   <tile gid="142"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
