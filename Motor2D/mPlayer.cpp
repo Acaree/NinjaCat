@@ -207,6 +207,19 @@ bool ModulePlayer::Update(float dt)
 
 	
 	if (currentAnimation != &dead) {
+
+		if (movement[down] == true) {
+			CalculateGravity();
+		}
+		else {
+			if (lookingleft == true) {
+				currentAnimation = &idleLeft;
+			}
+			else {
+				currentAnimation = &idleRight;
+			}
+		}
+
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
 			currentAnimation = &idleRight;
 			lookingleft = false;
@@ -290,7 +303,7 @@ bool ModulePlayer::Update(float dt)
 			gliding = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down]==false)
 		{
 			jumping = true;
 			speed_jump = original_speed_jump;
@@ -309,11 +322,6 @@ bool ModulePlayer::Update(float dt)
 
 
 	}
-
-
-		if (movement[down] == true) {
-			CalculateGravity();
-		}
 
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
@@ -381,7 +389,7 @@ void ModulePlayer::CalculateGravity() {
 
 	if (movement[down] == false && speed_jump > 0)
 	{
-		if (lookingleft == true && currentAnimation != &walkLeft) {
+		/*if (lookingleft == true && currentAnimation != &walkLeft) {
 			currentAnimation = &idleLeft;
 			lookingleft = true;
 		}
@@ -389,6 +397,7 @@ void ModulePlayer::CalculateGravity() {
 			currentAnimation = &idleRight;
 			lookingleft = false;
 		}
+		*/
 		jumping = false;
 		gliding = false;
 		speed_jump = 0;
