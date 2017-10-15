@@ -69,7 +69,7 @@ bool ModuleCollision::Update(float dt)
 
 void ModuleCollision::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		debug = !debug;
 
 	if (debug == false)
