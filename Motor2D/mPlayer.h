@@ -20,6 +20,7 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
+	void CalculateGravity();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 public:

@@ -205,23 +205,23 @@ bool ModulePlayer::Update(float dt)
 	}
 
 
-	//when dead animation introduced, it need to call idle animation
+	
 	if (currentAnimation != &dead) {
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
 			currentAnimation = &idleRight;
 			lookingleft = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
-		{
-			currentAnimation = &idleLeft;
-			lookingleft = true;
+
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && movement[down] == true && gliding == false) {
+			currentAnimation = &jumpRight;
+			lookingleft = false;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 
-			if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
+			if (movement[down] == false) {
 				currentAnimation = &walkRight;
 				lookingleft = false;
 			}
@@ -232,10 +232,23 @@ bool ModulePlayer::Update(float dt)
 		}
 
 
+
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
+		{
+			currentAnimation = &idleLeft;
+			lookingleft = true;
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && movement[down] == true && gliding == false) {
+			currentAnimation = &jumpLeft;
+			lookingleft = true;
+		}
+
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 
-			if (movement[down] == false && (currentAnimation == &idleLeft || currentAnimation == &idleRight)) {
+			if (movement[down] == false) {
 				currentAnimation = &walkLeft;
 				lookingleft = true;
 			}
@@ -277,15 +290,6 @@ bool ModulePlayer::Update(float dt)
 			gliding = false;
 		}
 
-		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && movement[down] == true && gliding == false) {
-			currentAnimation = &jumpLeft;
-			lookingleft = true;
-		}
-		else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && movement[down] == true && gliding == false) {
-			currentAnimation = &jumpRight;
-			lookingleft = false;
-		}
-
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false)
 		{
 			jumping = true;
@@ -304,38 +308,12 @@ bool ModulePlayer::Update(float dt)
 		}
 
 
-
+	}
 
 
 		if (movement[down] == true) {
-			//Trap for colliders work "good"
-			if (speed_jump <= 20)
-			{
-				speed_jump += gravity;
-			}
-			else
-			{
-				speed_jump = 10;
-			}
-
-			position.y += speed_jump;
+			CalculateGravity();
 		}
-
-		else if (movement[down] == false && speed_jump > 0)
-		{
-			if (lookingleft == true && currentAnimation != &walkLeft) {
-				currentAnimation = &idleLeft;
-				lookingleft = true;
-			}
-			else if (lookingleft == false && currentAnimation != &walkRight) {
-				currentAnimation = &idleRight;
-				lookingleft = false;
-			}
-			jumping = false;
-			gliding = false;
-			speed_jump = 0;
-		}
-	}
 
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
@@ -386,4 +364,33 @@ bool ModulePlayer::Load(pugi::xml_node& data)
 	
 
 	return true;
+}
+
+void ModulePlayer::CalculateGravity() {
+	//Trap for colliders work "good"
+	if (speed_jump < 20)
+	{
+		speed_jump += gravity;
+	}
+	else
+	{
+		speed_jump = 20;
+	}
+
+	position.y += speed_jump;
+
+	if (movement[down] == false && speed_jump > 0)
+	{
+		if (lookingleft == true && currentAnimation != &walkLeft) {
+			currentAnimation = &idleLeft;
+			lookingleft = true;
+		}
+		else if (lookingleft == false && currentAnimation != &walkRight) {
+			currentAnimation = &idleRight;
+			lookingleft = false;
+		}
+		jumping = false;
+		gliding = false;
+		speed_jump = 0;
+	}
 }
