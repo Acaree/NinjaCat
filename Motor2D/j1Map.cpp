@@ -421,8 +421,8 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 		switch (i)
 		{
 		case right:
-		
-			
+			rightDown = WorldToMap(playerRect.x + playerRect.w , playerRect.y + playerRect.h);
+			rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
 				if (wall == rightUpPlayer ||( wall == rightDownPlayer && leftDownPlayer != wall))
 				{
 					App->player->movement[right] = false;
@@ -435,7 +435,8 @@ void j1Map::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 			break;
 
 		case left:
-			
+			leftDown = WorldToMap(playerRect.x , playerRect.y + playerRect.h);
+			leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
 				if (wall == leftUpPlayer || (wall==leftDownPlayer && rightDownPlayer != wall) )
 				{
 				App->player->movement[left] = false;
