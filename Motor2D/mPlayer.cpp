@@ -13,100 +13,95 @@
 
 ModulePlayer::ModulePlayer()
 {
+
+	pugi::xml_document anim_file;
+	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
+
+	if (result == NULL)
+		LOG("Could not load animations xml file animation.xml. pugi error: %s", result.description());
+		
+	pugi::xml_node player_anim = anim_file.child("player");
 	name.create("player");
-	idleRight.PushBack({ 0,227,57,109 });
-	idleRight.PushBack({ 59,227,57,109 });
-	idleRight.PushBack({ 117,227,57,109 });
-	idleRight.PushBack({ 175,227,57,109 });
+	//animations
+
+	//idle right
+	pugi::xml_node idleRight_node = player_anim.child("idleRight").child("frame");
+	while (idleRight_node != nullptr) {
+		idleRight.PushBack({ idleRight_node.attribute("x").as_int(),idleRight_node.attribute("y").as_int(),idleRight_node.attribute("width").as_int(),idleRight_node.attribute("height").as_int() });
+		idleRight_node = idleRight_node.next_sibling();
+	}
 	idleRight.speed = 0.1f;
 	
-	idleLeft.PushBack({ 237,227,57,109 });
-	idleLeft.PushBack({ 295,227,57,109 });
-	idleLeft.PushBack({ 353,227,57,109 });
-	idleLeft.PushBack({ 411,227,57,109 });
+	//idleleft
+	pugi::xml_node idleLeft_node = player_anim.child("idleLeft").child("frame");
+	while (idleLeft_node != nullptr) {
+		idleLeft.PushBack({ idleLeft_node.attribute("x").as_int(),idleLeft_node.attribute("y").as_int(),idleLeft_node.attribute("width").as_int(),idleLeft_node.attribute("height").as_int() });
+		idleLeft_node = idleLeft_node.next_sibling();
+	}
 	idleLeft.speed = idleRight.speed;
 
-	walkRight.PushBack({ 9,3,81,107});
-	walkRight.PushBack({ 99,2,80,110 });
-	walkRight.PushBack({ 189,0,79,111 });
-	walkRight.PushBack({ 463,3,81,105 });
-	walkRight.PushBack({ 553,1,79,110 });
-	walkRight.PushBack({ 643,0,78,107 });
-	walkRight.PushBack({ 734,1,78,100 });
-	walkRight.PushBack({ 826,3,81,104 });
+	//walk right
+	pugi::xml_node walkRight_node = player_anim.child("walkRight").child("frame");
+	while (walkRight_node != nullptr) {
+		walkRight.PushBack({ walkRight_node.attribute("x").as_int(),walkRight_node.attribute("y").as_int(),walkRight_node.attribute("width").as_int(),walkRight_node.attribute("height").as_int() });
+		walkRight_node = walkRight_node.next_sibling();
+	}
 	walkRight.speed = 0.2f;
 
-	walkLeft.PushBack({ 1,117,80,107 });
-	walkLeft.PushBack({ 93,115,80,112 });
-	walkLeft.PushBack({ 186,115,79,110 });
-	walkLeft.PushBack({ 275,115,87,104 });
-	walkLeft.PushBack({ 364,117,87,106 });
-	walkLeft.PushBack({ 455,117,80,105 });
-	walkLeft.PushBack({ 547,115,80,109 });
-	walkLeft.PushBack({ 640,114,78,107 });
-	walkLeft.PushBack({ 730,115,78,100 });
-	walkLeft.PushBack({ 818,117,80,104 });
+	//walk left
+	pugi::xml_node walkLeft_node = player_anim.child("walkLeft").child("frame");
+	while (walkLeft_node != nullptr) {
+		walkLeft.PushBack({ walkLeft_node.attribute("x").as_int(),walkLeft_node.attribute("y").as_int(),walkLeft_node.attribute("width").as_int(),walkLeft_node.attribute("height").as_int() });
+		walkLeft_node = walkLeft_node.next_sibling();
+	}
 	walkLeft.speed = walkRight.speed;
 
-	dead.PushBack({ 7,816,65,107});
-	dead.PushBack({ 80,820,83,106 });
-	dead.PushBack({ 169,835,94,91 });
-	dead.PushBack({ 288,850,102,94 });
-	dead.PushBack({ 408,855,108,69 });
-	dead.PushBack({ 647,860,109,64 });
-	dead.PushBack({ 767,860,110,64 });
+	//dead
+	pugi::xml_node dead_node = player_anim.child("dead").child("frame");
+	while (dead_node != nullptr) {
+		dead.PushBack({ dead_node.attribute("x").as_int(),dead_node.attribute("y").as_int(),dead_node.attribute("width").as_int(),dead_node.attribute("height").as_int() });
+		dead_node = dead_node.next_sibling();
+	}
 	dead.speed = 0.2f;
 	dead.loop = false;
 
-	glideRight.PushBack({ 472,225,102,107 });
-	glideRight.PushBack({ 579,224,102,107 });
-	glideRight.PushBack({ 686,224,102,107 });
-	glideRight.PushBack({ 793,227,102,107 });
-	glideRight.PushBack({ 472,341,102,107 });
-	glideRight.PushBack({ 579,341,102,107 });
-	glideRight.PushBack({ 687,344,102,107 });
-	glideRight.PushBack({ 795,345,102,107 });
+	//glide right
+	pugi::xml_node glideRight_node = player_anim.child("glideRight").child("frame");
+	while (glideRight_node != nullptr) {
+		glideRight.PushBack({ glideRight_node.attribute("x").as_int(),glideRight_node.attribute("y").as_int(),glideRight_node.attribute("width").as_int(),glideRight_node.attribute("height").as_int() });
+		glideRight_node = glideRight_node.next_sibling();
+	}
 	glideRight.speed = 0.2f;
 
-	glideLeft.PushBack({ 472,585,102,107 });
-	glideLeft.PushBack({ 579,584,102,107 });
-	glideLeft.PushBack({ 686,584,102,107 });
-	glideLeft.PushBack({ 793,587,102,107 });
-	glideLeft.PushBack({ 472,701,102,107 });
-	glideLeft.PushBack({ 579,700,102,107 });
-	glideLeft.PushBack({ 684,700,102,107 });
-	glideLeft.PushBack({ 790,703,102,107 });
-	glideLeft.speed = 0.2f;
+	//glide left
+	pugi::xml_node glideLeft_node = player_anim.child("glideLeft").child("frame");
+	while (glideLeft_node != nullptr) {
+		glideLeft.PushBack({ glideLeft_node.attribute("x").as_int(),glideLeft_node.attribute("y").as_int(),glideLeft_node.attribute("width").as_int(),glideLeft_node.attribute("height").as_int() });
+		glideLeft_node = glideLeft_node.next_sibling();
+	}
+	glideLeft.speed = glideRight.speed;
 
-	jumpRight.PushBack({ 0,466,70,109 });
-	jumpRight.PushBack({ 88,464,66,114 });
-	jumpRight.PushBack({ 176,463,62,108 });
-	jumpRight.PushBack({ 265,463,63,107 });
-	jumpRight.PushBack({ 355,463,63,107 });
-	jumpRight.PushBack({ 445,463,63,107 });
-	jumpRight.PushBack({ 535,463,68,106 });
-	jumpRight.PushBack({ 620,463,74,104 });
-	jumpRight.PushBack({ 706,463,82,102 });
-	jumpRight.PushBack({ 796,463,82,102 });
-	jumpRight.speed = 0.1f;
-	jumpRight.loop = false;
+	//jump right
+	pugi::xml_node jumpRight_node = player_anim.child("jumpRight").child("frame");
+	while (jumpRight_node != nullptr) {
+		jumpRight.PushBack({ jumpRight_node.attribute("x").as_int(),jumpRight_node.attribute("y").as_int(),jumpRight_node.attribute("width").as_int(),jumpRight_node.attribute("height").as_int() });
+		jumpRight_node = jumpRight_node.next_sibling();
+	}
+		jumpRight.speed = 0.1f;
+		jumpRight.loop = false;
 
-	jumpLeft.PushBack({ 364,586,66,114 });
-	jumpLeft.PushBack({ 279,584,62,108 });
-	jumpLeft.PushBack({ 195,583,63,107 });
-	jumpLeft.PushBack({ 105,583,63,107 });
-	jumpLeft.PushBack({ 15,583,63,107 });
-	jumpLeft.PushBack({ 371,699,68,106 });
-	jumpLeft.PushBack({ 276,699,74,104 });
-	jumpLeft.PushBack({ 185,699,82,102 });
-	jumpLeft.PushBack({ 91,699,82,102 });
-	jumpLeft.PushBack({ 2,699,82,102 });
-	jumpLeft.speed = 0.1f;
-	jumpLeft.loop = false;
+	//jump left
+	pugi::xml_node jumpLeft_node = player_anim.child("jumpLeft").child("frame");
+	while (jumpLeft_node != nullptr) {
+		jumpLeft.PushBack({ jumpLeft_node.attribute("x").as_int(),jumpLeft_node.attribute("y").as_int(),jumpLeft_node.attribute("width").as_int(),jumpLeft_node.attribute("height").as_int() });
+		jumpLeft_node = jumpLeft_node.next_sibling();
+	}
+		jumpLeft.speed = jumpRight.speed;
+		jumpLeft.loop = false;
 
 	currentAnimation = &idleRight;
 	lookingleft = false;
-
+	
 	
 }
 
