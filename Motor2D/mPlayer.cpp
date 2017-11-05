@@ -30,7 +30,7 @@ ModulePlayer::ModulePlayer()
 		idleRight.PushBack({ idleRight_node.attribute("x").as_int(),idleRight_node.attribute("y").as_int(),idleRight_node.attribute("width").as_int(),idleRight_node.attribute("height").as_int() });
 		idleRight_node = idleRight_node.next_sibling();
 	}
-	idleRight.speed = 0.1f;
+	 idleRight.speed = player_anim.child("speeds").attribute("idle").as_float();
 	
 	//idleleft
 	pugi::xml_node idleLeft_node = player_anim.child("idleLeft").child("frame");
@@ -38,7 +38,7 @@ ModulePlayer::ModulePlayer()
 		idleLeft.PushBack({ idleLeft_node.attribute("x").as_int(),idleLeft_node.attribute("y").as_int(),idleLeft_node.attribute("width").as_int(),idleLeft_node.attribute("height").as_int() });
 		idleLeft_node = idleLeft_node.next_sibling();
 	}
-	idleLeft.speed = idleRight.speed;
+	idleLeft.speed= player_anim.child("speeds").attribute("idle").as_float();
 
 	//walk right
 	pugi::xml_node walkRight_node = player_anim.child("walkRight").child("frame");
@@ -46,7 +46,7 @@ ModulePlayer::ModulePlayer()
 		walkRight.PushBack({ walkRight_node.attribute("x").as_int(),walkRight_node.attribute("y").as_int(),walkRight_node.attribute("width").as_int(),walkRight_node.attribute("height").as_int() });
 		walkRight_node = walkRight_node.next_sibling();
 	}
-	walkRight.speed = 0.2f;
+	walkRight.speed= player_anim.child("speeds").attribute("walk").as_float();
 
 	//walk left
 	pugi::xml_node walkLeft_node = player_anim.child("walkLeft").child("frame");
@@ -54,7 +54,7 @@ ModulePlayer::ModulePlayer()
 		walkLeft.PushBack({ walkLeft_node.attribute("x").as_int(),walkLeft_node.attribute("y").as_int(),walkLeft_node.attribute("width").as_int(),walkLeft_node.attribute("height").as_int() });
 		walkLeft_node = walkLeft_node.next_sibling();
 	}
-	walkLeft.speed = walkRight.speed;
+	walkLeft.speed= player_anim.child("speeds").attribute("walk").as_float();
 
 	//dead
 	pugi::xml_node dead_node = player_anim.child("dead").child("frame");
@@ -62,8 +62,8 @@ ModulePlayer::ModulePlayer()
 		dead.PushBack({ dead_node.attribute("x").as_int(),dead_node.attribute("y").as_int(),dead_node.attribute("width").as_int(),dead_node.attribute("height").as_int() });
 		dead_node = dead_node.next_sibling();
 	}
-	dead.speed = 0.2f;
-	dead.loop = false;
+	dead.speed = player_anim.child("speeds").attribute("dead").as_float();
+	dead.loop = player_anim.child("speeds").attribute("loop").as_bool();
 
 	//glide right
 	pugi::xml_node glideRight_node = player_anim.child("glideRight").child("frame");
@@ -71,7 +71,7 @@ ModulePlayer::ModulePlayer()
 		glideRight.PushBack({ glideRight_node.attribute("x").as_int(),glideRight_node.attribute("y").as_int(),glideRight_node.attribute("width").as_int(),glideRight_node.attribute("height").as_int() });
 		glideRight_node = glideRight_node.next_sibling();
 	}
-	glideRight.speed = 0.2f;
+	glideRight.speed = player_anim.child("speeds").attribute("glide").as_float();
 
 	//glide left
 	pugi::xml_node glideLeft_node = player_anim.child("glideLeft").child("frame");
@@ -79,7 +79,7 @@ ModulePlayer::ModulePlayer()
 		glideLeft.PushBack({ glideLeft_node.attribute("x").as_int(),glideLeft_node.attribute("y").as_int(),glideLeft_node.attribute("width").as_int(),glideLeft_node.attribute("height").as_int() });
 		glideLeft_node = glideLeft_node.next_sibling();
 	}
-	glideLeft.speed = glideRight.speed;
+	glideLeft.speed = player_anim.child("speeds").attribute("glide").as_float();
 
 	//jump right
 	pugi::xml_node jumpRight_node = player_anim.child("jumpRight").child("frame");
@@ -87,8 +87,8 @@ ModulePlayer::ModulePlayer()
 		jumpRight.PushBack({ jumpRight_node.attribute("x").as_int(),jumpRight_node.attribute("y").as_int(),jumpRight_node.attribute("width").as_int(),jumpRight_node.attribute("height").as_int() });
 		jumpRight_node = jumpRight_node.next_sibling();
 	}
-		jumpRight.speed = 0.1f;
-		jumpRight.loop = false;
+		jumpRight.speed = player_anim.child("speeds").attribute("jump").as_float();
+		jumpRight.loop = player_anim.child("speed").attribute("loop").as_bool();
 
 	//jump left
 	pugi::xml_node jumpLeft_node = player_anim.child("jumpLeft").child("frame");
@@ -96,8 +96,8 @@ ModulePlayer::ModulePlayer()
 		jumpLeft.PushBack({ jumpLeft_node.attribute("x").as_int(),jumpLeft_node.attribute("y").as_int(),jumpLeft_node.attribute("width").as_int(),jumpLeft_node.attribute("height").as_int() });
 		jumpLeft_node = jumpLeft_node.next_sibling();
 	}
-		jumpLeft.speed = jumpRight.speed;
-		jumpLeft.loop = false;
+		jumpLeft.speed = player_anim.child("speeds").attribute("jump").as_float();
+		jumpLeft.loop = player_anim.child("speeds").attribute("loop").as_bool();
 
 	currentAnimation = &idleRight;
 	lookingleft = false;

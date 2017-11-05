@@ -252,8 +252,9 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 			case death:
 				//check all positions 
-				if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead && rightDownPlayer == dead)
+				if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead)
 				{
+					
 					if (now == 0) {
 						now = SDL_GetTicks();
 

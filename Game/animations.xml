@@ -36,7 +36,7 @@
     <frame x="730" y="115" width="78" height="100"/>
     <frame x="818" y="117" width="80" height="104"/>
   </walkLeft>
-
+  
   <dead>
     <frame x="7" y="816" width="65" height="107"/>
     <frame x="80" y="820" width="83" height="106"/>
@@ -68,7 +68,7 @@
     <frame x="684" y="700" width="102" height="107"/>
     <frame x="790" y="703" width="102" height="107"/>
   </glideLeft>
-
+ 
   <jumpRight>
     <frame x="0" y="466" width="70" height="109"/>
     <frame x="88" y="464" width="66" height="114"/>
@@ -95,6 +95,7 @@
     <frame x="2" y="699" width="82" height="102"/>
   </jumpLeft>
 
+  <speeds idle="0.1" walk="0.2" dead="0.2" glide="0.2" jump="0.1" loop="false"/>
 </player>
 
 
