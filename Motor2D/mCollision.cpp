@@ -3,6 +3,8 @@
 #include "j1Render.h"
 #include "mCollision.h"
 #include "j1Map.h"
+#include "mPlayer.h"
+
 ModuleCollision::ModuleCollision()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; i++)
@@ -163,4 +165,135 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.x + rect.w > r.x &&
 		rect.y < r.y + r.h &&
 		rect.h + rect.y > r.y);
+}
+
+void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
+{
+
+	// number of gid, layer collision
+	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
+	MapLayer* layerCollision;
+	if (App->map->data.layermap.start->next->next != nullptr)
+	{
+		layerCollision = App->map->data.layermap.start->next->next->data;
+		//points rect player, +- 34 set de x  smaller rect than original, -- bug
+		iPoint rightUp = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y);
+		iPoint rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 34, playerRect.y + playerRect.h);
+		iPoint leftUp = App->map->WorldToMap(playerRect.x, playerRect.y);
+		iPoint leftDown = App->map->WorldToMap(playerRect.x + 34, playerRect.y + playerRect.h);
+		//tiles in point of rect player
+		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
+		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+		int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+
+		for (int i = up; i <= death; i++)
+			switch (i)
+			{
+			case right:
+				rightDown = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+				rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+				leftDown = App->map->WorldToMap(playerRect.x + 50, playerRect.y + playerRect.h);
+				leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+				//3 options: player in front of wall, player whit  "floor" , point rectangle player right down floor and rest don't collision
+				if ((wall == leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer != wall))
+				{
+					App->player->movement[right] = false;
+				}
+				else
+				{
+					App->player->movement[right] = true;
+				}
+
+				break;
+
+			case left:
+				rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 50, playerRect.y + playerRect.h);
+				rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+				leftDown = App->map->WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+				leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+				// same right but left
+				if ((wall == rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer != wall))
+				{
+					App->player->movement[left] = false;
+				}
+				else
+				{
+					App->player->movement[left] = true;
+				}
+
+				break;
+
+
+			case down:
+
+				if (wall == leftDownPlayer || wall == rightDownPlayer)
+				{
+					App->player->movement[down] = false;
+					App->player->jumping = false;
+				}
+				else
+				{
+					App->player->movement[down] = true;
+				}
+				break;
+
+			case up:
+
+				if (wall == leftUpPlayer || wall == rightUpPlayer)
+				{
+					App->player->movement[up] = false;
+				}
+				else
+				{
+					App->player->movement[up] = true;
+				}
+				break;
+
+			case death:
+				//check all positions 
+				if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead && rightDownPlayer == dead)
+				{
+					if (now == 0) {
+						now = SDL_GetTicks();
+
+					}
+					if (now + 800 > SDL_GetTicks()) {
+						App->player->currentAnimation = &App->player->dead;
+						// stop all movement, else player go out of map, bug
+						movement[down] = false;
+						movement[left] = false;
+						movement[right] = false;
+					}
+					else {
+						App->player->currentAnimation = &App->player->idleRight;
+						now = 0;
+						if (App->player->isLevel1)
+						{
+							App->player->needRespawn1 = true;
+
+						}
+						else
+						{
+							App->player->needRespawn2 = true;
+						}
+						App->player->movement[down] = false;
+					}
+				}
+			case nextLevel:
+
+				if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
+				{
+					App->player->changeLevel = true;
+					if (App->player->isLevel1 == false)
+					{
+						App->player->isLevel1 = true;
+					}
+					else
+					{
+						App->player->isLevel1 = false;
+					}
+				}
+			}
+	}
 }

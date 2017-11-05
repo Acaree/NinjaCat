@@ -109,7 +109,7 @@ public:
 	
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-	void CollisionToWorld(SDL_Rect& playerRect, bool*movement);
+	
 private:
 
 	bool LoadMap();
@@ -123,7 +123,7 @@ public:
 	MapData data;
 
 private:
-	int now = 0;
+	
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

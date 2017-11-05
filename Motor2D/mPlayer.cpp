@@ -146,7 +146,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
-	App->map->CollisionToWorld(colliderPlayer->rect, movement);
+	App->collision->CollisionToWorld(colliderPlayer->rect, movement);
 
 	int speed = 10;
 

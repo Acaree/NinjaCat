@@ -5,7 +5,7 @@
 
 #include "j1Module.h"
 
-
+enum Direction;
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
@@ -52,12 +52,12 @@ public:
 	bool Update(float dt);
 	//update_status PostUpdate();
 	bool CleanUp();
-
+	void CollisionToWorld(SDL_Rect& playerRect, bool* movement);
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 
 private:
-
+	int now = 0;
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
