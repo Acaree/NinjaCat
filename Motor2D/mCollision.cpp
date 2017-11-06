@@ -93,7 +93,7 @@ void ModuleCollision::DebugDraw()
 	}
 	
 	//DRAW COLLISIONS
-	p2List_item<MapLayer*>* item_layer = App->map->data.layermap.start->next->next;
+	p2List_item<MapLayer*>* item_layer = App->map->data.layers.start->next->next;
 	p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next->next;
 
 
@@ -173,9 +173,9 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 	// number of gid, layer collision
 	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
 	MapLayer* layerCollision;
-	if (App->map->data.layermap.start->next->next != nullptr)
+	if (App->map->data.layers.start->next->next != nullptr)
 	{
-		layerCollision = App->map->data.layermap.start->next->next->data;
+		layerCollision = App->map->data.layers.start->next->next->data;
 		//points rect player, +- 34 set de x  smaller rect than original, -- bug
 		iPoint rightUp = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y);
 		iPoint rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 34, playerRect.y + playerRect.h);

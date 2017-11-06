@@ -34,7 +34,15 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
-	App->map->Load(map.GetString());
+	if (App->map->Load(map.GetString()) == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 	return true;
 }
 
@@ -46,8 +54,8 @@ bool j1Scene::PreUpdate()
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	//iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint p = App->map->WorldToMap(x, y);
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
