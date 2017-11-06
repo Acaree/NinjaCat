@@ -15,6 +15,7 @@ class j1Scene;
 class j1Map;
 class ModulePlayer;
 class ModuleCollision;
+class j1PathFinding;
 
 class j1App
 {
@@ -87,6 +88,7 @@ public:
 	j1Map*				map;
 	ModulePlayer*       player;
 	ModuleCollision*    collision;
+	j1PathFinding*		pathfinding;
 private:
 
 	p2List<j1Module*>	modules;

@@ -12,6 +12,7 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "mPlayer.h"
+#include "j1Pathfinding.h"
 #include "mCollision.h"
 
 // Constructor
@@ -29,6 +30,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	player = new ModulePlayer();
 	collision = new ModuleCollision();
+	pathfinding = new j1PathFinding();
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -37,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(pathfinding);
 	AddModule(player);
 	AddModule(collision);
 	// render last to swap buffer
