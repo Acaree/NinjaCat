@@ -121,8 +121,17 @@ bool j1Scene::Update(float dt)
 	
 	App->win->SetTitle(title.GetString());
 	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN){
-	App->enemies->AddEnemy(ENEMY_MOUSE, App->player->position.x+100, App->player->position.y);
+		//guarrada
+		int x;
+		int y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->map->WorldToMap(x, y);
+		iPoint posp = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+		p += {posp.x - 1, posp.y - 2};
+		iPoint point = App->map->MapToWorld(p.x,p.y);
+		App->enemies->AddEnemy(ENEMY_MOUSE, point.x, point.y);
 	}
+
 	return true;
 }
 

@@ -24,7 +24,7 @@ j1Enemies::~j1Enemies()
 bool j1Enemies::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	sprites = App->tex->Load("maps/enemies.png");
+	sprites = App->tex->Load("maps/Background.png");
 	
 	//audio_explosion = App->audio->LoadFx("Audio/explosion.wav");
 	return true;
