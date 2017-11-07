@@ -35,11 +35,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	bool AddEnemy(ENEMY_TYPES type, int x, int y);
-	uint audio_explosion;
-	uint audio_explosion2;
-	uint audio_explosion3;
-	uint audio_explosion4;
-	uint audio_explosion5;
+	
 
 private:
 
@@ -51,7 +47,7 @@ private:
 	SDL_Texture* sprites;
 public:
 	float damage;
-	bool bossdefeated = false;
+	
 };
 
 #endif // __ModuleEnemies_H_

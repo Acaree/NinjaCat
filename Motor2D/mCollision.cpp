@@ -88,6 +88,9 @@ void ModuleCollision::DebugDraw()
 		case COLLIDER_PLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
+		case COLLIDER_ENEMY:
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
 		}
 
 	}
@@ -198,11 +201,11 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				//3 options: player in front of wall, player whit  "floor" , point rectangle player right down floor and rest don't collision
 				if ((wall == leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer != wall))
 				{
-					App->player->movement[right] = false;
+					movement[right] = false;
 				}
 				else
 				{
-					App->player->movement[right] = true;
+					movement[right] = true;
 				}
 
 				break;
@@ -215,11 +218,11 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 				// same right but left
 				if ((wall == rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer != wall))
 				{
-					App->player->movement[left] = false;
+					movement[left] = false;
 				}
 				else
 				{
-					App->player->movement[left] = true;
+					movement[left] = true;
 				}
 
 				break;
@@ -229,12 +232,12 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 				if (wall == leftDownPlayer || wall == rightDownPlayer)
 				{
-					App->player->movement[down] = false;
+					movement[down] = false;
 					App->player->jumping = false;
 				}
 				else
 				{
-					App->player->movement[down] = true;
+					movement[down] = true;
 				}
 				break;
 
@@ -242,11 +245,11 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 				if (wall == leftUpPlayer || wall == rightUpPlayer)
 				{
-					App->player->movement[up] = false;
+					movement[up] = false;
 				}
 				else
 				{
-					App->player->movement[up] = true;
+					movement[up] = true;
 				}
 				break;
 
@@ -278,7 +281,7 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 						{
 							App->player->needRespawn2 = true;
 						}
-						App->player->movement[down] = false;
+						movement[down] = false;
 					}
 				}
 			case nextLevel:

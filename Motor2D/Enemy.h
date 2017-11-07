@@ -19,7 +19,7 @@ protected:
 
 public:
 	iPoint position;
-	float vmodule;
+
 	float hitpoints;
 	bool death = false;
 	uint enemy;
