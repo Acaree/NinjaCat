@@ -4,7 +4,7 @@
 #include "Enemy.h"
 
 
-class Enemy_Zombie : public Enemy
+class Enemy_Mouse : public Enemy
 {
 private:
 	iPoint originalpos;
@@ -21,7 +21,7 @@ private:
 
 public:
 
-	Enemy_Zombie(int x, int y);
+	Enemy_Mouse(int x, int y);
 
 	void Move();
 	void Shoot();
