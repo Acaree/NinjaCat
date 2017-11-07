@@ -11,6 +11,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
+#include "j1Enemies.h"
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
 #include "mCollision.h"
@@ -29,6 +30,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	player = new ModulePlayer();
+	enemies = new j1Enemies();
 	collision = new ModuleCollision();
 	pathfinding = new j1PathFinding();
 
@@ -42,6 +44,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(player);
+	AddModule(enemies);
 	AddModule(collision);
 	// render last to swap buffer
 	AddModule(render);

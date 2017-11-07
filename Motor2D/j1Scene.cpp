@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Enemies.h"
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
 
@@ -119,6 +120,9 @@ bool j1Scene::Update(float dt)
 	p2SString title("%i %i    %i %i", mouseCoordenates.x, mouseCoordenates.y, mouseTile.x , mouseTile.y );
 	
 	App->win->SetTitle(title.GetString());
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN){
+	App->enemies->AddEnemy(ENEMY_MOUSE, App->player->position.x+100, App->player->position.y);
+	}
 	return true;
 }
 
