@@ -65,11 +65,24 @@ void Enemy_Mouse::Move()
 					while (position.x > ñ.x)
 						position.x -= 1;
 				}
+				else if (App->pathfinding->last_path[tip].x - posP.x == 1)
+				{
+					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					while (position.x < ñ.x)
+						position.x += 1;
+				}
 				else if (App->pathfinding->last_path[tip].y - posP.y == 1)
 				{
 					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
-					while (position.y <= ñ.y)
+					while (position.y < ñ.y)
 						position.y += 1;
+
+				}
+				else if (App->pathfinding->last_path[tip].y - posP.y == -1)
+				{
+					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					while (position.y > ñ.y)
+						position.y -= 1;
 
 				}
 			}
