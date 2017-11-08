@@ -17,6 +17,11 @@ public:
 	void Move();
 	bool movement2[4] = { true,true,true,true };
 	bool play = false;
+	bool player_is_up;
+	bool player_is_down;
+	bool player_is_left;
+	bool player_is_right;
+	
 	int tip = 0;
 	p2DynArray<iPoint> enemy_path;
 };
