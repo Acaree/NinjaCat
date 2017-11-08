@@ -7,7 +7,6 @@
 #include "j1Audio.h"
 #include "Enemy.h"
 #include "Enemy_Mouse.h"
-#include "j1Map.h"
 
 #define SPAWN_MARGIN 140
 
@@ -117,20 +116,19 @@ bool j1Enemies::CleanUp()
 bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 {
 	bool ret = false;
-	if (App->map->data.layers.start->data->Get(x, y) < 141)
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		for (uint i = 0; i < MAX_ENEMIES; ++i)
+		if (queue[i].type == ENEMY_TYPES::NO_TYPE)
 		{
-			if (queue[i].type == ENEMY_TYPES::NO_TYPE)
-			{
-				queue[i].type = type;
-				queue[i].x = x;
-				queue[i].y = y;
-				ret = true;
-				break;
-			}
+			queue[i].type = type;
+			queue[i].x = x;
+			queue[i].y = y;
+			ret = true;
+			break;
 		}
 	}
+
 	return ret;
 }
 
