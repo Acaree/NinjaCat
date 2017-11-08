@@ -43,9 +43,9 @@ void Enemy_Mouse::Move()
 	iPoint p = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	//range of perception
+	if ((posP.x - p.x <= 2 && posP.x - p.x >= -2) && (posP.y - p.x <= 2 && posP.y - p.y >= -2) && play == false )
 	{
-
 		play = true;
 		App->pathfinding->CreatePath(posP, p, enemy_path);
 	}
