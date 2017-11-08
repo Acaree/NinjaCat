@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-#define MAX_ENEMIES 25
+#define MAX_ENEMIES 100
 
 enum ENEMY_TYPES
 {

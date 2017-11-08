@@ -31,22 +31,20 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 
 void Enemy_Mouse::Move()
 {
-
-	App->collision->CollisionToWorld(collider->rect, movement2);
+	
+	App->collision->CollisionToWorld(collider->rect,movement2 );
 
 	/*if (movement2[3] == true)
 	{
 		position.x += 1;
 	}*/
 
-	
-
 	iPoint posP = App->map->WorldToMap(position.x, position.y);
 	iPoint p = App->map->WorldToMap(App->player->position.x, App->player->position.y);
-
+	
 
 	//range of perception
-	if (App->input->GetKey(SDL_SCANCODE_Q)==KEY_DOWN)
+	if ((posP.x - p.x <= 2 && posP.x - p.x >= -2) && (posP.y - p.x <= 2 && posP.y - p.y >= -2) && play == false )
 	{
 		play = true;
 		App->pathfinding->CreatePath(posP, p, enemy_path);
@@ -54,56 +52,47 @@ void Enemy_Mouse::Move()
 
 	if (play == true)
 	{
-		
+
 		if (enemy_path[tip].x == posP.x && enemy_path[tip].y == posP.y)
 		{
-			
 			if (tip + 1 != enemy_path.Count())
 			{
+
 				tip++;
 				if (enemy_path[tip].x - posP.x == -1)
 				{
 					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					player_is_left = true;
-					player_is_right = false;
-					player_is_down = false;
-					player_is_up = false;
+					while (position.x > ñ.x)
+						position.x -= 1;
 				}
 				else if (enemy_path[tip].x - posP.x == 1)
 				{
 					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					player_is_right = true;
-					player_is_down = false;
-					player_is_up = false;
-					player_is_left = false;
+					while (position.x < ñ.x)
+						position.x += 1;
 				}
 				else if (enemy_path[tip].y - posP.y == 1)
 				{
 					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					player_is_down = true;
-					player_is_up = false;
-					player_is_left = false;
-					player_is_right = false;
+					while (position.y < ñ.y)
+						position.y += 1;
 
 				}
 				else if (enemy_path[tip].y - posP.y == -1)
 				{
 					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					player_is_up = true;
-					player_is_left = false;
-					player_is_right = false;
-					player_is_down = false;
+					while (position.y > ñ.y)
+						position.y -= 1;
+
 				}
-				else
-				{
-					tip = 0;
-					play = false;
-				}
-
-
-
+			}
+			else
+			{
+				tip = 0;
+				play = false;
 			}
 		}
+<<<<<<< HEAD
 
 	}
 	
@@ -132,5 +121,9 @@ void Enemy_Mouse::Move()
 		if (position.x < ñ.x)
 		position.x += 1;
 	}
+=======
+	}
+
+>>>>>>> parent of d5dd7bf... Fixed patfinding movement
 }
 
