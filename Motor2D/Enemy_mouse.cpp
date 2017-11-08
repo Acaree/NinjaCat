@@ -47,40 +47,40 @@ void Enemy_Mouse::Move()
 	{
 
 		play = true;
-		App->pathfinding->CreatePath(posP, p);
+		App->pathfinding->CreatePath(posP, p, enemy_path);
 	}
 
 	if (play == true)
 	{
 
-		if (App->pathfinding->last_path[tip].x == posP.x && App->pathfinding->last_path[tip].y == posP.y)
+		if (enemy_path[tip].x == posP.x && enemy_path[tip].y == posP.y)
 		{
-			if (tip + 1 != App->pathfinding->last_path.Count())
+			if (tip + 1 != enemy_path.Count())
 			{
 
 				tip++;
-				if (App->pathfinding->last_path[tip].x - posP.x == -1)
+				if (enemy_path[tip].x - posP.x == -1)
 				{
-					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
 					while (position.x > ñ.x)
 						position.x -= 1;
 				}
-				else if (App->pathfinding->last_path[tip].x - posP.x == 1)
+				else if (enemy_path[tip].x - posP.x == 1)
 				{
-					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
 					while (position.x < ñ.x)
 						position.x += 1;
 				}
-				else if (App->pathfinding->last_path[tip].y - posP.y == 1)
+				else if (enemy_path[tip].y - posP.y == 1)
 				{
-					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
 					while (position.y < ñ.y)
 						position.y += 1;
 
 				}
-				else if (App->pathfinding->last_path[tip].y - posP.y == -1)
+				else if (enemy_path[tip].y - posP.y == -1)
 				{
-					iPoint ñ = App->map->MapToWorld(App->pathfinding->last_path[tip].x, App->pathfinding->last_path[tip].y);
+					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
 					while (position.y > ñ.y)
 						position.y -= 1;
 

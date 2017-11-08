@@ -165,7 +165,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination,  p2DynArray<iPoint> &path)
 {
 
 	// TODO 1: if origin or destination are not walkable, return -1
@@ -190,16 +190,17 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		// Use the Pathnode::parent and Flip() the path when you are finish
 		if (close.list.end->data.pos == destination)
 		{
-			last_path.Clear();
+			path.Clear();
 			PathNode iterator = current->data;
 			while (iterator.parent != nullptr)
 			{
-				last_path.PushBack(iterator.pos);
+				path.PushBack(iterator.pos);
 				iterator = *iterator.parent;
 			}
-			last_path.PushBack(origin);
-			last_path.Flip();
+			path.PushBack(origin);
+			path.Flip();
 			break;
+			
 		}
 		// TODO 5: Fill a list of all adjancent nodes
 		PathList adjacents;
@@ -214,6 +215,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			if (close.Find(nodeIterator->data.pos) == NULL)
 			{
 				nodeIterator->data.CalculateF(destination);
+
 				if (p2List_item<PathNode>* equalNode = open.Find(nodeIterator->data.pos))
 				{
 					if (equalNode->data.g > nodeIterator->data.g)
