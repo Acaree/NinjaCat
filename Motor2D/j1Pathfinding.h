@@ -37,7 +37,7 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
-
+	p2DynArray<iPoint> last_path;
 private:
 
 	// size of the map
@@ -46,7 +46,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	
 };
 
 // forward declaration
