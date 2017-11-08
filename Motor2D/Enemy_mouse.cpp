@@ -108,18 +108,28 @@ void Enemy_Mouse::Move()
 	}
 	
 	if (player_is_up == true) {
-		position.y -= 1;
+		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
+		if (position.y > ñ.y)
+		{
+			position.y -= 1;
+		}
 	}
 
 	else if (player_is_down == true){
+		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
+		if (position.y > ñ.y)
 		position.y += 1;
 	}
 
 	else if (player_is_left == true) {
+		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
+		if (position.x > ñ.x)
 		position.x -= 1;
 	}
 
 	else if (player_is_right == true) {
+		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
+		if (position.x < ñ.x)
 		position.x += 1;
 	}
 }
