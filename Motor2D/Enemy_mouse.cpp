@@ -36,7 +36,7 @@ void Enemy_Mouse::Move()
 	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
 	
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) 
+	if(player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
 	{
 		App->pathfinding->CreatePath(enemy_tiles_pos, player_tiles_pos, enemy_path);
 	}
