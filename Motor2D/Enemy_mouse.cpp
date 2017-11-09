@@ -42,20 +42,23 @@ void Enemy_Mouse::Move()
 	}
 
 	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
-		
-		if (enemy_tiles_pos.x < enemy_path[i].x) {
+		//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
+		// el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
+		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
+
+		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x) {
 			position.x += 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.x > enemy_path[i].x) {
+		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x) {
 			position.x -= 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.y < enemy_path[i].y) {
+		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y) {
 			position.y += 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.y > enemy_path[i].y) {
+		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y) {
 			position.y -= 1;
 			current_in_path = true;
 		}
