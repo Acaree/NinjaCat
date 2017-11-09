@@ -15,9 +15,8 @@ public:
 
 	Enemy_Mouse(int x, int y);
 	void Move();
-	bool movement2[4] = { true,true,true,true };
-	bool play = false;
-	int tip = 0;
+	int i = 0;
+	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 };
 

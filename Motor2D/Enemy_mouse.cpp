@@ -32,98 +32,40 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 void Enemy_Mouse::Move()
 {
 	
-	App->collision->CollisionToWorld(collider->rect,movement2 );
+	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
+	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
-	/*if (movement2[3] == true)
-	{
-		position.x += 1;
-	}*/
-
-	iPoint posP = App->map->WorldToMap(position.x, position.y);
-	iPoint p = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 	
-
-	//range of perception
-	if ((posP.x - p.x <= 2 && posP.x - p.x >= -2) && (posP.y - p.x <= 2 && posP.y - p.y >= -2) && play == false )
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) 
 	{
-		play = true;
-		App->pathfinding->CreatePath(posP, p, enemy_path);
+		App->pathfinding->CreatePath(enemy_tiles_pos, player_tiles_pos, enemy_path);
 	}
 
-	if (play == true)
-	{
-
-		if (enemy_path[tip].x == posP.x && enemy_path[tip].y == posP.y)
-		{
-			if (tip + 1 != enemy_path.Count())
-			{
-
-				tip++;
-				if (enemy_path[tip].x - posP.x == -1)
-				{
-					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					while (position.x > ñ.x)
-						position.x -= 1;
-				}
-				else if (enemy_path[tip].x - posP.x == 1)
-				{
-					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					while (position.x < ñ.x)
-						position.x += 1;
-				}
-				else if (enemy_path[tip].y - posP.y == 1)
-				{
-					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					while (position.y < ñ.y)
-						position.y += 1;
-
-				}
-				else if (enemy_path[tip].y - posP.y == -1)
-				{
-					iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-					while (position.y > ñ.y)
-						position.y -= 1;
-
-				}
-			}
-			else
-			{
-				tip = 0;
-				play = false;
-			}
+	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
+		
+		if (enemy_tiles_pos.x < enemy_path[i].x) {
+			position.x += 1;
+			current_in_path = true;
 		}
-<<<<<<< HEAD
-
-	}
-	
-	if (player_is_up == true) {
-		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-		if (position.y > ñ.y)
-		{
+		else if (enemy_tiles_pos.x > enemy_path[i].x) {
+			position.x -= 1;
+			current_in_path = true;
+		}
+		else if (enemy_tiles_pos.y < enemy_path[i].y) {
+			position.y += 1;
+			current_in_path = true;
+		}
+		else if (enemy_tiles_pos.y > enemy_path[i].y) {
 			position.y -= 1;
+			current_in_path = true;
 		}
+		else {
+			current_in_path = false;
+		}
+		
+		
+		if (current_in_path==false)
+		i++;
 	}
 
-	else if (player_is_down == true){
-		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-		if (position.y > ñ.y)
-		position.y += 1;
-	}
-
-	else if (player_is_left == true) {
-		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-		if (position.x > ñ.x)
-		position.x -= 1;
-	}
-
-	else if (player_is_right == true) {
-		iPoint ñ = App->map->MapToWorld(enemy_path[tip].x, enemy_path[tip].y);
-		if (position.x < ñ.x)
-		position.x += 1;
-	}
-=======
-	}
-
->>>>>>> parent of d5dd7bf... Fixed patfinding movement
 }
-
