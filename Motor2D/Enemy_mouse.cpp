@@ -35,6 +35,7 @@ void Enemy_Mouse::Move()
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
+	App->collision->CollisionToWorld(collider->rect,movement);
 	
 	//if(player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
 	//{
@@ -46,19 +47,19 @@ void Enemy_Mouse::Move()
 		// el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
 		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
-		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x) {
+		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x) {
+		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y) {
+		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
 			position.y += 1;
 			current_in_path = true;
 		}
-		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y) {
+		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
 			position.y -= 1;
 			current_in_path = true;
 		}
@@ -66,9 +67,15 @@ void Enemy_Mouse::Move()
 			current_in_path = false;
 		}
 		
+		if (enemy_path[i].x == player_tiles_pos.x && enemy_path[i].y == player_tiles_pos.y)
+		{
+			i = 0;
+		}
 		
 		if (current_in_path==false)
 		i++;
+
+		
 	}
 
 }
