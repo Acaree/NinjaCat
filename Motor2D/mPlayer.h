@@ -69,7 +69,7 @@ public:
 	bool changeLevel =false;
 	bool loadRespawn = false;
 
-	int now = 0;
+	int started_attack = 0;
 	
 };
 

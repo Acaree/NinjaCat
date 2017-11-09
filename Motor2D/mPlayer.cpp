@@ -69,34 +69,28 @@ bool ModulePlayer::CleanUp()
 bool ModulePlayer::Update(float dt)
 {
 	App->collision->CollisionToWorld(colliderPlayer, movement);
-	
-
-	
-	
+		
 	int speed = 10;
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
-		if (currentAnimation == &idleLeft || currentAnimation == &walkLeft)
-		{
-				now = SDL_GetTicks();
-
-			if (now + 800 > SDL_GetTicks()) {
-				currentAnimation = &hitLeft;
-			}
-			
+		if (lookingleft) {
+			currentAnimation = &hitLeft;
+			started_attack = SDL_GetTicks();
 		}
-		else if (currentAnimation == &idleRight || currentAnimation == &walkRight)
-		{
-				now = SDL_GetTicks();
-
-			if (now + 800 > SDL_GetTicks()) {
-				currentAnimation = &hitRight;
-			}
-			
+		else {
+			currentAnimation = &hitRight;
+			started_attack = SDL_GetTicks();
 		}
-		now = 0;
 	}
+
+	if (started_attack + 500 < SDL_GetTicks()) {
+		if (lookingleft)
+			currentAnimation = &idleLeft;
+		else
+			currentAnimation = &idleRight;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		changeLevel = true;
 	}
@@ -105,7 +99,7 @@ bool ModulePlayer::Update(float dt)
 		Respawn();
 	}
 	
-	if (currentAnimation != &dead) {
+	if (currentAnimation != &dead && currentAnimation != &hitLeft && currentAnimation != &hitRight) {
 
 
 		if (movement[down] == true) {
