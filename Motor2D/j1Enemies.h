@@ -2,7 +2,8 @@
 #define __j1Enemies_H__
 
 #include "j1Module.h"
-
+#include "p2DynArray.h"
+#include "p2Point.h"
 #define MAX_ENEMIES 100
 
 enum ENEMY_TYPES
@@ -29,6 +30,7 @@ public:
 
 	bool Start();
 	bool PreUpdate();
+	bool Awake(pugi::xml_node&);
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
@@ -45,6 +47,7 @@ private:
 	EnemyInfo queue[MAX_ENEMIES];
 	Enemy* enemies[MAX_ENEMIES];
 	SDL_Texture* sprites;
+	p2DynArray<iPoint> flyPositions;
 public:
 	float damage;
 	

@@ -7,6 +7,7 @@
 #include "j1Audio.h"
 #include "Enemy.h"
 #include "Enemy_Mouse.h"
+#include "j1Map.h"
 
 #define SPAWN_MARGIN 140
 
@@ -14,6 +15,8 @@ j1Enemies::j1Enemies()
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		enemies[i] = nullptr;
+
+	name.create("enemies");
 }
 
 // Destructor
@@ -26,10 +29,28 @@ bool j1Enemies::Start()
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("maps/zombie.png");
 	
+	//COMPROBAR
+	for (int it = 0; it < flyPositions.Count(); it++)
+	{
+		iPoint p = App->map->MapToWorld(flyPositions[it].x, flyPositions[it].y);
+		AddEnemy(ENEMY_MOUSE, p.x, p.y);
+	}
+	flyPositions.Clear();
 	//audio_explosion = App->audio->LoadFx("Audio/explosion.wav");
 	return true;
 }
 
+bool j1Enemies::Awake(pugi::xml_node& config)
+{
+	//COMPROBAR
+	for (pugi::xml_node it = config.child("fly"); it; it = it.next_sibling())
+	{
+		flyPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
+	}
+
+	return true;
+
+}
 bool j1Enemies::PreUpdate()
 {
 	// check camera position to decide what to spawn
@@ -121,6 +142,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 	{
 		if (queue[i].type == ENEMY_TYPES::NO_TYPE)
 		{
+			App->map->data.tile_height;
 			queue[i].type = type;
 			queue[i].x = x;
 			queue[i].y = y;

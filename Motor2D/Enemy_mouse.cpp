@@ -21,7 +21,7 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
 	base.PushBack({ 0,0,86,119 });
 	animation = &base;
-
+	
 	position.x = x;
 	position.y = y;
 
@@ -36,10 +36,10 @@ void Enemy_Mouse::Move()
 	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
 	
-	if(player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
-	{
+	//if(player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
+	//{
 		App->pathfinding->CreatePath(enemy_tiles_pos, player_tiles_pos, enemy_path);
-	}
+	//}
 
 	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
 		//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando

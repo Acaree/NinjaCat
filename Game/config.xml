@@ -31,4 +31,9 @@
   <scene>
     <map name ="level1ND.tmx"/> 
   </scene>
+  
+   <enemies>
+     <fly posx ="9" posy="7"/>
+     <fly posx ="12" posy="7"/>
+     </enemies>
 </config>
