@@ -39,7 +39,7 @@ void Enemy_Mouse::Move()
 	
 	//if(player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
 	//{
-		App->pathfinding->CreatePath(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 	//}
 
 	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
