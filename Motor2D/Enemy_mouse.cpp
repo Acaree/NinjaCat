@@ -15,12 +15,16 @@
 #include "Enemy_mouse.h"
 #include "Enemy.h"
 #include "j1Enemies.h"
+#include "j1Textures.h"
 Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 {
 	
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
-	base.PushBack({ 0,0,86,119 });
-	animation = &base;
+	//base.PushBack({ 0,0,86,119 });
+	walkLeftFly = App->tex->CreateAnimation("girl", "walkLeft", true);
+	walkRightFly = App->tex->CreateAnimation("girl", "walkRight", true);
+	deadFly = App->tex->CreateAnimation("girl", "dead", false);
+	animation = &walkLeftFly;
 	
 	position.x = x;
 	position.y = y;
@@ -49,10 +53,12 @@ void Enemy_Mouse::Move()
 
 		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += 1;
+			animation = &walkRightFly;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= 1;
+			animation = &walkLeftFly;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {

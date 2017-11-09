@@ -1,4 +1,5 @@
-<player>
+<animations>
+  <player>
   <idleRight>
     <frame x="0" y="227" width="57" height="109"/>
     <frame x="59" y="227" width="57" height="109"/>
@@ -97,6 +98,50 @@
 
   <speeds idleRight="0.1" idleLeft="0.1" walkRight="0.2" walkLeft="0.2" dead="0.2" glideRight="0.2" glideLeft="0.2" jumpRight="0.25" jumpLeft="0.25"/>
 </player>
+
+<girl>
+  <walkLeft>
+    <frame x="0" y="0" width="116" height="109"/>
+    <frame x="116" y="0" width="116" height="109"/>
+    <frame x="232" y="0" width="116" height="109"/>
+    <frame x="348" y="0" width="116" height="109"/>
+    <frame x="464" y="0" width="116" height="109"/>
+    <frame x="580" y="0" width="116" height="109"/>
+    <frame x="696" y="0" width="116" height="109"/>
+    <frame x="812" y="0" width="116" height="109"/>
+    <frame x="928" y="0" width="116" height="109"/>
+    <frame x="1044" y="0" width="116" height="109"/>
+   </walkLeft>
+  
+   <walkRight>
+    <frame x="0" y="109" width="116" height="109"/>
+    <frame x="116" y="109" width="116" height="109"/>
+    <frame x="232" y="109" width="116" height="109"/>
+    <frame x="348" y="109" width="116" height="109"/>
+    <frame x="464" y="109" width="116" height="109"/>
+    <frame x="580" y="109" width="116" height="109"/>
+    <frame x="696" y="109" width="116" height="109"/>
+    <frame x="812" y="109" width="116" height="109"/>
+    <frame x="928" y="109" width="116" height="109"/>
+    <frame x="1044" y="109" width="116" height="109"/>
+   </walkRight>
+  <dead>
+    <frame x="0" y="218" width="122" height="124"/>
+    <frame x="122" y="218" width="122" height="124"/>
+    <frame x="244" y="218" width="122" height="124"/>
+    <frame x="366" y="218" width="122" height="124"/>
+    <frame x="488" y="218" width="122" height="124"/>
+    <frame x="610" y="218" width="122" height="124"/>
+    <frame x="732" y="218" width="122" height="124"/>
+    <frame x="854" y="218" width="122" height="124"/>
+    <frame x="976" y="218" width="122" height="124"/>
+    <frame x="1098" y="218" width="122" height="124"/>
+   </dead>
+
+  <speeds walkRight="0.2" walkLeft ="0.2" dead="0.1"/>
+</girl>
+
+</animations>
 
 
 

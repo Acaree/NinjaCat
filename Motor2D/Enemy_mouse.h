@@ -9,8 +9,10 @@ enum Direction;
 class Enemy_Mouse : public Enemy
 {
 private:
-
-	Animation base;
+	
+	Animation walkLeftFly;
+	Animation walkRightFly;
+	Animation deadFly;
 	
 public:
 
@@ -20,6 +22,8 @@ public:
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 	bool movement[4] = { true,true,true,true };
+
+	
 };
 
 #endif

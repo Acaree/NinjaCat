@@ -27,7 +27,8 @@ j1Enemies::~j1Enemies()
 bool j1Enemies::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	sprites = App->tex->Load("maps/zombie.png");
+	sprites = App->tex->Load("maps/girl.png");
+
 	
 	//COMPROBAR
 	for (int it = 0; it < flyPositions.Count(); it++)
@@ -80,7 +81,7 @@ bool j1Enemies::Update(float dt)
 			enemies[i]->Move();
 		}
 	}
-
+	
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{

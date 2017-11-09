@@ -14,13 +14,13 @@
 ModulePlayer::ModulePlayer()
 {
 		
-	pugi::xml_document anim_file;
+/*	pugi::xml_document anim_file;
 	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
-	pugi::xml_node player_anim = anim_file.child("player");
+	pugi::xml_node player_anim = anim_file.child("player");*/
 	name.create("player");
 	//animations
 
-	//idleleft
+	/*//idleleft
 	pugi::xml_node idleLeft_node = player_anim.child("idleLeft").child("frame");
 	while (idleLeft_node != nullptr) {
 		idleLeft.PushBack({ idleLeft_node.attribute("x").as_int(),idleLeft_node.attribute("y").as_int(),idleLeft_node.attribute("width").as_int(),idleLeft_node.attribute("height").as_int() });
@@ -88,7 +88,7 @@ ModulePlayer::ModulePlayer()
 		jumpLeft.loop = player_anim.child("speeds").attribute("loop").as_bool();
 
 	currentAnimation = &idleRight;
-	lookingleft = false;
+	lookingleft = false;*/
 	
 	
 }
@@ -126,7 +126,7 @@ bool ModulePlayer::Start()
 	jumpLeft = App->tex->CreateAnimation("player", "jumpLeft", false);
 	
 	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
-
+	currentAnimation = &idleRight;
 	return true;
 }
 

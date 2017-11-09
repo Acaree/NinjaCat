@@ -50,6 +50,7 @@ private:
 	p2DynArray<iPoint> flyPositions;
 public:
 	float damage;
+
 	
 };
 
