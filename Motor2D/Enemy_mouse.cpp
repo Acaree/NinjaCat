@@ -66,16 +66,12 @@ void Enemy_Mouse::Move()
 		else {
 			current_in_path = false;
 		}
-		
-		if (enemy_path[i].x == player_tiles_pos.x && enemy_path[i].y == player_tiles_pos.y)
-		{
-			i = 0;
-		}
-		
-		if (current_in_path==false)
-		i++;
 
-		
+		if (current_in_path == false)
+			i++;
+	}
+	else  {
+		i = 0;
 	}
 
 }
