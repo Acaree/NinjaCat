@@ -38,6 +38,8 @@ public:
 	Animation glideLeft;
 	Animation jumpRight;
 	Animation jumpLeft;
+	Animation hitRight;
+	Animation hitLeft;
 
 	uint jumpsound;
 	uint glidesound;
@@ -66,7 +68,9 @@ public:
 	bool movement[4] = { true,true,true,true };
 	bool changeLevel =false;
 	bool loadRespawn = false;
+
 	int now = 0;
+	
 };
 
 #endif

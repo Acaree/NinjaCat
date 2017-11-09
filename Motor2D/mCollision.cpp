@@ -257,7 +257,6 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				//check all positions 
 				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER)
 				{
-					
 					if (now == 0) {
 						now = SDL_GetTicks();
 
@@ -283,6 +282,14 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						}
 						movement[down] = false;
 					}
+				}
+				else if (player->type == COLLIDER_ENEMY)
+				{
+					iPoint playerTile = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+					iPoint enemyTile = App->map->WorldToMap(playerRect.x, playerRect.y);
+
+					//if(enem)
+
 				}
 			case nextLevel:
 

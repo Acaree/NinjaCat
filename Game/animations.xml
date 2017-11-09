@@ -95,8 +95,24 @@
     <frame x="91" y="699" width="82" height="102"/>
     <frame x="2" y="699" width="82" height="102"/>
   </jumpLeft>
+    
+    <hitRight>
+      <frame x="0" y="926" width="123" height="107"/>
+      <frame x="123" y="926" width="123" height="107"/>
+      <frame x="246" y="926" width="123" height="107"/>
+      <frame x="369" y="926" width="123" height="107"/>
+      <frame x="492" y="926" width="123" height="107"/>
+    </hitRight>
 
-  <speeds idleRight="0.1" idleLeft="0.1" walkRight="0.2" walkLeft="0.2" dead="0.2" glideRight="0.2" glideLeft="0.2" jumpRight="0.25" jumpLeft="0.25"/>
+    <hitLeft>
+      <frame x="0" y="1033" width="123" height="107"/>
+      <frame x="123" y="1033" width="123" height="107"/>
+      <frame x="246" y="1033" width="123" height="107"/>
+      <frame x="369" y="1033" width="123" height="107"/>
+      <frame x="492" y="1033" width="123" height="107"/>
+    </hitLeft>
+
+  <speeds idleRight="0.1" idleLeft="0.1" walkRight="0.2" walkLeft="0.2" dead="0.2" glideRight="0.2" glideLeft="0.2" jumpRight="0.25" jumpLeft="0.25" hitRight ="0.1" higtLeft="0.1"/>
 </player>
 
 <girl>

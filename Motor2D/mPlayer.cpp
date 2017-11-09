@@ -46,6 +46,8 @@ bool ModulePlayer::Start()
 	glideLeft = App->tex->CreateAnimation("player", "glideLeft", true);
 	jumpRight = App->tex->CreateAnimation("player", "jumpRight", false);
 	jumpLeft = App->tex->CreateAnimation("player", "jumpLeft", false);
+	hitLeft = App->tex->CreateAnimation("player", "hitLeft", false);
+	hitRight = App->tex->CreateAnimation("player", "hitRight", false);
 	
 	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
 	currentAnimation = &idleRight;
@@ -73,6 +75,28 @@ bool ModulePlayer::Update(float dt)
 	
 	int speed = 10;
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		if (currentAnimation == &idleLeft || currentAnimation == &walkLeft)
+		{
+				now = SDL_GetTicks();
+
+			if (now + 800 > SDL_GetTicks()) {
+				currentAnimation = &hitLeft;
+			}
+			
+		}
+		else if (currentAnimation == &idleRight || currentAnimation == &walkRight)
+		{
+				now = SDL_GetTicks();
+
+			if (now + 800 > SDL_GetTicks()) {
+				currentAnimation = &hitRight;
+			}
+			
+		}
+		now = 0;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		changeLevel = true;
 	}
