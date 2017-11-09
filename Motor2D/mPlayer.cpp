@@ -13,84 +13,7 @@
 
 ModulePlayer::ModulePlayer()
 {
-		
-/*	pugi::xml_document anim_file;
-	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
-	pugi::xml_node player_anim = anim_file.child("player");*/
 	name.create("player");
-	//animations
-
-	/*//idleleft
-	pugi::xml_node idleLeft_node = player_anim.child("idleLeft").child("frame");
-	while (idleLeft_node != nullptr) {
-		idleLeft.PushBack({ idleLeft_node.attribute("x").as_int(),idleLeft_node.attribute("y").as_int(),idleLeft_node.attribute("width").as_int(),idleLeft_node.attribute("height").as_int() });
-		idleLeft_node = idleLeft_node.next_sibling();
-	}
-	idleLeft.speed= player_anim.child("speeds").attribute("idle").as_float();
-
-	//walk right
-	pugi::xml_node walkRight_node = player_anim.child("walkRight").child("frame");
-	while (walkRight_node != nullptr) {
-		walkRight.PushBack({ walkRight_node.attribute("x").as_int(),walkRight_node.attribute("y").as_int(),walkRight_node.attribute("width").as_int(),walkRight_node.attribute("height").as_int() });
-		walkRight_node = walkRight_node.next_sibling();
-	}
-	walkRight.speed= player_anim.child("speeds").attribute("walk").as_float();
-
-	//walk left
-	pugi::xml_node walkLeft_node = player_anim.child("walkLeft").child("frame");
-	while (walkLeft_node != nullptr) {
-		walkLeft.PushBack({ walkLeft_node.attribute("x").as_int(),walkLeft_node.attribute("y").as_int(),walkLeft_node.attribute("width").as_int(),walkLeft_node.attribute("height").as_int() });
-		walkLeft_node = walkLeft_node.next_sibling();
-	}
-	walkLeft.speed= player_anim.child("speeds").attribute("walk").as_float();
-
-	//dead
-	pugi::xml_node dead_node = player_anim.child("dead").child("frame");
-	while (dead_node != nullptr) {
-		dead.PushBack({ dead_node.attribute("x").as_int(),dead_node.attribute("y").as_int(),dead_node.attribute("width").as_int(),dead_node.attribute("height").as_int() });
-		dead_node = dead_node.next_sibling();
-	}
-	dead.speed = player_anim.child("speeds").attribute("dead").as_float();
-	dead.loop = player_anim.child("speeds").attribute("loop").as_bool();
-
-	//glide right
-	pugi::xml_node glideRight_node = player_anim.child("glideRight").child("frame");
-	while (glideRight_node != nullptr) {
-		glideRight.PushBack({ glideRight_node.attribute("x").as_int(),glideRight_node.attribute("y").as_int(),glideRight_node.attribute("width").as_int(),glideRight_node.attribute("height").as_int() });
-		glideRight_node = glideRight_node.next_sibling();
-	}
-	glideRight.speed = player_anim.child("speeds").attribute("glide").as_float();
-
-	//glide left
-	pugi::xml_node glideLeft_node = player_anim.child("glideLeft").child("frame");
-	while (glideLeft_node != nullptr) {
-		glideLeft.PushBack({ glideLeft_node.attribute("x").as_int(),glideLeft_node.attribute("y").as_int(),glideLeft_node.attribute("width").as_int(),glideLeft_node.attribute("height").as_int() });
-		glideLeft_node = glideLeft_node.next_sibling();
-	}
-	glideLeft.speed = player_anim.child("speeds").attribute("glide").as_float();
-
-	//jump right
-	pugi::xml_node jumpRight_node = player_anim.child("jumpRight").child("frame");
-	while (jumpRight_node != nullptr) {
-		jumpRight.PushBack({ jumpRight_node.attribute("x").as_int(),jumpRight_node.attribute("y").as_int(),jumpRight_node.attribute("width").as_int(),jumpRight_node.attribute("height").as_int() });
-		jumpRight_node = jumpRight_node.next_sibling();
-	}
-		jumpRight.speed = player_anim.child("speeds").attribute("jump").as_float();
-		jumpRight.loop = player_anim.child("speed").attribute("loop").as_bool();
-
-	//jump left
-	pugi::xml_node jumpLeft_node = player_anim.child("jumpLeft").child("frame");
-	while (jumpLeft_node != nullptr) {
-		jumpLeft.PushBack({ jumpLeft_node.attribute("x").as_int(),jumpLeft_node.attribute("y").as_int(),jumpLeft_node.attribute("width").as_int(),jumpLeft_node.attribute("height").as_int() });
-		jumpLeft_node = jumpLeft_node.next_sibling();
-	}
-		jumpLeft.speed = player_anim.child("speeds").attribute("jump").as_float();
-		jumpLeft.loop = player_anim.child("speeds").attribute("loop").as_bool();
-
-	currentAnimation = &idleRight;
-	lookingleft = false;*/
-	
-	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -99,7 +22,6 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Awake(pugi::xml_node& config)
 {
-	
 	needRespawn1 = config.child("level1").attribute("needRespawn").as_bool();
 	respawnTile1.x = config.child("level1").attribute("respawnX").as_int();
 	respawnTile1.y = config.child("level1").attribute("respawnY").as_int();
@@ -144,8 +66,11 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
-	App->collision->CollisionToWorld(colliderPlayer->rect, movement);
+	App->collision->CollisionToWorld(colliderPlayer, movement);
+	
 
+	
+	
 	int speed = 10;
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {

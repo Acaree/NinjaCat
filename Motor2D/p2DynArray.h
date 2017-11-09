@@ -7,7 +7,7 @@
 
 #include "p2Defs.h"
 
-#define DYN_ARRAY_BLOCK_SIZE 32
+#define DYN_ARRAY_BLOCK_SIZE 64
 
 template<class VALUE>
 class p2DynArray

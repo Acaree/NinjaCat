@@ -170,9 +170,9 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.h + rect.y > r.y);
 }
 
-void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
+void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 {
-
+	SDL_Rect playerRect = player->rect;
 	// number of gid, layer collision
 	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
 	MapLayer* layerCollision;
@@ -255,7 +255,7 @@ void ModuleCollision::CollisionToWorld(SDL_Rect& playerRect, bool* movement)
 
 			case death:
 				//check all positions 
-				if (leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead)
+				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER)
 				{
 					
 					if (now == 0) {

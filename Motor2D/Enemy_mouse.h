@@ -22,7 +22,7 @@ public:
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 	bool movement[4] = { true,true,true,true };
-
+	int now = 0;
 	
 };
 
