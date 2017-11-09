@@ -26,6 +26,7 @@ public:
 	// Main function to request a path from A to B
 	int CreatePath(const iPoint& origin, const iPoint& destination, p2DynArray<iPoint> &path);
 
+	int CreatePathManhattan(const iPoint& origin, const iPoint& destination, p2DynArray<iPoint> &path);
 	// To request all tiles involved in the last generated path
 	const p2DynArray<iPoint>* GetLastPath() const;
 
@@ -68,7 +69,7 @@ struct PathNode
 	int Score() const;
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
-
+	int CalculateFManhattan(const iPoint& destination);
 	// -----------
 	int g;
 	int h;

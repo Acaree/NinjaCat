@@ -161,6 +161,13 @@ int PathNode::CalculateF(const iPoint& destination)
 
 	return g + h;
 }
+int PathNode::CalculateFManhattan(const iPoint& destination)
+{
+	g = parent->g + 1;
+	h = pos.DistanceManhattan(destination);
+
+	return g + h;
+}
 
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
@@ -215,6 +222,68 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination,  
 			if (close.Find(nodeIterator->data.pos) == NULL)
 			{
 				nodeIterator->data.CalculateF(destination);
+
+				if (p2List_item<PathNode>* equalNode = open.Find(nodeIterator->data.pos))
+				{
+					if (equalNode->data.g > nodeIterator->data.g)
+					{
+						equalNode->data.parent = nodeIterator->data.parent;
+					}
+
+				}
+				else
+				{
+					open.list.add(nodeIterator->data);
+				}
+			}
+
+		}
+	}
+	return 0;
+}
+
+int j1PathFinding::CreatePathManhattan(const iPoint& origin, const iPoint& destination, p2DynArray<iPoint> &path)
+{
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+		return -1;
+
+	PathList open;
+	PathList close;
+	p2List_item<PathNode>* current = nullptr;
+	open.list.add({ 0, 0, origin, nullptr });
+
+	while (open.list.count() != 0)
+	{
+		current = open.GetNodeLowestScore();
+		// TODO 3: Move the lowest score cell from open list to the closed list
+		close.list.add(current->data);
+		open.list.del(open.GetNodeLowestScore());
+		// TODO 4: If we just added the destination, we are done!
+		// Backtrack to create the final path
+		// Use the Pathnode::parent and Flip() the path when you are finish
+		if (close.list.end->data.pos == destination)
+		{
+			path.Clear();
+			PathNode iterator = current->data;
+			while (iterator.parent != nullptr)
+			{
+				path.PushBack(iterator.pos);
+				iterator = *iterator.parent;
+			}
+			path.PushBack(origin);
+			path.Flip();
+			break;
+
+		}
+		// TODO 5: Fill a list of all adjancent nodes
+		PathList adjacents;
+		close.list.end->data.FindWalkableAdjacents(adjacents);
+	
+		for (p2List_item<PathNode>* nodeIterator = adjacents.list.start; nodeIterator != nullptr; nodeIterator = nodeIterator->next)
+		{
+			if (close.Find(nodeIterator->data.pos) == NULL)
+			{
+				nodeIterator->data.CalculateFManhattan(destination);
 
 				if (p2List_item<PathNode>* equalNode = open.Find(nodeIterator->data.pos))
 				{
