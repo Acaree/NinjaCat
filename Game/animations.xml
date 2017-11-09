@@ -95,7 +95,7 @@
     <frame x="2" y="699" width="82" height="102"/>
   </jumpLeft>
 
-  <speeds idle="0.1" walk="0.2" dead="0.2" glide="0.2" jump="0.1" loop="false"/>
+  <speeds idleRight="0.1" idleLeft="0.1" walkRight="0.2" walkLeft="0.2" dead="0.2" glideRight="0.2" glideLeft="0.2" jumpRight="0.25" jumpLeft="0.25"/>
 </player>
 
 

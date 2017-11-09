@@ -13,25 +13,13 @@
 
 ModulePlayer::ModulePlayer()
 {
-
+		
 	pugi::xml_document anim_file;
 	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
-
-	if (result == NULL)
-		LOG("Could not load animations xml file animation.xml. pugi error: %s", result.description());
-		
 	pugi::xml_node player_anim = anim_file.child("player");
 	name.create("player");
 	//animations
 
-	//idle right
-	pugi::xml_node idleRight_node = player_anim.child("idleRight").child("frame");
-	while (idleRight_node != nullptr) {
-		idleRight.PushBack({ idleRight_node.attribute("x").as_int(),idleRight_node.attribute("y").as_int(),idleRight_node.attribute("width").as_int(),idleRight_node.attribute("height").as_int() });
-		idleRight_node = idleRight_node.next_sibling();
-	}
-	 idleRight.speed = player_anim.child("speeds").attribute("idle").as_float();
-	
 	//idleleft
 	pugi::xml_node idleLeft_node = player_anim.child("idleLeft").child("frame");
 	while (idleLeft_node != nullptr) {
@@ -126,6 +114,16 @@ bool ModulePlayer::Start()
 	graphics = App->tex->Load("maps/spriteSheet.png");
 	jumpsound=App->audio->LoadFx("audio/jump_fx.wav");
 	glidesound = App->audio->LoadFx("audio/glide.wav");
+
+	idleRight= App->tex->CreateAnimation("player", "idleRight", true);
+	idleLeft = App->tex->CreateAnimation("player", "idleLeft", true);
+	walkRight = App->tex->CreateAnimation("player", "walkRight", true);
+	walkLeft = App->tex->CreateAnimation("player", "walkLeft", true);
+	dead = App->tex->CreateAnimation("player", "dead", false);
+	glideRight = App->tex->CreateAnimation("player", "glideRight", true);
+	glideLeft = App->tex->CreateAnimation("player", "glideLeft", true);
+	jumpRight = App->tex->CreateAnimation("player", "jumpRight", false);
+	jumpLeft = App->tex->CreateAnimation("player", "jumpLeft", false);
 	
 	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
 

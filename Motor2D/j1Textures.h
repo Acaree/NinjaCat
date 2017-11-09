@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "animation.h"
 
 struct SDL_Texture;
 struct SDL_Surface;
@@ -30,10 +31,14 @@ public:
 	bool				UnLoad(SDL_Texture* texture);
 	SDL_Texture* const	LoadSurface(SDL_Surface* surface);
 	void				GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
+	
+	
 
 public:
 
 	p2List<SDL_Texture*>	textures;
+
+	Animation			CreateAnimation(char* anim_type, char* anim, bool loop);
 };
 
 
