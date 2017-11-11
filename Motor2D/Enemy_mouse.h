@@ -15,6 +15,7 @@ private:
 	Animation deadFly;
 	
 public:
+	iPoint originalpos;
 
 	Enemy_Mouse(int x, int y);
 	void Move();

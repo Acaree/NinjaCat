@@ -26,9 +26,8 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 	deadFly = App->tex->CreateAnimation("girl", "dead", false);
 	animation = &walkLeftFly;
 	
-	position.x = x;
-	position.y = y;
-
+	originalpos.x = position.x = x;
+	originalpos.y = position.y = y;
 	
 	collider = App->collision->AddCollider({ position.x, position.y,86,119 }, COLLIDER_ENEMY, App->enemies );
 }
@@ -52,8 +51,29 @@ void Enemy_Mouse::Move()
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
+	if (player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
+	{
+		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+	}
+	else
+	{
+		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
+		if (position.x == originalpos.x)
+		{
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+		}
+		else if (movement[left] == false)
+		{
+			iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
+
+			if (originalpos.x == position.x)
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+		}
+	}
+
 	
-	App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 	
 	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
 		//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando

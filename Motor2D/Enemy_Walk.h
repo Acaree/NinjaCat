@@ -17,6 +17,7 @@ private:
 	Animation dead;
 
 public:
+	iPoint originalpos;
 
 	Enemy_Walk(int x, int y);
 	void Move();
