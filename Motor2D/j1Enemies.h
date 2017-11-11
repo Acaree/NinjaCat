@@ -10,7 +10,7 @@ enum ENEMY_TYPES
 {
 	NO_TYPE,
 	ENEMY_MOUSE,
-	
+	ENEMY_WALK,
 };
 
 class Enemy;
@@ -47,7 +47,9 @@ private:
 	EnemyInfo queue[MAX_ENEMIES];
 	Enemy* enemies[MAX_ENEMIES];
 	SDL_Texture* sprites;
+	
 	p2DynArray<iPoint> flyPositions;
+	p2DynArray<iPoint> walkPositions;
 public:
 	float damage;
 

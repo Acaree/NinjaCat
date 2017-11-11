@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Enemy_Mouse.h"
 #include "j1Map.h"
+#include "Enemy_Walk.h"
 
 #define SPAWN_MARGIN 140
 
@@ -27,7 +28,7 @@ j1Enemies::~j1Enemies()
 bool j1Enemies::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	sprites = App->tex->Load("maps/girl.png");
+	sprites = App->tex->Load("maps/enemySprites.png");
 
 	
 	//COMPROBAR
@@ -36,7 +37,13 @@ bool j1Enemies::Start()
 		iPoint p = App->map->MapToWorld(flyPositions[it].x, flyPositions[it].y);
 		AddEnemy(ENEMY_MOUSE, p.x, p.y);
 	}
+	for (int it = 0; it < walkPositions.Count(); it++)
+	{
+		iPoint p = App->map->MapToWorld(walkPositions[it].x, walkPositions[it].y);
+		AddEnemy(ENEMY_WALK, p.x, p.y);
+	}
 	flyPositions.Clear();
+	walkPositions.Clear();
 	//audio_explosion = App->audio->LoadFx("Audio/explosion.wav");
 	return true;
 }
@@ -48,7 +55,10 @@ bool j1Enemies::Awake(pugi::xml_node& config)
 	{
 		flyPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
 	}
-
+	for (pugi::xml_node it = config.child("zombie"); it; it = it.next_sibling())
+	{
+		walkPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
+	}
 	return true;
 
 }
@@ -172,6 +182,9 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info)
 
 		case ENEMY_TYPES::ENEMY_MOUSE:
 			enemies[i] = new Enemy_Mouse(info.x, info.y);
+			break;
+		case ENEMY_TYPES::ENEMY_WALK:
+			enemies[i] = new Enemy_Walk(info.x, info.y);
 			break;
 		}
 

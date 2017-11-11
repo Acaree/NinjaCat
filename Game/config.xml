@@ -33,7 +33,7 @@
   </scene>
   
    <enemies>
-     <fly posx ="9" posy="7"/>
-     <fly posx ="12" posy="7"/>
+    
+     <zombie posx="8" posy ="7"/>
      </enemies>
 </config>

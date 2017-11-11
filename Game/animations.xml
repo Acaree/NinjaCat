@@ -156,7 +156,37 @@
 
   <speeds walkRight="0.2" walkLeft ="0.2" dead="0.1"/>
 </girl>
+  
+<zombie>
+  <walkLeft>
+    <frame x="0" y="436" width="86" height="119"/>
+    <frame x="86" y="436" width="86" height="119"/>
+    <frame x="172" y="436" width="86" height="119"/>
+    <frame x="258" y="436" width="86" height="119"/>
+    <frame x="344" y="436" width="86" height="119"/>
+    <frame x="430" y="436" width="86" height="119"/>
+    <frame x="516" y="436" width="86" height="119"/>
+    <frame x="602" y="436" width="86" height="119"/>
+    <frame x="688" y="436" width="86" height="119"/>
+    <frame x="774" y="436" width="86" height="119"/>
+    </walkLeft>
+    
+   <walkRight>
+    <frame x="0" y="555" width="86" height="119"/>
+    <frame x="86" y="555" width="86" height="119"/>
+    <frame x="172" y="555" width="86" height="119"/>
+    <frame x="258" y="555" width="86" height="119"/>
+    <frame x="344" y="555" width="86" height="119"/>
+    <frame x="430" y="555" width="86" height="119"/>
+    <frame x="516" y="555" width="86" height="119"/>
+    <frame x="602" y="555" width="86" height="119"/>
+    <frame x="688" y="555" width="86" height="119"/>
+    <frame x="774" y="555" width="86" height="119"/>
+   </walkRight>
+  
+  <speeds walkRight="0.2" walkLeft ="0.2" dead="0.1"/>
 
+  </zombie>
 </animations>
 
 

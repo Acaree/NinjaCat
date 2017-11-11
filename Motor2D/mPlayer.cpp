@@ -225,8 +225,12 @@ bool ModulePlayer::Update(float dt)
 		if (currentAnimation != &dead) {
 			dead.Reset();
 		}
-
-
+		if (currentAnimation != &hitLeft) {
+			hitLeft.Reset();
+		}
+		if (currentAnimation != &hitRight) {
+			hitRight.Reset();
+		}
 	return true;
 }
 

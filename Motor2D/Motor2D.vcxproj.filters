@@ -52,6 +52,9 @@
     <ClCompile Include="Enemy_mouse.cpp">
       <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_Walk.cpp">
+      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -124,6 +127,9 @@
       <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_mouse.h">
+      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Walk.h">
       <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
