@@ -30,7 +30,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 	position.y = y;
 
 
-	collider = App->collision->AddCollider({ position.x, position.y,86,119 }, COLLIDER_ENEMY, App->enemies);
+	collider = App->collision->AddCollider({ position.x, position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
 }
 
 void Enemy_Walk::Move()

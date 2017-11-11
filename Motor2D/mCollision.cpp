@@ -91,6 +91,8 @@ void ModuleCollision::DebugDraw()
 		case COLLIDER_ENEMY:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
+		case COLLIDER_WALKENEMY:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 		}
 
 	}
@@ -207,7 +209,13 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				{
 					movement[right] = true;
 				}
-
+				if (player->type == COLLIDER_WALKENEMY)
+				{
+					if (leftDownPlayer == 0)
+					{
+						movement[right] = false;
+					}
+				}
 				break;
 
 			case left:
@@ -224,7 +232,14 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				{
 					movement[left] = true;
 				}
-
+				if (player->type == COLLIDER_WALKENEMY)
+				{
+					if (leftDownPlayer == 0)
+					{
+						movement[left] = false;
+					}
+				}
+				
 				break;
 
 
