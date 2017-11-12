@@ -117,9 +117,9 @@ bool j1Scene::Update(float dt)
 	
 	mouseTile =App->map->WorldToMap(mouseCoordenates.x, mouseCoordenates.y);
 
-	p2SString title("%i %i    %i %i", mouseCoordenates.x, mouseCoordenates.y, mouseTile.x , mouseTile.y );
+	//p2SString title("%i %i    %i %i", mouseCoordenates.x, mouseCoordenates.y, mouseTile.x , mouseTile.y );
 	
-	App->win->SetTitle(title.GetString());
+	//App->win->SetTitle(title.GetString());
 	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN){
 		//guarrada
 		int x;
