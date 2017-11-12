@@ -44,7 +44,7 @@ public:
 	uint jumpsound;
 	uint glidesound;
 
-	iPoint position;
+	fPoint position;
 	iPoint respawnTile1;
 	iPoint respawnTile2;
 	Collider* colliderPlayer;

@@ -18,7 +18,7 @@ public:
 	iPoint originalpos;
 
 	Enemy_Mouse(int x, int y);
-	void Move();
+	void Move(float dt);
 	int i = 0;
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;

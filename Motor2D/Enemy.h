@@ -18,7 +18,7 @@ protected:
 
 
 public:
-	iPoint position;
+	fPoint position;
 
 	float hitpoints;
 	bool death = false;
@@ -32,7 +32,7 @@ public:
 
 	const Collider* GetCollider() const;
 
-	virtual void Move() {};
+	virtual void Move(float dt) {};
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);
 };

@@ -30,11 +30,13 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 	originalpos.y=position.y = y;
 	
 
-	collider = App->collision->AddCollider({ position.x, position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
+	collider = App->collision->AddCollider({(int)position.x, (int)position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
 }
 
-void Enemy_Walk::Move()
+void Enemy_Walk::Move(float dt)
 {
+	float speed = 30 * dt;
+
 	App->collision->CollisionToWorld(collider, movement);
 	if(movement[down] == true)
 		CalculateGravity();
@@ -81,21 +83,21 @@ void Enemy_Walk::Move()
 		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
 		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
-			position.x += 1;
+			position.x += speed;
 			animation = &walkRight;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
-			position.x -= 1;
+			position.x -= speed;
 			animation = &walkLeft;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
-			position.y += 1;
+			position.y += speed;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
-			position.y -= 1;
+			position.y -= speed;
 			current_in_path = true;
 		}
 		else {

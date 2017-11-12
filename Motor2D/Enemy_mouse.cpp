@@ -29,10 +29,10 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 	
-	collider = App->collision->AddCollider({ position.x, position.y,86,119 }, COLLIDER_ENEMY, App->enemies );
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->enemies );
 }
 
-void Enemy_Mouse::Move()
+void Enemy_Mouse::Move(float dt)
 {
 	App->collision->CollisionToWorld(collider, movement);
 

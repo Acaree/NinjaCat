@@ -49,7 +49,7 @@ bool ModulePlayer::Start()
 	hitLeft = App->tex->CreateAnimation("player", "hitLeft", false);
 	hitRight = App->tex->CreateAnimation("player", "hitRight", false);
 	
-	colliderPlayer = App->collision->AddCollider({ position.x,position.y,80,110 }, COLLIDER_PLAYER, this);
+	colliderPlayer = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, this);
 	currentAnimation = &idleRight;
 	return true;
 }
@@ -70,7 +70,7 @@ bool ModulePlayer::Update(float dt)
 {
 	App->collision->CollisionToWorld(colliderPlayer, movement);
 		
-	int speed = 10;
+	float speed = 300 * dt;
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
