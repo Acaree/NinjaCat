@@ -114,15 +114,22 @@ bool ModulePlayer::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP && movement[down] == false) {
-			currentAnimation = &idleRight;
-			lookingleft = false;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		{
+			lookingleft = true;
 		}
 
 
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && movement[down] == true && gliding == false) {
-			currentAnimation = &jumpRight;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		{
 			lookingleft = false;
+		}
+
+		if (movement[down] == true && gliding == false) {
+			if (lookingleft)
+				currentAnimation = &jumpLeft;
+			else
+				currentAnimation = &jumpRight;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -130,7 +137,6 @@ bool ModulePlayer::Update(float dt)
 
 			if (movement[down] == false) {
 				currentAnimation = &walkRight;
-				lookingleft = false;
 			}
 			if (movement[right] == true)
 			{
@@ -138,23 +144,13 @@ bool ModulePlayer::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP && movement[down] == false)
-		{
-			currentAnimation = &idleLeft;
-			lookingleft = true;
-		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && movement[down] == true && gliding == false) {
-			currentAnimation = &jumpLeft;
-			lookingleft = true;
-		}
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 
 			if (movement[down] == false) {
 				currentAnimation = &walkLeft;
-				lookingleft = true;
 			}
 			if (movement[left] == true)
 			{
@@ -177,7 +173,6 @@ bool ModulePlayer::Update(float dt)
 						App->audio->PlayFx(glidesound, 1);
 						gliding = true;
 					}
-					lookingleft = true;
 				}
 				if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
 					currentAnimation = &glideRight;
@@ -185,7 +180,6 @@ bool ModulePlayer::Update(float dt)
 						App->audio->PlayFx(glidesound, 1);
 						gliding = true;
 					}
-					lookingleft = false;
 				}
 			}
 		}
@@ -199,14 +193,13 @@ bool ModulePlayer::Update(float dt)
 			jumping = true;
 			speed_jump = original_speed_jump;
 			position.y += speed_jump;
+			App->audio->PlayFx(jumpsound);
 
 			if (lookingleft == true) {
-				App->audio->PlayFx(jumpsound);
 				currentAnimation = &jumpLeft;
 			}
 
 			else {
-				App->audio->PlayFx(jumpsound);
 				currentAnimation = &jumpRight;
 			}
 		}
