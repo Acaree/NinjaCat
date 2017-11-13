@@ -2,6 +2,7 @@
 #define __ModulePlayer_H__
 
 #include "j1Module.h"
+#include "mCollision.h"
 #include "Animation.h"
 #include "p2Point.h"
 
@@ -56,6 +57,7 @@ public:
 	bool gliding = false;
 
 	bool lookingleft;
+	bool attacking;
 
 	bool movingleft;
 	bool movingright;
@@ -70,6 +72,7 @@ public:
 	bool loadRespawn = false;
 
 	int started_attack = 0;
+	Collider* attack_collider;
 	
 };
 

@@ -93,6 +93,9 @@ void ModuleCollision::DebugDraw()
 			break;
 		case COLLIDER_WALKENEMY:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+
+		case COLLIDER_ATTACK:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 		}
 
 	}
@@ -160,6 +163,25 @@ Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Modu
 	}
 
 	return ret;
+}
+
+bool ModuleCollision::EraseCollider(Collider* collider)
+{
+	if (collider != nullptr)
+	{
+		// we still search for it in case we received a dangling pointer
+		for (uint i = 0; i < MAX_COLLIDERS; ++i)
+		{
+			if (colliders[i] == collider)
+			{
+				collider->to_delete = true;
+				break;
+			}
+		}
+	}
+
+
+	return false;
 }
 
 // -----------------------------------------------------

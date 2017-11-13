@@ -72,24 +72,7 @@ bool ModulePlayer::Update(float dt)
 		
 	float speed = 300 * dt;
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		if (lookingleft) {
-			currentAnimation = &hitLeft;
-			started_attack = SDL_GetTicks();
-		}
-		else {
-			currentAnimation = &hitRight;
-			started_attack = SDL_GetTicks();
-		}
-	}
-
-	if (started_attack + 500 < SDL_GetTicks()) {
-		if (lookingleft)
-			currentAnimation = &idleLeft;
-		else
-			currentAnimation = &idleRight;
-	}
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		changeLevel = true;
@@ -99,20 +82,48 @@ bool ModulePlayer::Update(float dt)
 		Respawn();
 	}
 	
-	if (currentAnimation != &dead && currentAnimation != &hitLeft && currentAnimation != &hitRight) {
+	if (currentAnimation != &dead) {
 
+
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && started_attack == 0)
+		{
+			if (lookingleft) {
+				currentAnimation = &hitLeft;
+				started_attack = SDL_GetTicks();
+				attacking = true;
+			}
+			else {
+				currentAnimation = &hitRight;
+				started_attack = SDL_GetTicks();
+				attacking = true;
+			}
+
+			SDL_Rect attack = { position.x + 15, position.y + 15,50,50 };
+			attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
+		}
+
+		if (started_attack + 500 < SDL_GetTicks()) {
+			if (lookingleft)
+				currentAnimation = &idleLeft;
+			else
+				currentAnimation = &idleRight;
+			App->collision->EraseCollider(attack_collider);
+			started_attack = 0;
+			attacking = false;
+		}
 
 		if (movement[down] == true) {
 			CalculateGravity();
 		}
-		else {
+		
+		if (attacking == false) {
 			if (lookingleft == true) {
 				currentAnimation = &idleLeft;
 			}
 			else {
 				currentAnimation = &idleRight;
 			}
-		}
+
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		{
@@ -188,7 +199,7 @@ bool ModulePlayer::Update(float dt)
 			gliding = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down]==false)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false)
 		{
 			jumping = true;
 			speed_jump = original_speed_jump;
@@ -201,6 +212,7 @@ bool ModulePlayer::Update(float dt)
 
 			else {
 				currentAnimation = &jumpRight;
+				}
 			}
 		}
 	}

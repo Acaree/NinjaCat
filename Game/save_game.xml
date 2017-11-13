@@ -8,11 +8,11 @@
 	<scene />
 	<pathfinding />
 	<player>
-		<player x="256" y="1044" level1="true" />
+		<player x="368" y="1044" level1="true" />
 	</player>
-	<:anonymous />
+	<enemies />
 	<:anonymous />
 	<renderer>
-		<camera x="-56" y="-744" />
+		<camera x="-168" y="-744" />
 	</renderer>
 </game_state>

@@ -16,6 +16,7 @@ enum COLLIDER_TYPE
 	COLLIDER_ENEMY_SHOT,
 	COLLIDER_TOWER,
 	COLLIDER_WALKENEMY,
+	COLLIDER_ATTACK,
 	COLLIDER_MAX
 };
 
@@ -54,6 +55,7 @@ public:
 	bool CleanUp();
 	void CollisionToWorld(Collider* playerRect, bool* movement);
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 
 private:
