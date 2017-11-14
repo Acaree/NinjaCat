@@ -91,15 +91,18 @@ bool ModulePlayer::Update(float dt)
 				currentAnimation = &hitLeft;
 				started_attack = SDL_GetTicks();
 				attacking = true;
+				SDL_Rect attack = { position.x - 20, position.y,20,90 };
+				attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
 			}
 			else {
 				currentAnimation = &hitRight;
 				started_attack = SDL_GetTicks();
 				attacking = true;
+				SDL_Rect attack = { position.x + 75, position.y,20,90 };
+				attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
 			}
 
-			SDL_Rect attack = { position.x + 15, position.y + 15,50,50 };
-			attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
+		
 		}
 
 		if (started_attack + 500 < SDL_GetTicks()) {

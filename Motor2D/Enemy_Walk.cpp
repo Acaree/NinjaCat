@@ -55,6 +55,7 @@ void Enemy_Walk::Move(float dt)
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
+	/*
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
 	{
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
@@ -62,6 +63,7 @@ void Enemy_Walk::Move(float dt)
 	}
 	else
 	{
+
 		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
 		if (position.x == originalpos.x)
 		{
@@ -75,11 +77,13 @@ void Enemy_Walk::Move(float dt)
 			if(originalpos.x == position.x)
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 		}
+		
 	}
+	*/
 
-	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
-								  //No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
-								  // el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
+	App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+
+	if (i < enemy_path.Count()) { 
 		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
 		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
