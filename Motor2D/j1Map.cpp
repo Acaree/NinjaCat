@@ -515,6 +515,14 @@ void j1Map::CreateEnemies() {
 
 				}
 
+				if (tileID == 146)
+				{
+					iPoint position = App->map->MapToWorld(x, y);
+
+					App->enemies->AddEnemy(ENEMY_WALK, position.x, position.y);
+
+				}
+
 			}
 		}
 

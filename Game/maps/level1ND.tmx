@@ -1453,7 +1453,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="map" width="90" height="16" visible="0">
+ <layer name="map" width="90" height="16">
   <data>
    <tile gid="118"/>
    <tile gid="0"/>
@@ -2897,7 +2897,7 @@
    <tile gid="118"/>
   </data>
  </layer>
- <layer name="colliders" width="90" height="16" visible="0">
+ <layer name="colliders" width="90" height="16">
   <properties>
    <property name="colliders" type="int" value="1"/>
   </properties>
@@ -3544,7 +3544,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="146"/>
    <tile gid="141"/>
    <tile gid="141"/>
    <tile gid="0"/>

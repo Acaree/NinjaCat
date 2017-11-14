@@ -35,12 +35,12 @@ bool j1Enemies::Start()
 	for (int it = 0; it < flyPositions.Count(); it++)
 	{
 		iPoint p = App->map->MapToWorld(flyPositions[it].x, flyPositions[it].y);
-		AddEnemy(ENEMY_MOUSE, p.x, p.y);
+		//AddEnemy(ENEMY_MOUSE, p.x, p.y);
 	}
 	for (int it = 0; it < walkPositions.Count(); it++)
 	{
 		iPoint p = App->map->MapToWorld(walkPositions[it].x, walkPositions[it].y);
-		AddEnemy(ENEMY_WALK, p.x, p.y);
+		//AddEnemy(ENEMY_WALK, p.x, p.y);
 	}
 	flyPositions.Clear();
 	walkPositions.Clear();
