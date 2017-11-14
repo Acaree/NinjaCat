@@ -8,6 +8,7 @@
 #include "mPlayer.h"
 #include "mCollision.h"
 #include "j1Input.h"
+#include "j1Enemies.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -361,6 +362,8 @@ bool j1Map::LoadMap()
 		}
 	}
 
+	
+
 	return ret;
 }
 
@@ -451,6 +454,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		{
 			layer->data[i++] = tile.attribute("gid").as_int(0);
 		}
+
 	}
 
 	return ret;
@@ -479,6 +483,42 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	}
 
 	return ret;
+}
+
+void j1Map::CreateEnemies() {
+	if (App->map->data.layers.start->next->next != nullptr)
+	{
+		//DRAW COLLISIONS
+		p2List_item<MapLayer*>* item_layer = App->map->data.layers.start->next->next;
+		p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next->next;
+
+
+		for (int x = 0; x < item_layer->data->width; x++)
+		{
+			for (int y = 0; y < item_layer->data->height; y++)
+			{
+				int tileID = 0;
+
+				if (x > item_layer->data->width || y > item_layer->data->height)
+				{
+					tileID = 0;
+				}
+				else {
+					tileID = item_layer->data->Get(x, y);
+				}
+
+				if (tileID == 145)
+				{
+					iPoint position = App->map->MapToWorld(x, y);
+
+					App->enemies->AddEnemy(ENEMY_MOUSE, position.x, position.y);
+
+				}
+
+			}
+		}
+
+	}
 }
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
