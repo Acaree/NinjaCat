@@ -40,10 +40,10 @@ void Enemy_Walk::Move(float dt)
 	
 		float speed = 30 * dt;
 		
-		/*walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
+		walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
 		walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
 		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);*/
+		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
 
 		App->collision->CollisionToWorld(collider, movement);
 		if (movement[down] == true)

@@ -168,7 +168,7 @@
     <frame x="1098" y="984" width="122" height="124"/>
   </deadLeft>
 
-  <speeds walkRight="0.2" walkLeft ="0.2" deadRight="0.1" deadLeft="0.1"/>
+  <speeds walkRight="10" walkLeft ="10" deadRight="10" deadLeft="10"/>
 </girl>
   
 <zombie>
@@ -224,7 +224,7 @@
     <frame x="1314" y="872" width="146" height="104"/>
     </deadLeft>
   
-  <speeds walkRight="0.2" walkLeft ="0.2" deadRight="0.1" deadLeft="0.1"/>
+  <speeds walkRight="10" walkLeft ="10" deadRight="10" deadLeft="10"/>
 
   </zombie>
 </animations>
