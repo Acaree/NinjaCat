@@ -93,6 +93,8 @@ public:
 	j1Enemies*			enemies;
 	ModuleCollision*    collision;
 	j1PathFinding*		pathfinding;
+
+	bool				pause = false;
 private:
 
 	p2List<j1Module*>	modules;

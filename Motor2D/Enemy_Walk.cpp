@@ -35,86 +35,88 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 
 void Enemy_Walk::Move(float dt)
 {
-	float speed = 30 * dt;
-
-	App->collision->CollisionToWorld(collider, movement);
-	if(movement[down] == true)
-		CalculateGravity();
-	/*if (movement[death] == true)  //need think
+	if (dt != 0)
 	{
-	if (now == 0) {
-	now = SDL_GetTicks();
+		float speed = 30 * dt;
 
-	}
-	if (now + 800 > SDL_GetTicks()) {
-	animation = &deadFly;
-	}
-	collider->to_delete = true;
-	}*/
+		App->collision->CollisionToWorld(collider, movement);
+		if (movement[down] == true)
+			CalculateGravity();
+		/*if (movement[death] == true)  //need think
+		{
+		if (now == 0) {
+		now = SDL_GetTicks();
 
-	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
-	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+		}
+		if (now + 800 > SDL_GetTicks()) {
+		animation = &deadFly;
+		}
+		collider->to_delete = true;
+		}*/
 
-	/*
-	if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
-	{
+		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
+		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+
+		/*
+		if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
+		{
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+		}
+		else
+		{
+
+			iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
+			if (position.x == originalpos.x)
+			{
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, {enemy_tiles_pos.x -1 , enemy_tiles_pos.y}, enemy_path);
+			}
+			else if (movement[left] == false)
+			{
+				iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
+
+				if(originalpos.x == position.x)
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+			}
+
+		}
+		*/
+
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
-	}
-	else
-	{
 
-		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
-		if (position.x == originalpos.x)
-		{
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, {enemy_tiles_pos.x -1 , enemy_tiles_pos.y}, enemy_path);
-		}
-		else if (movement[left] == false)
-		{
-			iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
-			
-			if(originalpos.x == position.x)
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-		}
-		
-	}
-	*/
+		if (i < enemy_path.Count()) {
+			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
-	App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+			if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+				position.x += speed;
+				animation = &walkRight;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
+				position.x -= speed;
+				animation = &walkLeft;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
+				position.y += speed;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
+				position.y -= speed;
+				current_in_path = true;
+			}
+			else {
+				current_in_path = false;
+			}
 
-	if (i < enemy_path.Count()) { 
-		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
-
-		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
-			position.x += speed;
-			animation = &walkRight;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
-			position.x -= speed;
-			animation = &walkLeft;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
-			position.y += speed;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
-			position.y -= speed;
-			current_in_path = true;
+			if (current_in_path == false)
+				i++;
 		}
 		else {
-			current_in_path = false;
+			i = 0;
 		}
-
-		if (current_in_path == false)
-			i++;
 	}
-	else {
-		i = 0;
-	}
-
 }
 
 void Enemy_Walk::CalculateGravity() {

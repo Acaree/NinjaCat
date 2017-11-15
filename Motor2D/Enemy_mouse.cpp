@@ -34,79 +34,81 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 
 void Enemy_Mouse::Move(float dt)
 {
-	App->collision->CollisionToWorld(collider, movement);
-
-	/*if (movement[death] == true)  //need think
+	if (dt != 0)
 	{
-		if (now == 0) {
-			now = SDL_GetTicks();
-
-		}
-		if (now + 800 > SDL_GetTicks()) {
-			animation = &deadFly;
-		}
-		collider->to_delete = true;
-	}*/
-
-	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
-	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
-
-	if (player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
-	{
-		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
-	}
-	else
-	{
-		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
-		if (position.x == originalpos.x)
+		App->collision->CollisionToWorld(collider, movement);
+		float speed = 30 * dt;
+		/*if (movement[death] == true)  //need think
 		{
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-		}
-		else if (movement[left] == false)
-		{
-			iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
+			if (now == 0) {
+				now = SDL_GetTicks();
 
-			if (originalpos.x == position.x)
+			}
+			if (now + 800 > SDL_GetTicks()) {
+				animation = &deadFly;
+			}
+			collider->to_delete = true;
+		}*/
+
+		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
+		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+
+		if (player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
+		{
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+		}
+		else
+		{
+			iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
+			if (position.x == originalpos.x)
+			{
 				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-		}
-	}
+			}
+			else if (movement[left] == false)
+			{
+				iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
 
-	
-	
-	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
-		//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
-		// el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
-		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
+				if (originalpos.x == position.x)
+					App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+			}
+		}
 
-		if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
-			position.x += 1;
-			animation = &walkRightFly;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
-			position.x -= 1;
-			animation = &walkLeftFly;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
-			position.y += 1;
-			current_in_path = true;
-		}
-		else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
-			position.y -= 1;
-			current_in_path = true;
+
+
+		if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
+			//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
+			// el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
+			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
+
+			if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+				position.x += speed;
+				animation = &walkRightFly;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
+				position.x -= speed;
+				animation = &walkLeftFly;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
+				position.y += speed;
+				current_in_path = true;
+			}
+			else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
+				position.y -= speed;
+				current_in_path = true;
+			}
+			else {
+				current_in_path = false;
+			}
+
+			if (current_in_path == false)
+				i++;
 		}
 		else {
-			current_in_path = false;
+			i = 0;
 		}
-
-		if (current_in_path == false)
-			i++;
 	}
-	else  {
-		i = 0;
-	}
-
 }

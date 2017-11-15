@@ -171,7 +171,19 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 
-	dt = frame_time.ReadSec();
+	if (input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		if (App->pause == true)
+			App->pause = false;
+		else
+			App->pause = true;
+	}
+
+	if (pause == false)
+		dt = frame_time.ReadSec();
+	else
+		dt = 0;
+
 	frame_time.Start();
 }
 
