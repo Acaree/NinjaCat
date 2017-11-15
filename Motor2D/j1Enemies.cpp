@@ -147,13 +147,7 @@ bool j1Enemies::ResetEnemies()
 		}
 	}
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
-		{
-			queue[i].type = NO_TYPE;
-		}
-	}
+
 	return true;
 
 }
