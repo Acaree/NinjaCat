@@ -359,3 +359,32 @@ void ModulePlayer::Respawn()
 
 	
 }
+
+void ModulePlayer::Dead()
+{
+	if (now == 0) {
+		now = SDL_GetTicks();
+
+	}
+	if (now + 800 > SDL_GetTicks()) {
+		App->player->currentAnimation = &App->player->dead;
+		// stop all movement, else player go out of map, bug
+		movement[down] = false;
+		movement[left] = false;
+		movement[right] = false;
+	}
+	else {
+		App->player->currentAnimation = &App->player->idleRight;
+		now = 0;
+		if (App->player->isLevel1)
+		{
+			App->player->needRespawn1 = true;
+
+		}
+		else
+		{
+			App->player->needRespawn2 = true;
+		}
+		movement[down] = false;
+	}
+}

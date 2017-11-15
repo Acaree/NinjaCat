@@ -25,6 +25,8 @@ public:
 	void Respawn();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
+
+	void Dead();
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -74,6 +76,7 @@ public:
 	int started_attack = 0;
 	Collider* attack_collider;
 	
+	int now = 0;
 };
 
 #endif

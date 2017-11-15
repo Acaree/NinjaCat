@@ -294,38 +294,17 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				//check all positions 
 				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER)
 				{
-					if (now == 0) {
-						now = SDL_GetTicks();
-
-					}
-					if (now + 800 > SDL_GetTicks()) {
-						App->player->currentAnimation = &App->player->dead;
-						// stop all movement, else player go out of map, bug
-						movement[down] = false;
-						movement[left] = false;
-						movement[right] = false;
-					}
-					else {
-						App->player->currentAnimation = &App->player->idleRight;
-						now = 0;
-						if (App->player->isLevel1)
-						{
-							App->player->needRespawn1 = true;
-
-						}
-						else
-						{
-							App->player->needRespawn2 = true;
-						}
-						movement[down] = false;
-					}
+					App->player->Dead();
 				}
-				else if (player->type == COLLIDER_ENEMY)
+				else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
 				{
-					iPoint playerTile = App->map->WorldToMap(App->player->position.x, App->player->position.y);
-					iPoint enemyTile = App->map->WorldToMap(playerRect.x, playerRect.y);
 
-					//if(enem)
+					if (player->CheckCollision(App->player->colliderPlayer->rect))
+					{
+						App->player->Dead();
+					}		
+					// ahora solo colisiona si se toca al enemigo, aqui colocar si el player esta atacando, lo mas fàcil es un bool
+				
 
 				}
 			case nextLevel:
