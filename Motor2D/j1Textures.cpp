@@ -134,3 +134,13 @@ Animation j1Textures::CreateAnimation(char* anim_type, char* anim, bool loop) {
 	ret.loop = loop;
 	return ret;
 }
+
+float j1Textures::NormalizeAnimSpeed(char* anim_type, char* anim, float dt) {
+	
+	pugi::xml_document anim_file;
+	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
+	
+	float ret;
+	ret = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float()*dt;
+	return ret;
+}

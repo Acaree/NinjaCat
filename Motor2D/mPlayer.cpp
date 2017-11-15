@@ -72,7 +72,17 @@ bool ModulePlayer::Update(float dt)
 		
 	float speed = 300 * dt;
 
-	
+	idleRight.speed = App->tex->NormalizeAnimSpeed("player", "idleRight", dt);
+	idleLeft.speed = App->tex->NormalizeAnimSpeed("player", "idleLeft", dt);
+	walkRight.speed = App->tex->NormalizeAnimSpeed("player", "walkRight", dt);
+	walkLeft.speed = App->tex->NormalizeAnimSpeed("player", "walkLeft", dt);
+	dead.speed = App->tex->NormalizeAnimSpeed("player", "dead", dt);
+	glideRight.speed = App->tex->NormalizeAnimSpeed("player", "glideRight", dt);
+	glideLeft.speed = App->tex->NormalizeAnimSpeed("player", "glideLeft", dt);
+	jumpRight.speed = App->tex->NormalizeAnimSpeed("player", "jumpRight", dt);
+	jumpLeft.speed = App->tex->NormalizeAnimSpeed("player", "jumpLeft", dt);
+	hitRight.speed = App->tex->NormalizeAnimSpeed("player", "hitRight", dt);
+	hitLeft.speed = App->tex->NormalizeAnimSpeed("player", "hitLeft", dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		changeLevel = true;

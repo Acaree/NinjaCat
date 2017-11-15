@@ -112,7 +112,7 @@
       <frame x="492" y="1033" width="123" height="107"/>
     </hitLeft>
 
-  <speeds idleRight="0.1" idleLeft="0.1" walkRight="0.2" walkLeft="0.2" dead="0.2" glideRight="0.2" glideLeft="0.2" jumpRight="0.25" jumpLeft="0.25" hitRight ="0.1" higtLeft="0.1"/>
+  <speeds idleRight="10" idleLeft="10" walkRight="10" walkLeft="10" dead="10" glideRight="10" glideLeft="10" jumpRight="10" jumpLeft="10" hitRight ="10" hitLeft="10"/>
 </player>
 
 <girl>
