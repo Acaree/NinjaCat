@@ -232,8 +232,14 @@ bool ModulePlayer::Update(float dt)
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
 		colliderPlayer->SetPos(position.x, position.y);
-		App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
-
+		if (currentAnimation == &hitLeft)
+		{
+		App->render->Blit(graphics, position.x-60, position.y, &(currentAnimation->GetCurrentFrame()));
+		}
+		else
+		{
+			App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
+		}
 		if (currentAnimation != &jumpLeft) {
 			jumpLeft.Reset();
 		}
@@ -364,7 +370,7 @@ void ModulePlayer::Dead()
 {
 	if (now == 0) {
 		now = SDL_GetTicks();
-
+		
 	}
 	if (now + 800 > SDL_GetTicks()) {
 		App->player->currentAnimation = &App->player->dead;
@@ -387,4 +393,5 @@ void ModulePlayer::Dead()
 		}
 		movement[down] = false;
 	}
+	
 }

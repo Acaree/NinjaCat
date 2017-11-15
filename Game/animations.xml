@@ -42,7 +42,7 @@
     <frame x="7" y="816" width="65" height="107"/>
     <frame x="80" y="820" width="83" height="106"/>
     <frame x="169" y="835" width="94" height="91"/>
-    <frame x="288" y="850" width="102" height="94"/>
+    <frame x="288" y="850" width="102" height="72"/>
     <frame x="408" y="855" width="108" height="69"/>
     <frame x="647" y="860" width="109" height="64"/>
     <frame x="767" y="860" width="110" height="64"/>
@@ -97,19 +97,19 @@
   </jumpLeft>
     
     <hitRight>
-      <frame x="0" y="926" width="123" height="107"/>
-      <frame x="123" y="926" width="123" height="107"/>
-      <frame x="246" y="926" width="123" height="107"/>
-      <frame x="369" y="926" width="123" height="107"/>
-      <frame x="492" y="926" width="123" height="107"/>
+      <frame x="0" y="926" width="122" height="106"/>
+      <frame x="123" y="926" width="122" height="106"/>
+      <frame x="246" y="926" width="122" height="106"/>
+      <frame x="369" y="926" width="122" height="106"/>
+      <frame x="492" y="926" width="122" height="106"/>
     </hitRight>
 
     <hitLeft>
-      <frame x="0" y="1033" width="123" height="107"/>
-      <frame x="123" y="1033" width="123" height="107"/>
-      <frame x="246" y="1033" width="123" height="107"/>
-      <frame x="369" y="1033" width="123" height="107"/>
-      <frame x="492" y="1033" width="123" height="107"/>
+      <frame x="0" y="1034" width="122" height="106"/>
+      <frame x="123" y="1034" width="122" height="106"/>
+      <frame x="246" y="1034" width="122" height="106"/>
+      <frame x="369" y="1034" width="122" height="106"/>
+      <frame x="492" y="1034" width="122" height="106"/>
     </hitLeft>
 
   <speeds idleRight="10" idleLeft="10" walkRight="10" walkLeft="10" dead="10" glideRight="10" glideLeft="10" jumpRight="10" jumpLeft="10" hitRight ="10" hitLeft="10"/>
