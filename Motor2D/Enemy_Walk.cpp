@@ -39,11 +39,11 @@ void Enemy_Walk::Move(float dt)
 {
 	
 		float speed = 30 * dt;
-
-		walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
+		
+		/*walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
 		walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
 		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
+		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);*/
 
 		App->collision->CollisionToWorld(collider, movement);
 		if (movement[down] == true)
@@ -63,15 +63,14 @@ void Enemy_Walk::Move(float dt)
 		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
-		/*
-		if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
+		
+		/*if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
 		{
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 		}
 		else
 		{
-
 			iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
 			if (position.x == originalpos.x)
 			{
@@ -86,8 +85,8 @@ void Enemy_Walk::Move(float dt)
 				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 			}
 
-		}
-		*/
+		}*/
+		
 
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 
@@ -104,14 +103,14 @@ void Enemy_Walk::Move(float dt)
 				animation = &walkLeft;
 				current_in_path = true;
 			}
-			else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
+		/*	else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
 				position.y += speed;
 				current_in_path = true;
 			}
 			else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
 				position.y -= speed;
 				current_in_path = true;
-			}
+			}*/
 			else {
 				current_in_path = false;
 			}

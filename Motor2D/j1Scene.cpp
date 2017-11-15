@@ -116,24 +116,6 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 	
-	App->input->GetMousePosition(mouseCoordenates.x, mouseCoordenates.y);
-	
-	mouseTile =App->map->WorldToMap(mouseCoordenates.x, mouseCoordenates.y);
-
-	//p2SString title("%i %i    %i %i", mouseCoordenates.x, mouseCoordenates.y, mouseTile.x , mouseTile.y );
-	
-	//App->win->SetTitle(title.GetString());
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN){
-		//guarrada
-		int x;
-		int y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->map->WorldToMap(x, y);
-		iPoint posp = App->map->WorldToMap(App->player->position.x, App->player->position.y);
-		p += {posp.x - 1, posp.y - 2};
-		iPoint point = App->map->MapToWorld(p.x,p.y);
-		App->enemies->AddEnemy(ENEMY_MOUSE, point.x, point.y);
-	}
 
 	return true;
 }

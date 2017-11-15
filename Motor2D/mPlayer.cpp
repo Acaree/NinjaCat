@@ -96,7 +96,7 @@ bool ModulePlayer::Update(float dt)
 
 
 
-		if (currentAnimation != &dead) {
+		if (currentAnimation != &dead && dt != 0) {
 
 
 
@@ -367,6 +367,7 @@ void ModulePlayer::Respawn()
 		isLevel1 = false;
 		App->map->CreateEnemies();
 	}
+	currentAnimation = &idleRight;
 	//load respawn: if is true don't take the position of tile in config.xml take the position in save_game.xml
 	loadRespawn = false;
 	// movement true : collider respawn > collider player
@@ -383,23 +384,23 @@ void ModulePlayer::Dead()
 		
 	}
 	if (now + 800 > SDL_GetTicks()) {
-		App->player->currentAnimation = &App->player->dead;
+		App->player->currentAnimation = &dead;
 		// stop all movement, else player go out of map, bug
 		movement[down] = false;
 		movement[left] = false;
 		movement[right] = false;
 	}
 	else {
-		App->player->currentAnimation = &App->player->idleRight;
+		App->player->currentAnimation = &idleRight;
 		now = 0;
-		if (App->player->isLevel1)
+		if (isLevel1)
 		{
-			App->player->needRespawn1 = true;
+			needRespawn1 = true;
 
 		}
 		else
 		{
-			App->player->needRespawn2 = true;
+			needRespawn2 = true;
 		}
 		movement[down] = false;
 	}

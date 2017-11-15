@@ -256,6 +256,7 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				}
 				if (player->type == COLLIDER_WALKENEMY)
 				{
+					leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y+1);
 					if (leftDownPlayer == 0)
 					{
 						movement[left] = false;
@@ -266,16 +267,17 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 
 			case down:
-
-				if (wall == leftDownPlayer || wall == rightDownPlayer)
-				{
-					movement[down] = false;
-					App->player->jumping = false;
-				}
-				else
-				{
-					movement[down] = true;
-				}
+				
+					if (wall == leftDownPlayer || wall == rightDownPlayer)
+					{
+						movement[down] = false;
+						App->player->jumping = false;
+					}
+					else
+					{
+						movement[down] = true;
+					}
+				
 				break;
 
 			case up:
