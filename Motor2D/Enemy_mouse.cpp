@@ -23,7 +23,9 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 	//base.PushBack({ 0,0,86,119 });
 	walkLeftFly = App->tex->CreateAnimation("girl", "walkLeft", true);
 	walkRightFly = App->tex->CreateAnimation("girl", "walkRight", true);
-	deadFly = App->tex->CreateAnimation("girl", "dead", false);
+	deadFlyRight = App->tex->CreateAnimation("girl", "deadRight", false);
+	deadFlyLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
+
 	animation = &walkLeftFly;
 	
 	originalpos.x = position.x = x;
@@ -34,10 +36,13 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 
 void Enemy_Mouse::Move(float dt)
 {
-	if (dt != 0)
-	{
+	
 		App->collision->CollisionToWorld(collider, movement);
 		float speed = 30 * dt;
+		walkLeftFly.speed = App->tex->NormalizeAnimSpeed("girl","walkLeft",dt);
+		walkRightFly.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
+		deadFlyLeft.speed = App->tex->NormalizeAnimSpeed("girl", "deadLeft", dt);
+		deadFlyRight.speed = App->tex->NormalizeAnimSpeed("girl", "deadRight", dt);
 		/*if (movement[death] == true)  //need think
 		{
 			if (now == 0) {
@@ -110,5 +115,5 @@ void Enemy_Mouse::Move(float dt)
 		else {
 			i = 0;
 		}
-	}
+	
 }

@@ -69,8 +69,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 bool ModulePlayer::Update(float dt)
 {
-	if (dt != 0)
-	{
+	
 		App->collision->CollisionToWorld(colliderPlayer, movement);
 
 		float speed = 300 * dt;
@@ -218,7 +217,7 @@ bool ModulePlayer::Update(float dt)
 					gliding = false;
 				}
 
-				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false)
+				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
 				{
 					jumping = true;
 					speed_jump = original_speed_jump;
@@ -254,7 +253,7 @@ bool ModulePlayer::Update(float dt)
 		if (currentAnimation != &hitRight) {
 			hitRight.Reset();
 		}
-	}
+	
 	if (currentAnimation == &hitLeft)
 	{
 		App->render->Blit(graphics, position.x - 60, position.y, &(currentAnimation->GetCurrentFrame()));
@@ -378,6 +377,7 @@ void ModulePlayer::Respawn()
 
 void ModulePlayer::Dead()
 {
+	
 	if (now == 0) {
 		now = SDL_GetTicks();
 		

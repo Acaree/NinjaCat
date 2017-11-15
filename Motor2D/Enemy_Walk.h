@@ -14,6 +14,8 @@ private:
 
 	Animation walkLeft;
 	Animation walkRight;
+	Animation deadLeft;
+	Animation deadRight;
 	Animation dead;
 
 public:

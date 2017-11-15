@@ -12,7 +12,8 @@ private:
 	
 	Animation walkLeftFly;
 	Animation walkRightFly;
-	Animation deadFly;
+	Animation deadFlyRight;
+	Animation deadFlyLeft;
 	
 public:
 	iPoint originalpos;
