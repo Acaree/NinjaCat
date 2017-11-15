@@ -487,6 +487,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 void j1Map::CreateEnemies() {
 
+	App->enemies->ResetEnemies();
 	if (App->map->data.layers.start->next->next != nullptr)
 	{
 		//DRAW COLLISIONS

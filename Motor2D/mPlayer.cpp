@@ -10,6 +10,7 @@
 #include "p2Log.h"
 #include "Animation.h"
 #include "j1Map.h"
+#include "j1Enemies.h"
 
 ModulePlayer::ModulePlayer()
 {
@@ -322,12 +323,13 @@ void ModulePlayer::Respawn()
 			{
 
 				App->map->Load("level2ND.tmx");
+				
 				needRespawn2 = true;
 			}
 			else if (isLevel1 == false)
 			{
-
 				App->map->Load("level1ND.tmx");
+				
 				needRespawn1 = true;
 			}
 			currentAnimation = &idleRight;
@@ -344,6 +346,7 @@ void ModulePlayer::Respawn()
 		}
 		needRespawn1 = false;
 		isLevel1 = true;
+		App->map->CreateEnemies();
 	}
 	else if (needRespawn2 == true)
 	{
@@ -356,7 +359,7 @@ void ModulePlayer::Respawn()
 		}
 		needRespawn2 = false;
 		isLevel1 = false;
-
+		App->map->CreateEnemies();
 	}
 	//load respawn: if is true don't take the position of tile in config.xml take the position in save_game.xml
 	loadRespawn = false;

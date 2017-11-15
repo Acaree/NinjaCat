@@ -33,20 +33,7 @@ bool j1Enemies::Start()
 	sprites = App->tex->Load("maps/enemySprites.png");
 
 	
-	//COMPROBAR
-	for (int it = 0; it < flyPositions.Count(); it++)
-	{
-		iPoint p = App->map->MapToWorld(flyPositions[it].x, flyPositions[it].y);
-		//AddEnemy(ENEMY_MOUSE, p.x, p.y);
-	}
-	for (int it = 0; it < walkPositions.Count(); it++)
-	{
-		iPoint p = App->map->MapToWorld(walkPositions[it].x, walkPositions[it].y);
-		//AddEnemy(ENEMY_WALK, p.x, p.y);
-	}
-	flyPositions.Clear();
-	walkPositions.Clear();
-	//audio_explosion = App->audio->LoadFx("Audio/explosion.wav");
+
 	return true;
 }
 
@@ -130,8 +117,6 @@ bool j1Enemies::PostUpdate()
 bool j1Enemies::CleanUp()
 {
 	App->tex->UnLoad(sprites);
-
-	
 	// No unload for fxs
 	/*
 	App->audio->UnloadFX(audio_explosion5);
@@ -146,6 +131,31 @@ bool j1Enemies::CleanUp()
 	}
 
 	return true;
+}
+
+bool j1Enemies::ResetEnemies()
+{
+	
+	
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			enemies[i]->collider->to_delete = true;
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+	}
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+		{
+			queue[i].type = NO_TYPE;
+		}
+	}
+	return true;
+
 }
 
 bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
