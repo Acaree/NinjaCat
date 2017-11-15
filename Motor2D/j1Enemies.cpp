@@ -9,8 +9,10 @@
 #include "Enemy_Mouse.h"
 #include "j1Map.h"
 #include "Enemy_Walk.h"
+#include "p2Log.h"
 
 #define SPAWN_MARGIN 140
+#define DESPAWN_MARGIN 1400
 
 j1Enemies::j1Enemies()
 {
@@ -69,11 +71,12 @@ bool j1Enemies::PreUpdate()
 	{		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
 		{
 
-			//if (queue[i].x < App->render->camera.x + (App->render->camera.w) + SPAWN_MARGIN)
-			//{
-				SpawnEnemy(queue[i]);
+			if (queue[i].x < (App->render->camera.x - (App->render->camera.w) - SPAWN_MARGIN)*(-1))
+			{
+  				SpawnEnemy(queue[i]);
 				queue[i].type = ENEMY_TYPES::NO_TYPE;
-			//}
+				LOG("Spawning enemy at %i %i", queue[i].x, queue[i].y);
+			}
 		}
 	}
 
@@ -111,12 +114,12 @@ bool j1Enemies::PostUpdate()
 	{
 		if (enemies[i] != nullptr)
 		{
-			/*if (enemies[i]->position.y < App->render->camera.y)
+			if (enemies[i]->position.x < (App->render->camera.x + DESPAWN_MARGIN)*(-1))
 			{
 
 				delete enemies[i];
 				enemies[i] = nullptr;
-			}*/
+			}
 		}
 		}
 

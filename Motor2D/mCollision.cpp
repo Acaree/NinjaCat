@@ -301,8 +301,15 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 					if (player->CheckCollision(App->player->colliderPlayer->rect))
 					{
+						if (App->player->attacking==false)
 						App->player->Dead();
+						else {
+							//enemydeath
+						}
 					}		
+
+
+
 					// ahora solo colisiona si se toca al enemigo, aqui colocar si el player esta atacando, lo mas fàcil es un bool
 				
 
