@@ -40,14 +40,14 @@ bool j1Enemies::Start()
 bool j1Enemies::Awake(pugi::xml_node& config)
 {
 	//COMPROBAR
-	for (pugi::xml_node it = config.child("fly"); it; it = it.next_sibling())
+	/*for (pugi::xml_node it = config.child("fly"); it; it = it.next_sibling())
 	{
 		flyPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
 	}
 	for (pugi::xml_node it = config.child("zombie"); it; it = it.next_sibling())
 	{
 		walkPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
-	}
+	}*/
 	return true;
 
 }
@@ -145,6 +145,14 @@ bool j1Enemies::ResetEnemies()
 			delete enemies[i];
 			enemies[i] = nullptr;
 		}
+	}
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if(queue[i].type != NULL)
+		queue[i].type = NO_TYPE;
+		queue[i].x = 0;
+		queue[i].y = 0;
 	}
 
 

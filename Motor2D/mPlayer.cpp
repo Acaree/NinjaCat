@@ -100,7 +100,7 @@ bool ModulePlayer::Update(float dt)
 
 
 
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT && started_attack == 0)
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && started_attack == 0)
 			{
 				if (lookingleft) {
 					currentAnimation = &hitLeft;
@@ -120,7 +120,7 @@ bool ModulePlayer::Update(float dt)
 
 			}
 
-			if (started_attack + 500 < SDL_GetTicks() && App->input->GetKey(SDL_SCANCODE_R) == KEY_UP) {
+			if (started_attack + 500 < SDL_GetTicks() /*&& App->input->GetKey(SDL_SCANCODE_R) == KEY_UP*/) {
 				if (lookingleft)
 					currentAnimation = &idleLeft;
 				else

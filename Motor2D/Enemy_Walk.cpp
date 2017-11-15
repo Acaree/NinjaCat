@@ -103,14 +103,6 @@ void Enemy_Walk::Move(float dt)
 				animation = &walkLeft;
 				current_in_path = true;
 			}
-		/*	else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
-				position.y += speed;
-				current_in_path = true;
-			}
-			else if (enemy_tiles_pos.y >= enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
-				position.y -= speed;
-				current_in_path = true;
-			}*/
 			else {
 				current_in_path = false;
 			}
