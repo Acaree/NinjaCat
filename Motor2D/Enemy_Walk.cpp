@@ -33,63 +33,86 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 	
 
 	collider = App->collision->AddCollider({(int)position.x, (int)position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
+	start_time = SDL_GetTicks();
 }
 
 void Enemy_Walk::Move(float dt)
 {
-	
-		float speed = 30 * dt;
-		
-		walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
-		walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
-		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
 
-		death = App->collision->CollisionToWorld(collider, movement);
-		if (movement[down] == true)
-			CalculateGravity();
-		/*if (movement[death] == true)  //need think
+	float speed = 30 * dt;
+
+	walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
+	walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
+	deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
+	deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
+
+	death = App->collision->CollisionToWorld(collider, movement);
+	if (movement[down] == true)
+		CalculateGravity();
+	/*if (movement[death] == true)  //need think
+	{
+	if (now == 0) {
+	now = SDL_GetTicks();
+
+	}
+	if (now + 800 > SDL_GetTicks()) {
+	animation = &deadFly;
+	}
+	collider->to_delete = true;
+	}*/
+
+	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
+	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+
+
+	if (player_tiles_pos.x - enemy_tiles_pos.x <= 3 && player_tiles_pos.x - enemy_tiles_pos.x >= -3)
+	{
+ 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+	}
+	/*
+	else
+	{
+		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
+		if (position.x == originalpos.x)
 		{
-		if (now == 0) {
-		now = SDL_GetTicks();
-
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, {enemy_tiles_pos.x -1 , enemy_tiles_pos.y}, enemy_path);
 		}
-		if (now + 800 > SDL_GetTicks()) {
-		animation = &deadFly;
-		}
-		collider->to_delete = true;
-		}*/
-
-		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
-		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
-
-		
-		/*if (player_tiles_pos.x - enemy_tiles_pos.x <= 1 && player_tiles_pos.x - enemy_tiles_pos.x >= -1)
+		else if (movement[left] == false)
 		{
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+			iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
+
+			if(originalpos.x == position.x)
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 		}
+
+	}*/
+
+	else {
+		//guarrada
+		//creo que esto se puede hacer con el module timer
+
+
+		if (start_time + 2000 < SDL_GetTicks()) {
+			if (movingLeft) {
+				movingLeft = false;
+				start_time = SDL_GetTicks();
+				animation = &walkLeft;
+			}
+			else {
+				movingLeft = true;
+				start_time = SDL_GetTicks();
+				animation = &walkRight;
+			}
+		}
+
+		if (movingLeft)
+			position.x += speed;
 		else
-		{
-			iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
-			if (position.x == originalpos.x)
-			{
-				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, {enemy_tiles_pos.x -1 , enemy_tiles_pos.y}, enemy_path);
-			}
-			else if (movement[left] == false)
-			{
-				iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
-				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
-
-				if(originalpos.x == position.x)
-				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-			}
-
-		}*/
-		
-
-		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-
+			position.x -= speed;
+	}
 		if (i < enemy_path.Count()) {
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
@@ -113,8 +136,9 @@ void Enemy_Walk::Move(float dt)
 		else {
 			i = 0;
 		}
-	
-}
+
+	}
+
 
 void Enemy_Walk::CalculateGravity() {
 	//Trap for colliders work "good" 

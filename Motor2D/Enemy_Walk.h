@@ -27,7 +27,8 @@ public:
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 	bool movement[4] = { true,true,true,true };
-	int now = 0;
+	int start_time = 0;
+	bool movingLeft = false;
 
 	float gravity = 1.0f;
 	float original_speed_jump = -20.0f;
