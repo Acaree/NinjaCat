@@ -47,6 +47,7 @@ void Enemy_Walk::Move(float dt)
 	deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
 
 	death = App->collision->CollisionToWorld(collider, movement);
+	
 	if (movement[down] == true)
 		CalculateGravity();
 	/*if (movement[death] == true)  //need think
@@ -116,7 +117,12 @@ void Enemy_Walk::Move(float dt)
 		if (i < enemy_path.Count()) {
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
-			if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+			if (death == true)
+			{
+
+				animation = &deadLeft;
+			}
+			else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 				position.x += speed;
 				animation = &walkRight;
 				current_in_path = true;

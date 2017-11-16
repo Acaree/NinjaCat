@@ -35,7 +35,7 @@ public:
 	float speed_jump;
 	bool jumping = false;
 	bool gliding = false;
-
+	
 };
 
 #endif
