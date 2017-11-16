@@ -194,8 +194,9 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.h + rect.y > r.y);
 }
 
-void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
+bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 {
+	bool ret = false;
 	SDL_Rect playerRect = player->rect;
 	// number of gid, layer collision
 	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
@@ -306,7 +307,7 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						if (App->player->attacking == false)
 							App->player->Dead();
 						else {
-							//enemydeath
+							ret = true;
 						}
 					}		
 
@@ -332,4 +333,5 @@ void ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				}
 			}
 	}
+	return ret;
 }

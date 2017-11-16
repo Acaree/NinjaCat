@@ -16,7 +16,7 @@ private:
 	Animation walkRight;
 	Animation deadLeft;
 	Animation deadRight;
-	Animation dead;
+	//Animation dead;
 
 public:
 	fPoint originalpos;

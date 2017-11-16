@@ -37,7 +37,7 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 void Enemy_Mouse::Move(float dt)
 {
 	
-		App->collision->CollisionToWorld(collider, movement);
+		death = App->collision->CollisionToWorld(collider, movement);
 		float speed = 30 * dt;
 		walkLeftFly.speed = App->tex->NormalizeAnimSpeed("girl","walkLeft",dt);
 		walkRightFly.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);

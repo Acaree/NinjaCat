@@ -45,7 +45,7 @@ void Enemy_Walk::Move(float dt)
 		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
 		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
 
-		App->collision->CollisionToWorld(collider, movement);
+		death = App->collision->CollisionToWorld(collider, movement);
 		if (movement[down] == true)
 			CalculateGravity();
 		/*if (movement[death] == true)  //need think

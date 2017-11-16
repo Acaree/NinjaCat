@@ -53,7 +53,7 @@ public:
 	bool Update(float dt);
 	//update_status PostUpdate();
 	bool CleanUp();
-	void CollisionToWorld(Collider* playerRect, bool* movement);
+	bool CollisionToWorld(Collider* playerRect, bool* movement);
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();

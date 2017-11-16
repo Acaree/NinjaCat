@@ -91,6 +91,17 @@ bool j1Enemies::Update(float dt)
 		}
 	}
 
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			if (enemies[i]->death == true) {
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+		}
+	}
+
 	return true;
 }
 
