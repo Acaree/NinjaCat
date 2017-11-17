@@ -13,6 +13,8 @@ private:
 
 	void CalculateGravity();
 
+	uint zombiesound;
+
 	Animation walkLeft;
 	Animation walkRight;
 	Animation deadLeft;
@@ -29,6 +31,7 @@ public:
 	p2DynArray<iPoint> enemy_path;
 	bool movement[4] = { true,true,true,true };
 	j1Timer timer;
+	j1Timer soundtimer;
 	bool movingLeft = false;
 
 	float gravity = 1.0f;

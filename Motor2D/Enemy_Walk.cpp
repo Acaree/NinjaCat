@@ -28,6 +28,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 	deadRight = App->tex->CreateAnimation("zombie", "deadRight", false);
 	//dead = App->tex->CreateAnimation("girl", "dead", false);
 	animation = &walkLeft;
+	zombiesound = App->audio->LoadFx("audio/zombie.wav");
 
 	originalpos.x=position.x = x;
 	originalpos.y=position.y = y;
@@ -35,10 +36,16 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 
 	collider = App->collision->AddCollider({(int)position.x, (int)position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
 	timer.Start();
+	soundtimer.Start();
 }
 
 void Enemy_Walk::Move(float dt)
 {
+
+	if (soundtimer.Read() > 10000) {
+		App->audio->PlayFx(zombiesound, 1);
+		soundtimer.Start();
+	}
 
 	float speed = 30 * dt;
 
@@ -95,6 +102,7 @@ void Enemy_Walk::Move(float dt)
 	else {
 		
 		if (timer.Read()>2000) {
+		
 			if (movingLeft) {
 				movingLeft = false;
 				timer.Start();
