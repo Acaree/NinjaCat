@@ -121,6 +121,13 @@ bool j1Scene::Update(float dt)
 		else
 			App->player->godMode = true;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (App->capped_ms == 1000/30)
+			App->capped_ms = 1000/60;
+		else
+			App->capped_ms = 1000/30;
+	}
 
 	App->map->Draw();
 	
