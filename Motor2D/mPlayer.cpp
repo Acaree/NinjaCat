@@ -81,8 +81,20 @@ bool ModulePlayer::Update(float dt)
 		
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
-		colliderPlayer->SetPos(position.x, position.y);
-		
+
+		if (attacking == false)
+		{
+			colliderPlayer->SetPos(position.x, position.y);
+		}
+		else if (lookingleft)
+		{
+			colliderPlayer->SetPos(position.x - 40, position.y);
+		}
+		else
+		{
+			colliderPlayer->SetPos(position.x+20, position.y);
+		}
+
 		ResetAnimations();
 	
 	if (currentAnimation == &hitLeft)
@@ -116,8 +128,9 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 
 
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && attacking == false)
 		{
+			
 			if (lookingleft) {
 				currentAnimation = &hitLeft;
 				started_attack = SDL_GetTicks();
@@ -132,14 +145,20 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 
 		}
 
-		if (started_attack + 500 < SDL_GetTicks()) {
+		if (started_attack + 500 < SDL_GetTicks() && attacking == true) {
 			if (lookingleft)
+			{
 				currentAnimation = &idleLeft;
+				
+			}
 			else
+			{
 				currentAnimation = &idleRight;
+			}
 			App->collision->EraseCollider(attack_collider);
 			started_attack = 0;
 			attacking = false;
+			
 		}
 
 		if (movement[down] == true) {

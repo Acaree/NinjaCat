@@ -62,7 +62,7 @@ public:
 	bool gliding = false;
 
 	bool lookingleft;
-	bool attacking;
+	bool attacking = false;
 
 	bool movingleft;
 	bool movingright;
