@@ -38,7 +38,7 @@ void Enemy_Mouse::Move(float dt)
 {
 	
 		death = App->collision->CollisionToWorld(collider, movement);
-		float speed = 30 * dt;
+		float speed = 90 * dt;
 		walkLeftFly.speed = App->tex->NormalizeAnimSpeed("girl","walkLeft",dt);
 		walkRightFly.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
 		deadFlyLeft.speed = App->tex->NormalizeAnimSpeed("girl", "deadLeft", dt);
@@ -58,7 +58,7 @@ void Enemy_Mouse::Move(float dt)
 		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
 
-		if (player_tiles_pos.x - enemy_tiles_pos.x <= 2 && player_tiles_pos.x - enemy_tiles_pos.x >= -2 && player_tiles_pos.y - enemy_tiles_pos.y <= 2 && player_tiles_pos.y - enemy_tiles_pos.y >= -2)
+		if (player_tiles_pos.x - enemy_tiles_pos.x <= 4 && player_tiles_pos.x - enemy_tiles_pos.x >= -4 && player_tiles_pos.y - enemy_tiles_pos.y <= 4 && player_tiles_pos.y - enemy_tiles_pos.y >= -4)
 		{
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);

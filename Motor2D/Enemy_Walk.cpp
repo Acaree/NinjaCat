@@ -70,28 +70,8 @@ void Enemy_Walk::Move(float dt)
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 3 && player_tiles_pos.x - enemy_tiles_pos.x >= -3)
 	{
  		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+	
 	}
-	/*
-	else
-	{
-		iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
-		if (position.x == originalpos.x)
-		{
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, {enemy_tiles_pos.x -1 , enemy_tiles_pos.y}, enemy_path);
-		}
-		else if (movement[left] == false)
-		{
-			iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
-
-			if(originalpos.x == position.x)
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-		}
-
-	}*/
-	
-	
 	else {
 		
 		if (timer.Read()>2000) {
