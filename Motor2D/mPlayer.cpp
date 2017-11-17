@@ -52,7 +52,7 @@ bool ModulePlayer::Start()
 	
 	colliderPlayer = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, this);
 	currentAnimation = &idleRight;
-
+	
 	dead_start = false;
 	return true;
 }

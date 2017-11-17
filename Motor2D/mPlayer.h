@@ -71,6 +71,7 @@ public:
 
 	int backgroundspeed;
 
+	bool godMode = false;
 	bool needRespawn1;
 	bool needRespawn2;
 	bool isLevel1;

@@ -269,7 +269,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 			case down:
 				
-					if (wall == leftDownPlayer || wall == rightDownPlayer)
+					if (wall == leftDownPlayer || wall == rightDownPlayer || dead == leftDownPlayer || dead == rightDownPlayer)
 					{
 						movement[down] = false;
 						App->player->jumping = false;
@@ -295,6 +295,8 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 			case death:
 				//check all positions 
+				if(App->player->godMode ==false)
+				{
 				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->player->dead_start == false)
 				{
 					App->player->dead_start = true;
@@ -309,12 +311,9 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						else {
 							ret = true;
 						}
-					}		
+					}
 
-
-
-					// ahora solo colisiona si se toca al enemigo, aqui colocar si el player esta atacando, lo mas fàcil es un bool
-				
+				}
 
 				}
 			case nextLevel:

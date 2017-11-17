@@ -114,6 +114,14 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN  && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
 		App->SaveGame();
 
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		if (App->player->godMode == true)
+			App->player->godMode = false;
+		else
+			App->player->godMode = true;
+	}
+
 	App->map->Draw();
 	
 
