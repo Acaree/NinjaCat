@@ -74,19 +74,9 @@ bool ModulePlayer::Update(float dt)
 	
 		App->collision->CollisionToWorld(colliderPlayer, movement);
 
-		float speed = 300 * dt;
+		speed = 300 * dt;
 
-		idleRight.speed = App->tex->NormalizeAnimSpeed("player", "idleRight", dt);
-		idleLeft.speed = App->tex->NormalizeAnimSpeed("player", "idleLeft", dt);
-		walkRight.speed = App->tex->NormalizeAnimSpeed("player", "walkRight", dt);
-		walkLeft.speed = App->tex->NormalizeAnimSpeed("player", "walkLeft", dt);
-		dead.speed = App->tex->NormalizeAnimSpeed("player", "dead", dt);
-		glideRight.speed = App->tex->NormalizeAnimSpeed("player", "glideRight", dt);
-		glideLeft.speed = App->tex->NormalizeAnimSpeed("player", "glideLeft", dt);
-		jumpRight.speed = App->tex->NormalizeAnimSpeed("player", "jumpRight", dt);
-		jumpLeft.speed = App->tex->NormalizeAnimSpeed("player", "jumpLeft", dt);
-		hitRight.speed = App->tex->NormalizeAnimSpeed("player", "hitRight", dt);
-		hitLeft.speed = App->tex->NormalizeAnimSpeed("player", "hitLeft", dt);
+		NormalizeAnimations(dt, last_dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 			changeLevel = true;
@@ -238,21 +228,7 @@ bool ModulePlayer::Update(float dt)
 		App->render->camera.y = 300 - position.y;
 		colliderPlayer->SetPos(position.x, position.y);
 		
-		if (currentAnimation != &jumpLeft) {
-			jumpLeft.Reset();
-		}
-		if (currentAnimation != &jumpRight) {
-			jumpRight.Reset();
-		}
-		if (currentAnimation != &dead) {
-			dead.Reset();
-		}
-		if (currentAnimation != &hitLeft) {
-			hitLeft.Reset();
-		}
-		if (currentAnimation != &hitRight) {
-			hitRight.Reset();
-		}
+		ResetAnimations();
 	
 	if (currentAnimation == &hitLeft)
 	{
@@ -262,9 +238,49 @@ bool ModulePlayer::Update(float dt)
 	{
 		App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
 	}
+
+	last_dt = dt;
 	return true;
 }
 
+void ModulePlayer::NormalizeAnimations(float dt, float last_dt)
+{
+	if(dt != last_dt)
+	{
+		idleRight.speed = App->tex->NormalizeAnimSpeed("player", "idleRight", dt);
+		idleLeft.speed = App->tex->NormalizeAnimSpeed("player", "idleLeft", dt);
+		walkRight.speed = App->tex->NormalizeAnimSpeed("player", "walkRight", dt);
+		walkLeft.speed = App->tex->NormalizeAnimSpeed("player", "walkLeft", dt);
+		dead.speed = App->tex->NormalizeAnimSpeed("player", "dead", dt);
+		glideRight.speed = App->tex->NormalizeAnimSpeed("player", "glideRight", dt);
+		glideLeft.speed = App->tex->NormalizeAnimSpeed("player", "glideLeft", dt);
+		jumpRight.speed = App->tex->NormalizeAnimSpeed("player", "jumpRight", dt);
+		jumpLeft.speed = App->tex->NormalizeAnimSpeed("player", "jumpLeft", dt);
+		hitRight.speed = App->tex->NormalizeAnimSpeed("player", "hitRight", dt);
+		hitLeft.speed = App->tex->NormalizeAnimSpeed("player", "hitLeft", dt);
+	}
+
+
+}
+void ModulePlayer::ResetAnimations()
+{
+	if (currentAnimation != &jumpLeft) {
+		jumpLeft.Reset();
+	}
+	if (currentAnimation != &jumpRight) {
+		jumpRight.Reset();
+	}
+	if (currentAnimation != &dead) {
+		dead.Reset();
+	}
+	if (currentAnimation != &hitLeft) {
+		hitLeft.Reset();
+	}
+	if (currentAnimation != &hitRight) {
+		hitRight.Reset();
+	}
+
+}
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {

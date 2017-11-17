@@ -26,6 +26,9 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	void ResetAnimations();
+	void NormalizeAnimations(float dt,float last_dt);
+	//void InputsPlayer(bool* movement, float dt);
 	void Dead();
 public:
 
@@ -74,10 +77,10 @@ public:
 	bool movement[4] = { true,true,true,true };
 	bool changeLevel =false;
 	bool loadRespawn = false;
-
+	float speed;
 	int started_attack = 0;
 	Collider* attack_collider;
-	
+	float last_dt;
 	int now = 0;
 };
 
