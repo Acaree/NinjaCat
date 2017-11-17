@@ -77,153 +77,8 @@ bool ModulePlayer::Update(float dt)
 		speed = 300 * dt;
 
 		NormalizeAnimations(dt, last_dt);
-
-		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-			changeLevel = true;
-		}
-
-		if (needRespawn1 == true || needRespawn2 == true || changeLevel == true) {
-			Respawn();
-		}
-
-		if (dead_start == true) {
-			Dead();
-		}
-
-		if (currentAnimation != &dead && dt != 0) {
-
-
-
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-			{
-				if (lookingleft) {
-					currentAnimation = &hitLeft;
-					started_attack = SDL_GetTicks();
-					attacking = true;
-				}
-				else {
-					currentAnimation = &hitRight;
-					started_attack = SDL_GetTicks();
-					attacking = true;
-				}
-
-
-			}
-
-			if (started_attack + 500 < SDL_GetTicks() /*&& App->input->GetKey(SDL_SCANCODE_R) == KEY_UP*/) {
-				if (lookingleft)
-					currentAnimation = &idleLeft;
-				else
-					currentAnimation = &idleRight;
-				App->collision->EraseCollider(attack_collider);
-				started_attack = 0;
-				attacking = false;
-			}
-
-			if (movement[down] == true) {
-				CalculateGravity();
-			}
-
-			if (attacking == false) {
-				if (lookingleft == true) {
-					currentAnimation = &idleLeft;
-				}
-				else {
-					currentAnimation = &idleRight;
-				}
-
-
-				if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-				{
-					lookingleft = true;
-				}
-
-
-				if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-				{
-					lookingleft = false;
-				}
-
-				if (movement[down] == true && gliding == false) {
-					if (lookingleft)
-						currentAnimation = &jumpLeft;
-					else
-						currentAnimation = &jumpRight;
-				}
-
-				if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-				{
-
-					if (movement[down] == false) {
-						currentAnimation = &walkRight;
-					}
-					if (movement[right] == true)
-					{
-						position.x += speed;
-					}
-				}
-
-
-
-				if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-				{
-
-					if (movement[down] == false) {
-						currentAnimation = &walkLeft;
-					}
-					if (movement[left] == true)
-					{
-						position.x -= speed;
-					}
-				}
-
-
-				if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-				{
-
-
-					if (movement[down] == true)
-					{
-
-						speed_jump = 3.0f;
-						if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
-							currentAnimation = &glideLeft;
-							if (gliding == false) {
-								App->audio->PlayFx(glidesound, 1);
-								gliding = true;
-							}
-						}
-						if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
-							currentAnimation = &glideRight;
-							if (gliding == false) {
-								App->audio->PlayFx(glidesound, 1);
-								gliding = true;
-							}
-						}
-					}
-				}
-
-				if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
-					gliding = false;
-				}
-
-				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
-				{
-					jumping = true;
-					speed_jump = original_speed_jump;
-					position.y += speed_jump;
-					App->audio->PlayFx(jumpsound);
-
-					if (lookingleft == true) {
-						currentAnimation = &jumpLeft;
-					}
-
-					else {
-						currentAnimation = &jumpRight;
-					}
-				}
-			}
-		}
+		InputsPlayer(movement, dt);
+		
 		App->render->camera.x = 200 - position.x;
 		App->render->camera.y = 300 - position.y;
 		colliderPlayer->SetPos(position.x, position.y);
@@ -241,6 +96,157 @@ bool ModulePlayer::Update(float dt)
 
 	last_dt = dt;
 	return true;
+}
+
+void ModulePlayer::InputsPlayer(bool* movement, float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		changeLevel = true;
+	}
+
+	if (needRespawn1 == true || needRespawn2 == true || changeLevel == true) {
+		Respawn();
+	}
+
+	if (dead_start == true) {
+		Dead();
+	}
+
+	if (currentAnimation != &dead && dt != 0) {
+
+
+
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			if (lookingleft) {
+				currentAnimation = &hitLeft;
+				started_attack = SDL_GetTicks();
+				attacking = true;
+			}
+			else {
+				currentAnimation = &hitRight;
+				started_attack = SDL_GetTicks();
+				attacking = true;
+			}
+
+
+		}
+
+		if (started_attack + 500 < SDL_GetTicks()) {
+			if (lookingleft)
+				currentAnimation = &idleLeft;
+			else
+				currentAnimation = &idleRight;
+			App->collision->EraseCollider(attack_collider);
+			started_attack = 0;
+			attacking = false;
+		}
+
+		if (movement[down] == true) {
+			CalculateGravity();
+		}
+
+		if (attacking == false) {
+			if (lookingleft == true) {
+				currentAnimation = &idleLeft;
+			}
+			else {
+				currentAnimation = &idleRight;
+			}
+
+
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			{
+				lookingleft = true;
+			}
+
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				lookingleft = false;
+			}
+
+			if (movement[down] == true && gliding == false) {
+				if (lookingleft)
+					currentAnimation = &jumpLeft;
+				else
+					currentAnimation = &jumpRight;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+
+				if (movement[down] == false) {
+					currentAnimation = &walkRight;
+				}
+				if (movement[right] == true)
+				{
+					position.x += speed;
+				}
+			}
+
+
+
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+
+				if (movement[down] == false) {
+					currentAnimation = &walkLeft;
+				}
+				if (movement[left] == true)
+				{
+					position.x -= speed;
+				}
+			}
+
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+
+
+				if (movement[down] == true)
+				{
+
+					speed_jump = 3.0f;
+					if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
+						currentAnimation = &glideLeft;
+						if (gliding == false) {
+							App->audio->PlayFx(glidesound, 1);
+							gliding = true;
+						}
+					}
+					if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
+						currentAnimation = &glideRight;
+						if (gliding == false) {
+							App->audio->PlayFx(glidesound, 1);
+							gliding = true;
+						}
+					}
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
+				gliding = false;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
+			{
+				jumping = true;
+				speed_jump = original_speed_jump;
+				position.y += speed_jump;
+				App->audio->PlayFx(jumpsound);
+
+				if (lookingleft == true) {
+					currentAnimation = &jumpLeft;
+				}
+
+				else {
+					currentAnimation = &jumpRight;
+				}
+			}
+		}
+	}
+
 }
 
 void ModulePlayer::NormalizeAnimations(float dt, float last_dt)
@@ -280,11 +286,6 @@ void ModulePlayer::ResetAnimations()
 		hitRight.Reset();
 	}
 
-}
-
-void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
-{
-	
 }
 
 bool ModulePlayer::Save(pugi::xml_node& config) const

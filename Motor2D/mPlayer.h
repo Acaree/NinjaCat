@@ -20,7 +20,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
+	
 	void CalculateGravity();
 	void Respawn();
 	bool Load(pugi::xml_node&);
@@ -28,7 +28,7 @@ public:
 
 	void ResetAnimations();
 	void NormalizeAnimations(float dt,float last_dt);
-	//void InputsPlayer(bool* movement, float dt);
+	void InputsPlayer(bool* movement, float dt);
 	void Dead();
 public:
 
