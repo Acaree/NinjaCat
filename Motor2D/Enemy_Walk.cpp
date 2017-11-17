@@ -16,6 +16,7 @@
 #include "Enemy.h"
 #include "j1Enemies.h"
 #include "j1Textures.h"
+
 Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 {
 
@@ -33,7 +34,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Enemy(x, y)
 	
 
 	collider = App->collision->AddCollider({(int)position.x, (int)position.y,86,119 }, COLLIDER_WALKENEMY, App->enemies);
-	start_time = SDL_GetTicks();
+	timer.Start();
 }
 
 void Enemy_Walk::Move(float dt)
@@ -69,7 +70,6 @@ void Enemy_Walk::Move(float dt)
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 3 && player_tiles_pos.x - enemy_tiles_pos.x >= -3)
 	{
  		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 	}
 	/*
@@ -90,30 +90,31 @@ void Enemy_Walk::Move(float dt)
 		}
 
 	}*/
-
+	
+	
 	else {
-		//guarrada
-		//creo que esto se puede hacer con el module timer
-
-
-		if (start_time + 2000 < SDL_GetTicks()) {
+		
+		if (timer.Read()>2000) {
 			if (movingLeft) {
 				movingLeft = false;
-				start_time = SDL_GetTicks();
+				timer.Start();
 				animation = &walkLeft;
 			}
 			else {
 				movingLeft = true;
-				start_time = SDL_GetTicks();
+				timer.Start();
 				animation = &walkRight;
 			}
 		}
-
+		
 		if (movingLeft)
-			position.x += speed;
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
 		else
-			position.x -= speed;
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+			
+			
 	}
+	
 		if (i < enemy_path.Count()) {
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 

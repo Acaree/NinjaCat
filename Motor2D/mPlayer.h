@@ -64,6 +64,8 @@ public:
 	bool movingleft;
 	bool movingright;
 
+	bool dead_start;
+
 	int backgroundspeed;
 
 	bool needRespawn1;

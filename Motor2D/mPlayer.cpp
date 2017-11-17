@@ -52,6 +52,8 @@ bool ModulePlayer::Start()
 	
 	colliderPlayer = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, this);
 	currentAnimation = &idleRight;
+
+	dead_start = false;
 	return true;
 }
 
@@ -94,27 +96,25 @@ bool ModulePlayer::Update(float dt)
 			Respawn();
 		}
 
-
+		if (dead_start == true) {
+			Dead();
+		}
 
 		if (currentAnimation != &dead && dt != 0) {
 
 
 
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && started_attack == 0)
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			{
 				if (lookingleft) {
 					currentAnimation = &hitLeft;
 					started_attack = SDL_GetTicks();
 					attacking = true;
-					SDL_Rect attack = { position.x - 20, position.y,20,90 };
-					attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
 				}
 				else {
 					currentAnimation = &hitRight;
 					started_attack = SDL_GetTicks();
 					attacking = true;
-					SDL_Rect attack = { position.x + 75, position.y,20,90 };
-					attack_collider = App->collision->AddCollider(attack, COLLIDER_ATTACK, this);
 				}
 
 
@@ -321,6 +321,8 @@ void ModulePlayer::CalculateGravity() {
 void ModulePlayer::Respawn()
 {
 	// set de level, clean up and load map
+	dead_start = false;
+
 	if (changeLevel == true) {
 		if (currentAnimation != &dead) {
 			App->map->CleanUp();
@@ -378,12 +380,12 @@ void ModulePlayer::Respawn()
 
 void ModulePlayer::Dead()
 {
-	
+
 	if (now == 0) {
 		now = SDL_GetTicks();
 		
 	}
-	if (now + 800 > SDL_GetTicks()) {
+	if (now + 1000 > SDL_GetTicks()) {
 		App->player->currentAnimation = &dead;
 		// stop all movement, else player go out of map, bug
 		movement[down] = false;
@@ -393,10 +395,11 @@ void ModulePlayer::Dead()
 	else {
 		App->player->currentAnimation = &idleRight;
 		now = 0;
+		//dead_start = false;
+		
 		if (isLevel1)
 		{
 			needRespawn1 = true;
-
 		}
 		else
 		{

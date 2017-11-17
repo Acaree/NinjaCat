@@ -295,9 +295,9 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 			case death:
 				//check all positions 
-				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER)
+				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->player->dead_start == false)
 				{
-					App->player->Dead();
+					App->player->dead_start = true;
 				}
 				else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
 				{
@@ -305,7 +305,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 					if (player->CheckCollision(App->player->colliderPlayer->rect))
 					{
 						if (App->player->attacking == false)
-							App->player->Dead();
+							App->player->dead_start = true;
 						else {
 							ret = true;
 						}
