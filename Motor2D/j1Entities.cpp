@@ -242,7 +242,7 @@ bool j1Entities::Save(pugi::xml_node& config) const
 
 	player_node.append_attribute("x") = player->position.x;
 	player_node.append_attribute("y") = player->position.y;
-	player_node.append_attribute("level1") = player->isLevel1;
+	player_node.append_attribute("level1") = App->map->isLevel1;
 	return true;
 }
 
@@ -250,7 +250,7 @@ bool j1Entities::Load(pugi::xml_node& data)
 {
 	bool tmp = data.child("player").attribute("level1").as_bool();
 
-	if (tmp != player->isLevel1)
+	if (tmp != App->map->isLevel1)
 	{
 		player->changeLevel = true;
 		player->loadRespawn = true;

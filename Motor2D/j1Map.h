@@ -135,7 +135,7 @@ private:
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
-
+	bool isLevel1 = true;
 	MapData data;
 
 private:

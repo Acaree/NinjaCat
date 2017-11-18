@@ -84,7 +84,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
-		if (App->entity_m->player->isLevel1 == true)
+		if (App->map->isLevel1 == true)
 		{
 			App->entity_m->player->needRespawn1 = true;
 		}
@@ -96,7 +96,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
-		if (App->entity_m->player->isLevel1 == true)
+		if (App->map->isLevel1 == true)
 		{
 			App->entity_m->player->needRespawn1 = true;
 		}

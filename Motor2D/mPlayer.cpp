@@ -49,7 +49,7 @@ Player::Player(int x, int y) : Entity(x, y)
 	collider = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, App->entity_m);
 	animation = &idleRight;
 
-	isLevel1 = true;
+	
 
 	death = false;
 }
@@ -327,17 +327,17 @@ void Player::Respawn()
 		if (animation != &dead) {
 			App->map->CleanUp();
 			changeLevel = false;
-			if (isLevel1 == true)
+			if (App->map->isLevel1 == true)
 			{
 
 				App->map->Load("level2ND.tmx");
-				
+				App->map->isLevel1 = false;
 				needRespawn2 = true;
 			}
-			else if (isLevel1 == false)
+			else if (App->map->isLevel1 == false)
 			{
 				App->map->Load("level1ND.tmx");
-				
+				App->map->isLevel1 = true;
 				needRespawn1 = true;
 			}
 			animation = &idleRight;
@@ -353,7 +353,7 @@ void Player::Respawn()
 			position.y = respawnCordenate.y;
 		}
 		needRespawn1 = false;
-		isLevel1 = true;
+		//isLevel1 = true;
 		App->map->CreateEnemies();
 	}
 	else if (needRespawn2 == true)
@@ -366,7 +366,7 @@ void Player::Respawn()
 			position.y = respawnCordenate.y;
 		}
 		needRespawn2 = false;
-		isLevel1 = false;
+		//isLevel1 = false;
 		App->map->CreateEnemies();
 	}
 	animation = &idleRight;
@@ -397,7 +397,7 @@ void Player::Dead()
 		now = 0;
 		//dead_start = false;
 		
-		if (isLevel1)
+		if (App->map->isLevel1)
 		{
 			needRespawn1 = true;
 		}
@@ -407,7 +407,7 @@ void Player::Dead()
 		}
 		movement[down] = false;
 	}
-	
+
 }
 
 void Player::Draw(SDL_Texture* sprites) {}
