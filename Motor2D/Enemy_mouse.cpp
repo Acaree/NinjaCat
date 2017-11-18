@@ -13,10 +13,10 @@
 #include "j1Pathfinding.h"
 #include "p2DynArray.h"
 #include "Enemy_mouse.h"
-#include "Enemy.h"
-#include "j1Enemies.h"
+#include "Entity.h"
+#include "j1Entities.h"
 #include "j1Textures.h"
-Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
+Enemy_Mouse::Enemy_Mouse(int x, int y) : Entity(x, y)
 {
 	
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
@@ -31,7 +31,7 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Enemy(x, y)
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 	
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->enemies );
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->entity_m );
 }
 
 void Enemy_Mouse::Move(float dt)
@@ -56,7 +56,7 @@ void Enemy_Mouse::Move(float dt)
 		}*/
 
 		iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
-		iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+		iPoint player_tiles_pos = App->map->WorldToMap(App->entity_m->player->position.x, App->entity_m->player->position.y);
 
 		if (player_tiles_pos.x - enemy_tiles_pos.x <= 4 && player_tiles_pos.x - enemy_tiles_pos.x >= -4 && player_tiles_pos.y - enemy_tiles_pos.y <= 4 && player_tiles_pos.y - enemy_tiles_pos.y >= -4)
 		{

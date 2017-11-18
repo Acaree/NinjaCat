@@ -8,7 +8,7 @@
 #include "mPlayer.h"
 #include "mCollision.h"
 #include "j1Input.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -59,10 +59,10 @@ void j1Map::Draw()
 						SDL_Rect rect = item_set->data->GetTileRect(tileID);
 						// if name is background print first
 						if (item_layer->data->name == "Background") {
-							if (App->player->movement[left]) {
+							if (App->entity_m->player->movement[left]) {
 								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
 							}
-							else if (App->player->movement[right]) {
+							else if (App->entity_m->player->movement[right]) {
 								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
 							}
 							else {
@@ -487,7 +487,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 void j1Map::CreateEnemies() {
 
-	App->enemies->ResetEnemies();
+	App->entity_m->ResetEntities();
 	if (App->map->data.layers.start->next->next != nullptr)
 	{
 		//DRAW COLLISIONS
@@ -513,7 +513,7 @@ void j1Map::CreateEnemies() {
 				{
 					iPoint position = App->map->MapToWorld(x, y);
 
-					App->enemies->AddEnemy(ENEMY_MOUSE, position.x, position.y);
+					App->entity_m->AddEntity(ENEMY_FLY, position.x, position.y);
 
 				}
 
@@ -521,7 +521,15 @@ void j1Map::CreateEnemies() {
 				{
 					iPoint position = App->map->MapToWorld(x, y);
 
-					App->enemies->AddEnemy(ENEMY_WALK, position.x, position.y);
+					App->entity_m->AddEntity(ENEMY_WALK, position.x, position.y);
+
+				}
+
+				if (tileID == 144)
+				{
+					iPoint position = App->map->MapToWorld(x, y);
+
+					App->entity_m->AddEntity(ENTITY_PLAYER, position.x, position.y);
 
 				}
 

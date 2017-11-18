@@ -4,7 +4,8 @@
 #define MAX_COLLIDERS 50
 
 #include "j1Module.h"
-
+#include "Entity.h"
+#include "mPlayer.h"
 enum Direction;
 enum COLLIDER_TYPE
 {

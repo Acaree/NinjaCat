@@ -10,35 +10,31 @@
 #include "p2Log.h"
 #include "Animation.h"
 #include "j1Map.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 
-ModulePlayer::ModulePlayer()
+Player::Player(int x, int y) : Entity(x, y)
 {
-	name.create("player");
-}
+	pugi::xml_document config_file;
+	pugi::xml_node config;
 
-ModulePlayer::~ModulePlayer()
-{}
+	pugi::xml_parse_result result = config_file.load_file("config.xml");
 
-// Load assets
-bool ModulePlayer::Awake(pugi::xml_node& config)
-{
+	config = config_file.child("config");
+
 	needRespawn1 = config.child("level1").attribute("needRespawn").as_bool();
 	respawnTile1.x = config.child("level1").attribute("respawnX").as_int();
 	respawnTile1.y = config.child("level1").attribute("respawnY").as_int();
 
 	needRespawn2 = config.child("level2").attribute("needRespawn").as_bool();
-	respawnTile2.x= config.child("level2").attribute("respawnX").as_int();
+	respawnTile2.x = config.child("level2").attribute("respawnX").as_int();
 	respawnTile2.y = config.child("level2").attribute("respawnY").as_int();
-	return true;
-}
-bool ModulePlayer::Start()
-{
+
+
 	graphics = App->tex->Load("maps/spriteSheet.png");
-	jumpsound=App->audio->LoadFx("audio/jump_fx.wav");
+	jumpsound = App->audio->LoadFx("audio/jump_fx.wav");
 	glidesound = App->audio->LoadFx("audio/glide.wav");
 
-	idleRight= App->tex->CreateAnimation("player", "idleRight", true);
+	idleRight = App->tex->CreateAnimation("player", "idleRight", true);
 	idleLeft = App->tex->CreateAnimation("player", "idleLeft", true);
 	walkRight = App->tex->CreateAnimation("player", "walkRight", true);
 	walkLeft = App->tex->CreateAnimation("player", "walkLeft", true);
@@ -49,30 +45,28 @@ bool ModulePlayer::Start()
 	jumpLeft = App->tex->CreateAnimation("player", "jumpLeft", false);
 	hitLeft = App->tex->CreateAnimation("player", "hitLeft", false);
 	hitRight = App->tex->CreateAnimation("player", "hitRight", false);
-	
-	colliderPlayer = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, this);
-	currentAnimation = &idleRight;
-	
-	dead_start = false;
-	return true;
+
+	collider = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, App->entity_m);
+	animation = &idleRight;
+
+	isLevel1 = true;
+
+	death = false;
 }
+
+
+	//App->tex->UnLoad(graphics);
+
+
+// Load assets
 
 // Unload assets
-bool ModulePlayer::CleanUp()
-{
-	
-	App->tex->UnLoad(graphics);
-	
-	colliderPlayer->to_delete = true;
-
-	return true;
-}
 
 // Update: draw background
-bool ModulePlayer::Update(float dt)
+void Player::Move(float dt)
 {
 	
-		App->collision->CollisionToWorld(colliderPlayer, movement);
+		App->collision->CollisionToWorld(collider, movement);
 
 		speed = 300 * dt;
 
@@ -84,33 +78,32 @@ bool ModulePlayer::Update(float dt)
 
 		if (attacking == false)
 		{
-			colliderPlayer->SetPos(position.x, position.y);
+			collider->SetPos(position.x, position.y);
 		}
 		else if (lookingleft)
 		{
-			colliderPlayer->SetPos(position.x - 40, position.y);
+			collider->SetPos(position.x - 40, position.y);
 		}
 		else
 		{
-			colliderPlayer->SetPos(position.x+20, position.y);
+			collider->SetPos(position.x+20, position.y);
 		}
 
 		ResetAnimations();
 	
-	if (currentAnimation == &hitLeft)
+	if (animation == &hitLeft)
 	{
-		App->render->Blit(graphics, position.x - 60, position.y, &(currentAnimation->GetCurrentFrame()));
+		App->render->Blit(graphics, position.x - 60, position.y, &(animation->GetCurrentFrame()));
 	}
 	else
 	{
-		App->render->Blit(graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()));
+		App->render->Blit(graphics, position.x, position.y, &(animation->GetCurrentFrame()));
 	}
 
 	last_dt = dt;
-	return true;
 }
 
-void ModulePlayer::InputsPlayer(bool* movement, float dt)
+void Player::InputsPlayer(bool* movement, float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		changeLevel = true;
@@ -120,11 +113,11 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 		Respawn();
 	}
 
-	if (dead_start == true) {
+	if (death == true) {
 		Dead();
 	}
 
-	if (currentAnimation != &dead && dt != 0) {
+	if (animation != &dead && dt != 0) {
 
 
 
@@ -132,12 +125,12 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 		{
 			
 			if (lookingleft) {
-				currentAnimation = &hitLeft;
+				animation = &hitLeft;
 				started_attack = SDL_GetTicks();
 				attacking = true;
 			}
 			else {
-				currentAnimation = &hitRight;
+				animation = &hitRight;
 				started_attack = SDL_GetTicks();
 				attacking = true;
 			}
@@ -148,12 +141,12 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 		if (started_attack + 500 < SDL_GetTicks() && attacking == true) {
 			if (lookingleft)
 			{
-				currentAnimation = &idleLeft;
+				animation = &idleLeft;
 				
 			}
 			else
 			{
-				currentAnimation = &idleRight;
+				animation = &idleRight;
 			}
 			App->collision->EraseCollider(attack_collider);
 			started_attack = 0;
@@ -161,16 +154,15 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 			
 		}
 
-		if (movement[down] == true) {
 			CalculateGravity();
-		}
+		
 
 		if (attacking == false) {
 			if (lookingleft == true) {
-				currentAnimation = &idleLeft;
+				animation = &idleLeft;
 			}
 			else {
-				currentAnimation = &idleRight;
+				animation = &idleRight;
 			}
 
 
@@ -187,16 +179,16 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 
 			if (movement[down] == true && gliding == false) {
 				if (lookingleft)
-					currentAnimation = &jumpLeft;
+					animation = &jumpLeft;
 				else
-					currentAnimation = &jumpRight;
+					animation = &jumpRight;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 
 				if (movement[down] == false) {
-					currentAnimation = &walkRight;
+					animation = &walkRight;
 				}
 				if (movement[right] == true)
 				{
@@ -210,7 +202,7 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 			{
 
 				if (movement[down] == false) {
-					currentAnimation = &walkLeft;
+					animation = &walkLeft;
 				}
 				if (movement[left] == true)
 				{
@@ -228,14 +220,14 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 
 					speed_jump = 3.0f;
 					if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
-						currentAnimation = &glideLeft;
+						animation = &glideLeft;
 						if (gliding == false) {
 							App->audio->PlayFx(glidesound, 1);
 							gliding = true;
 						}
 					}
 					if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || lookingleft == false) {
-						currentAnimation = &glideRight;
+						animation = &glideRight;
 						if (gliding == false) {
 							App->audio->PlayFx(glidesound, 1);
 							gliding = true;
@@ -256,11 +248,11 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 				App->audio->PlayFx(jumpsound);
 
 				if (lookingleft == true) {
-					currentAnimation = &jumpLeft;
+					animation = &jumpLeft;
 				}
 
 				else {
-					currentAnimation = &jumpRight;
+					animation = &jumpRight;
 				}
 			}
 		}
@@ -268,7 +260,7 @@ void ModulePlayer::InputsPlayer(bool* movement, float dt)
 
 }
 
-void ModulePlayer::NormalizeAnimations(float dt, float last_dt)
+void Player::NormalizeAnimations(float dt, float last_dt)
 {
 	if(dt != last_dt)
 	{
@@ -287,27 +279,27 @@ void ModulePlayer::NormalizeAnimations(float dt, float last_dt)
 
 
 }
-void ModulePlayer::ResetAnimations()
+void Player::ResetAnimations()
 {
-	if (currentAnimation != &jumpLeft) {
+	if (animation != &jumpLeft) {
 		jumpLeft.Reset();
 	}
-	if (currentAnimation != &jumpRight) {
+	if (animation != &jumpRight) {
 		jumpRight.Reset();
 	}
-	if (currentAnimation != &dead) {
+	if (animation != &dead) {
 		dead.Reset();
 	}
-	if (currentAnimation != &hitLeft) {
+	if (animation != &hitLeft) {
 		hitLeft.Reset();
 	}
-	if (currentAnimation != &hitRight) {
+	if (animation != &hitRight) {
 		hitRight.Reset();
 	}
 
 }
 
-bool ModulePlayer::Save(pugi::xml_node& config) const
+bool Player::Save(pugi::xml_node& config) const
 {
 	pugi::xml_node player = config.append_child("player");
 
@@ -317,7 +309,7 @@ bool ModulePlayer::Save(pugi::xml_node& config) const
 	return true;
 }
 
-bool ModulePlayer::Load(pugi::xml_node& data)
+bool Player::Load(pugi::xml_node& data)
 {
 	bool tmp = data.child("player").attribute("level1").as_bool();
 		
@@ -333,19 +325,20 @@ bool ModulePlayer::Load(pugi::xml_node& data)
 	return true;
 }
 
-void ModulePlayer::CalculateGravity() {
+void Player::CalculateGravity() {
 	//Trap for colliders work "good" 
-	if (speed_jump < 20)
-	{
-		speed_jump += gravity;
-	}
-	else
-	{
-		speed_jump = 20;
-	}
+	if (movement[down] == true) {
+		if (speed_jump < 20)
+		{
+			speed_jump += gravity;
+		}
+		else
+		{
+			speed_jump = 20;
+		}
 
-	position.y += speed_jump;
-
+		position.y += speed_jump;
+	}
 	if (movement[down] == false && speed_jump > 0)
 	{
 		jumping = false;
@@ -354,13 +347,13 @@ void ModulePlayer::CalculateGravity() {
 	}
 }
 
-void ModulePlayer::Respawn()
+void Player::Respawn()
 {
 	// set de level, clean up and load map
-	dead_start = false;
+	death = false;
 
 	if (changeLevel == true) {
-		if (currentAnimation != &dead) {
+		if (animation != &dead) {
 			App->map->CleanUp();
 			changeLevel = false;
 			if (isLevel1 == true)
@@ -376,7 +369,7 @@ void ModulePlayer::Respawn()
 				
 				needRespawn1 = true;
 			}
-			currentAnimation = &idleRight;
+			animation = &idleRight;
 		}
 	}
 
@@ -405,7 +398,7 @@ void ModulePlayer::Respawn()
 		isLevel1 = false;
 		App->map->CreateEnemies();
 	}
-	currentAnimation = &idleRight;
+	animation = &idleRight;
 	//load respawn: if is true don't take the position of tile in config.xml take the position in save_game.xml
 	loadRespawn = false;
 	// movement true : collider respawn > collider player
@@ -414,7 +407,7 @@ void ModulePlayer::Respawn()
 	
 }
 
-void ModulePlayer::Dead()
+void Player::Dead()
 {
 
 	if (now == 0) {
@@ -422,14 +415,14 @@ void ModulePlayer::Dead()
 		
 	}
 	if (now + 1000 > SDL_GetTicks()) {
-		App->player->currentAnimation = &dead;
+		animation = &dead;
 		// stop all movement, else player go out of map, bug
 		movement[down] = false;
 		movement[left] = false;
 		movement[right] = false;
 	}
 	else {
-		App->player->currentAnimation = &idleRight;
+		animation = &idleRight;
 		now = 0;
 		//dead_start = false;
 		
@@ -445,3 +438,6 @@ void ModulePlayer::Dead()
 	}
 	
 }
+
+void Player::Draw(SDL_Texture* sprites) {}
+void Player::OnCollision(Collider* collider) {}

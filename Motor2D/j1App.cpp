@@ -11,8 +11,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
-#include "j1Enemies.h"
-#include "mPlayer.h"
+#include "j1Entities.h"
 #include "j1Pathfinding.h"
 #include "mCollision.h"
 #include "Brofiler\Brofiler.h"
@@ -30,8 +29,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	player = new ModulePlayer();
-	enemies = new j1Enemies();
+	entity_m = new j1Entities();
 	collision = new ModuleCollision();
 	pathfinding = new j1PathFinding();
 
@@ -44,8 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(pathfinding);
-	AddModule(player);
-	AddModule(enemies);
+	AddModule(entity_m);
 	AddModule(collision);
 	// render last to swap buffer
 	AddModule(render);
@@ -336,7 +333,7 @@ void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
-	if (App->player->currentAnimation != &App->player->dead) {
+	if (App->entity_m->player->animation != &App->entity_m->player->dead) {
 		if (load_game.GetString() != "save_game.xml")
 		{
 			load_game = "save_game.xml";

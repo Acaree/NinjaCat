@@ -1,13 +1,13 @@
 #ifndef __ENEMY_WALK_H__
 #define __ENEMY_WALK_H__
 
-#include "Enemy.h"
+#include "Entity.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
 #include "j1Timer.h"
 enum Direction;
 
-class Enemy_Walk : public Enemy
+class Enemy_Walk : public Entity
 {
 private:
 

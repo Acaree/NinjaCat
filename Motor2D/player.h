@@ -1,7 +1,7 @@
-#ifndef __Player_H__
-#define __Player_H__
+#ifndef __ModulePlayer_H__
+#define __ModulePlayer_H__
 
-#include "Entity.h"
+#include "j1Module.h"
 #include "mCollision.h"
 #include "Animation.h"
 #include "p2Point.h"
@@ -10,28 +10,31 @@ struct SDL_Texture;
 struct Collider;
 enum Direction;
 
-class Player : public Entity
+class ModulePlayer : public j1Module
 {
 public:
-	Player(int x, int y);
+	ModulePlayer();
+	~ModulePlayer();
 
-	void Move(float dt);
-	void Draw(SDL_Texture* sprites);
-	void OnCollision(Collider* collider);
-	
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool Update(float dt);
+	bool CleanUp();
+
 	void CalculateGravity();
 	void Respawn();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
 	void ResetAnimations();
-	void NormalizeAnimations(float dt,float last_dt);
+	void NormalizeAnimations(float dt, float last_dt);
 	void InputsPlayer(bool* movement, float dt);
 	void Dead();
 public:
 
 	SDL_Texture* graphics = nullptr;
 
+	Animation* currentAnimation = nullptr;
 	Animation idleRight;
 	Animation idleLeft;
 	Animation walkRight;
@@ -47,13 +50,13 @@ public:
 	uint jumpsound;
 	uint glidesound;
 
-
-	iPoint respawnTile1;//sobra
-	iPoint respawnTile2;//sobra
-	
+	fPoint position;
+	iPoint respawnTile1;
+	iPoint respawnTile2;
+	Collider* colliderPlayer;
 
 	float gravity = 1.0f;
-	float original_speed_jump=-20.0f;
+	float original_speed_jump = -20.0f;
 	float speed_jump;
 	bool jumping = false;
 	bool gliding = false;
@@ -64,7 +67,7 @@ public:
 	bool movingleft;
 	bool movingright;
 
-	
+	bool dead_start;
 
 	int backgroundspeed;
 
@@ -73,7 +76,7 @@ public:
 	bool needRespawn2;
 	bool isLevel1;
 	bool movement[4] = { true,true,true,true };
-	bool changeLevel =false;
+	bool changeLevel = false;
 	bool loadRespawn = false;
 	float speed;
 	int started_attack = 0;

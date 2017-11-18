@@ -76,10 +76,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Enemy_mouse.cpp" />
     <ClCompile Include="Enemy_Walk.cpp" />
-    <ClCompile Include="j1Enemies.cpp" />
+    <ClCompile Include="j1Entities.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -99,10 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Enemy_mouse.h" />
     <ClInclude Include="Enemy_Walk.h" />
-    <ClInclude Include="j1Enemies.h" />
+    <ClInclude Include="j1Entities.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />

@@ -34,32 +34,32 @@
     <ClCompile Include="j1Map.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="mPlayer.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="mCollision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemies.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy_mouse.cpp">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy_Walk.cpp">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entities.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_mouse.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Walk.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayer.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +114,6 @@
     <ClInclude Include="j1Map.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="mPlayer.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
@@ -126,23 +123,26 @@
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemies.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_mouse.h">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Walk.h">
-      <Filter>Desenvolupament  ========\Modules\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entities.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_mouse.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Walk.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="mPlayer.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,8 +164,11 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Enemies">
+    <Filter Include="Desenvolupament  ========\Modules\Entities">
       <UniqueIdentifier>{643e301d-83a4-442e-99ee-e13b63f50bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Enemies">
+      <UniqueIdentifier>{04616831-f043-49cc-aa94-b527a01ec336}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

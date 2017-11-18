@@ -1,13 +1,13 @@
 #include "j1App.h"
-#include "Enemy.h"
+#include "Entity.h"
 #include "mCollision.h"
 #include "j1Render.h"
 #include "j1Audio.h"
 
-Enemy::Enemy(int x, int y) : position(x, y)
+Entity::Entity(int x, int y) : position(x, y)
 {}
 
-Enemy::~Enemy()
+Entity::~Entity()
 {
 	if (collider != nullptr)
 		collider->to_delete = true;
@@ -15,12 +15,12 @@ Enemy::~Enemy()
 
 }
 
-const Collider* Enemy::GetCollider() const
+const Collider* Entity::GetCollider() const
 {
 	return collider;
 }
 
-void Enemy::Draw(SDL_Texture* sprites)
+void Entity::Draw(SDL_Texture* sprites)
 {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
@@ -33,7 +33,7 @@ void Enemy::Draw(SDL_Texture* sprites)
 
 }
 
-void Enemy::OnCollision(Collider* collider)
+void Entity::OnCollision(Collider* collider)
 {
 
 }

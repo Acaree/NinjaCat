@@ -3,7 +3,8 @@
 #include "j1Render.h"
 #include "mCollision.h"
 #include "j1Map.h"
-#include "mPlayer.h"
+#include "j1Entities.h"
+
 
 ModuleCollision::ModuleCollision()
 {
@@ -272,7 +273,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 					if (wall == leftDownPlayer || wall == rightDownPlayer || dead == leftDownPlayer || dead == rightDownPlayer)
 					{
 						movement[down] = false;
-						App->player->jumping = false;
+					
 					}
 					else
 					{
@@ -295,19 +296,19 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 			case death:
 				//check all positions 
-				if(App->player->godMode ==false)
+				if(App->entity_m->player->godMode ==false)
 				{
-				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->player->dead_start == false)
+				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->entity_m->player->death == false)
 				{
-					App->player->dead_start = true;
+					App->entity_m->player->death = true;
 				}
 				else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
 				{
 
-					if (player->CheckCollision(App->player->colliderPlayer->rect))
+					if (player->CheckCollision(App->entity_m->player->collider->rect))
 					{
-						if (App->player->attacking == false)
-							App->player->dead_start = true;
+						if (App->entity_m->player->attacking == false)
+							App->entity_m->player->death = true;
 						else {
 							ret = true;
 						}
@@ -320,14 +321,14 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 				if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
 				{
-					App->player->changeLevel = true;
-					if (App->player->isLevel1 == false)
+					App->entity_m->player->changeLevel = true;
+					if (App->entity_m->player->isLevel1 == false)
 					{
-						App->player->isLevel1 = true;
+						App->entity_m->player->isLevel1 = true;
 					}
 					else
 					{
-						App->player->isLevel1 = false;
+						App->entity_m->player->isLevel1 = false;
 					}
 				}
 			}

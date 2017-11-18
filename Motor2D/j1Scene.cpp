@@ -8,7 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
 
@@ -82,44 +82,44 @@ bool j1Scene::Update(float dt)
 {
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
-		if (App->player->isLevel1 == true)
+		if (App->entity_m->player->isLevel1 == true)
 		{
-			App->player->needRespawn1 = true;
+			App->entity_m->player->needRespawn1 = true;
 		}
 		else
 		{
-			App->player->changeLevel = true;
+			App->entity_m->player->changeLevel = true;
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
-		if (App->player->isLevel1 == true)
+		if (App->entity_m->player->isLevel1 == true)
 		{
-			App->player->needRespawn1 = true;
+			App->entity_m->player->needRespawn1 = true;
 		}
 		else
 		{
-			App->player->needRespawn2 = true;
+			App->entity_m->player->needRespawn2 = true;
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN  && App->player->currentAnimation != &App->player->dead && App->player->jumping == false) 
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN  && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
 		App->LoadGame();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN  && App->player->currentAnimation != &App->player->dead && App->player->jumping == false)
+	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN  && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		if (App->player->godMode == true)
-			App->player->godMode = false;
+		if (App->entity_m->player->godMode == true)
+			App->entity_m->player->godMode = false;
 		else
-			App->player->godMode = true;
+			App->entity_m->player->godMode = true;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{

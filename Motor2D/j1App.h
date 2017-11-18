@@ -15,8 +15,7 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class ModulePlayer;
-class j1Enemies;
+class j1Entities;
 class ModuleCollision;
 class j1PathFinding;
 
@@ -89,8 +88,7 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	ModulePlayer*       player;
-	j1Enemies*			enemies;
+	j1Entities*			entity_m;
 	ModuleCollision*    collision;
 	j1PathFinding*		pathfinding;
 

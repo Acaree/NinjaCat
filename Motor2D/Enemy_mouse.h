@@ -1,13 +1,13 @@
 #ifndef __ENEMY_MOUSE_H__
 #define __ENEMY_MOUSE_H__
 
-#include "Enemy.h"
+#include "Entity.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
 #include "j1Timer.h"
 enum Direction;
 
-class Enemy_Mouse : public Enemy
+class Enemy_Mouse : public Entity
 {
 private:
 	

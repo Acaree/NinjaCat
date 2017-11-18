@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
 #include "p2Point.h"
 #include "Animation.h"
@@ -9,26 +9,29 @@
 struct SDL_Texture;
 struct Collider;
 
-class Enemy
+enum Direction { up = 0, down, left, right, nextLevel, death };
+
+class Entity
 {
 protected:
-	Animation* animation = nullptr;
+	
 
 
 
 
 public:
 	fPoint position;
-
+	Animation* animation = nullptr;
 	float hitpoints;
 	bool death = false;
 	uint enemy;
 	Collider* collider = nullptr;
+	bool isPlayer = false;
 
 
 public:
-	Enemy(int x, int y);
-	virtual ~Enemy();
+	Entity(int x, int y);
+	virtual ~Entity();
 
 	const Collider* GetCollider() const;
 
