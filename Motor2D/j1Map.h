@@ -136,6 +136,7 @@ private:
 
 public:
 	bool isLevel1 = true;
+	bool respawnPosition = false;
 	MapData data;
 
 private:

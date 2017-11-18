@@ -199,29 +199,29 @@
    </walkRight>
   
   <deadRight>
-    <frame x="0" y="673" width="146" height="104"/>
-    <frame x="146" y="673" width="146" height="104"/>
-    <frame x="292" y="673" width="146" height="104"/>
-    <frame x="438" y="673" width="146" height="104"/>
-    <frame x="584" y="673" width="146" height="104"/>
-    <frame x="730" y="673" width="146" height="104"/>
-    <frame x="876" y="673" width="146" height="104"/>
-    <frame x="1022" y="673" width="146" height="104"/>
-    <frame x="1168" y="673" width="146" height="104"/>
-    <frame x="1314" y="673" width="146" height="104"/>
+    <frame x="0" y="674" width="146" height="104"/>
+    <frame x="146" y="674" width="146" height="104"/>
+    <frame x="292" y="674" width="146" height="104"/>
+    <frame x="438" y="674" width="146" height="104"/>
+    <frame x="584" y="674" width="146" height="104"/>
+    <frame x="730" y="674" width="146" height="104"/>
+    <frame x="876" y="674" width="146" height="104"/>
+    <frame x="1022" y="674" width="146" height="104"/>
+    <frame x="1168" y="674" width="146" height="104"/>
+    <frame x="1314" y="674" width="146" height="104"/>
     </deadRight>
   
   <deadLeft>
-    <frame x="1314" y="872" width="146" height="104"/>
-    <frame x="1168" y="872" width="146" height="104"/>
-    <frame x="1022" y="872" width="146" height="104"/>
-    <frame x="876" y="872" width="146" height="104"/>
-    <frame x="730" y="872" width="146" height="104"/>
-    <frame x="584" y="872" width="146" height="104"/>
-    <frame x="438" y="872" width="146" height="104"/>
-    <frame x="292" y="872" width="146" height="104"/>
-    <frame x="146" y="872" width="146" height="104"/>
-    <frame x="0" y="872" width="146" height="104"/>
+    <frame x="1314" y="873" width="146" height="104"/>
+    <frame x="1168" y="873" width="146" height="104"/>
+    <frame x="1022" y="873" width="146" height="104"/>
+    <frame x="876" y="873" width="146" height="104"/>
+    <frame x="730" y="873" width="146" height="104"/>
+    <frame x="584" y="873" width="146" height="104"/>
+    <frame x="438" y="873" width="146" height="104"/>
+    <frame x="292" y="873" width="146" height="104"/>
+    <frame x="146" y="873" width="146" height="104"/>
+    <frame x="0" y="873" width="146" height="104"/>
   </deadLeft>
   
   <speeds walkRight="10" walkLeft ="10" deadRight="10" deadLeft="10"/>

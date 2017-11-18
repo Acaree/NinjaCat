@@ -8,10 +8,10 @@
 	<scene />
 	<pathfinding />
 	<entities>
-		<player x="256" y="1045" level1="true" />
+		<player x="689.200317" y="789" level1="false" />
 	</entities>
 	<:anonymous />
 	<renderer>
-		<camera x="-56" y="-745" />
+		<camera x="-489" y="-489" />
 	</renderer>
 </game_state>
