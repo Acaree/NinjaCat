@@ -61,7 +61,7 @@ public:
 	bool godMode = false;
 	bool needRespawn1;
 	bool needRespawn2;
-	bool isLevel1;
+	
 	bool changeLevel =false;
 	bool loadRespawn = false;
 	int started_attack = 0;

@@ -322,13 +322,13 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
 				{
 					App->entity_m->player->changeLevel = true;
-					if (App->entity_m->player->isLevel1 == false)
+					if (App->map->isLevel1 == false)
 					{
-						App->entity_m->player->isLevel1 = true;
+						App->map->isLevel1 = true;
 					}
 					else
 					{
-						App->entity_m->player->isLevel1 = false;
+						App->map->isLevel1 = false;
 					}
 				}
 			}

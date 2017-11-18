@@ -29,7 +29,6 @@ public:
 	Collider* collider = nullptr;
 	bool isPlayer = false;
 	bool movement[4] = { true,true,true,true };
-
 public:
 	Entity(int x, int y);
 	virtual ~Entity();
