@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
+#include "j1Timer.h"
 enum Direction;
 
 class Enemy_Mouse : public Enemy
@@ -25,7 +26,8 @@ public:
 	p2DynArray<iPoint> enemy_path;
 	bool movement[4] = { true,true,true,true };
 	int now = 0;
-	
+	j1Timer timer;
+	bool movingLeft = false;
 };
 
 #endif

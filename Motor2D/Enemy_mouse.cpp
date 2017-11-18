@@ -63,23 +63,26 @@ void Enemy_Mouse::Move(float dt)
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 		}
-		else
-		{
-			iPoint previousTile = App->map->MapToWorld(enemy_tiles_pos.x - 1, enemy_tiles_pos.y);
-			if (position.x == originalpos.x)
-			{
+		else {
+
+			if (timer.Read() > 2000) {
+
+				if (movingLeft) {
+					movingLeft = false;
+					timer.Start();
+					animation = &walkLeftFly;
+				}
+				else {
+					movingLeft = true;
+					timer.Start();
+					animation = &walkRightFly;
+				}
+			}
+			if (movingLeft)
+				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
+			else
 				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-			}
-			else if (movement[left] == false)
-			{
-				iPoint originTile = App->map->WorldToMap(originalpos.x, originalpos.y);
-				App->pathfinding->CreatePathManhattan(enemy_tiles_pos, originTile, enemy_path);
-
-				if (originalpos.x == position.x)
-					App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-			}
 		}
-
 
 
 		if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
@@ -90,12 +93,12 @@ void Enemy_Mouse::Move(float dt)
 			{
 				animation = &deadFlyLeft;
 			}
-			else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+			else if (enemy_tiles_pos.x < enemy_path[i].x && (int)position.x < tileInMap.x && movement[right] == true) {
 				position.x += speed;
 				animation = &walkRightFly;
 				current_in_path = true;
 			}
-			else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
+			else if (enemy_tiles_pos.x > enemy_path[i].x && (int)position.x > tileInMap.x && movement[left] == true) {
 				position.x -= speed;
 				animation = &walkLeftFly;
 				current_in_path = true;
