@@ -27,7 +27,6 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 	deadLeft = App->tex->CreateAnimation("zombie", "deadLeft", false);
 	deadRight = App->tex->CreateAnimation("zombie", "deadRight", false);
 	//dead = App->tex->CreateAnimation("girl", "dead", false);
-	animation = &walkLeft;
 	zombiesound = App->audio->LoadFx("audio/zombie.wav");
 
 	originalpos.x=position.x = x;

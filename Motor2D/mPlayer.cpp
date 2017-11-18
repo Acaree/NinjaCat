@@ -54,7 +54,13 @@ Player::Player(int x, int y) : Entity(x, y)
 	death = false;
 }
 
+Player::~Player()
+{
+	App->tex->UnLoad(graphics);
+	
 
+
+}
 	//App->tex->UnLoad(graphics);
 
 
