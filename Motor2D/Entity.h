@@ -29,6 +29,7 @@ public:
 	Collider* collider = nullptr;
 	bool isPlayer = false;
 	bool movement[4] = { true,true,true,true };
+	int now = 0;
 public:
 	Entity(int x, int y);
 	virtual ~Entity();
@@ -39,6 +40,7 @@ public:
 	virtual void Move(float dt) {};
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);
+	virtual void Dead() { };
 };
 
 #endif // __ENEMY_H__

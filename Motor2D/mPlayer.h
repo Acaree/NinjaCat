@@ -15,6 +15,7 @@ class Player : public Entity
 public:
 	Player(int x, int y);
 	~Player();
+
 	void Move(float dt);
 	void Draw(SDL_Texture* sprites);
 	void OnCollision(Collider* collider);

@@ -36,9 +36,10 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Entity(x, y)
 
 void Enemy_Mouse::Move(float dt)
 {
-	
-		death = App->collision->CollisionToWorld(collider, movement);
+	if(isDead==false)
+		isDead = App->collision->CollisionToWorld(collider, movement);
 		speed = 90 * dt;
+		NormalizeAnimations(dt);
 		/*if (movement[death] == true)  //need think
 		{
 			if (now == 0) {
@@ -85,9 +86,9 @@ void Enemy_Mouse::Move(float dt)
 			//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
 			// el iPoint tileInMap coje la posicion en el mapa de la tile para dirijir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
-			if (death == true)
+			if (isDead == true)
 			{
-				animation = &deadLeft;
+				Dead();
 			}
 			else if (enemy_tiles_pos.x < enemy_path[i].x && (int)position.x < tileInMap.x && movement[right] == true) {
 				position.x += speed;
@@ -123,10 +124,36 @@ void Enemy_Mouse::Move(float dt)
 
 void Enemy_Mouse::NormalizeAnimations(float dt) {
 
-
 		walkLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
 		walkRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
 		deadLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
 		deadRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
 
+}
+
+void Enemy_Mouse::Dead()
+{
+
+	if (now == 0) {
+		now = SDL_GetTicks();
+
+	}
+	if (now + 1000 > SDL_GetTicks()) {
+		if (movingLeft)
+		{
+			animation = &deadLeft;
+		}
+		else
+			animation = &deadRight;
+
+		// stop all movement, else player go out of map, bug
+		movement[down] = false;
+		movement[left] = false;
+		movement[right] = false;
+	}
+	else
+	{
+		now = 0;
+		death = true;
+	}
 }

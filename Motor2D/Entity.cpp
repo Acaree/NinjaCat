@@ -33,7 +33,6 @@ void Entity::Draw(SDL_Texture* sprites)
 }
 
 
-
 void Entity::OnCollision(Collider* collider)
 {
 

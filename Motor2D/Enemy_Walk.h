@@ -25,6 +25,8 @@ public:
 
 	Enemy_Walk(int x, int y);
 	void Move(float dt);
+	void Dead();
+	bool isDead = false;
 	int i = 0; // pathcount
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;

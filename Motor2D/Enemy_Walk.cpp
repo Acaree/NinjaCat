@@ -40,6 +40,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 
 void Enemy_Walk::Move(float dt)
 {
+	NormalizeAnimations(dt);
 
 	if (soundtimer.Read() > 10000) {
 		App->audio->PlayFx(zombiesound, 1);
@@ -48,7 +49,8 @@ void Enemy_Walk::Move(float dt)
 
 	speed = 30 * dt;
 
-	death = App->collision->CollisionToWorld(collider, movement);
+	if (isDead == false)
+		isDead = App->collision->CollisionToWorld(collider, movement);
 	
 	if (movement[down] == true)
 		CalculateGravity();
@@ -100,10 +102,10 @@ void Enemy_Walk::Move(float dt)
 		if (i < enemy_path.Count()) {
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 
-			if (death == true)
+			if (isDead == true)
 			{
-
-				animation = &deadLeft;
+				Dead();
+				
 			}
 			else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 				position.x += speed;
@@ -156,4 +158,31 @@ void Enemy_Walk::NormalizeAnimations(float dt) {
 		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
 		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
 
+}
+
+void Enemy_Walk::Dead()
+{
+
+	if (now == 0) {
+		now = SDL_GetTicks();
+
+	}
+	if (now + 1000 > SDL_GetTicks()) {
+		if (movingLeft)
+		{
+			animation = &deadLeft;
+		}
+		else
+			animation = &deadRight;
+
+		// stop all movement, else player go out of map, bug
+		movement[down] = false;
+		movement[left] = false;
+		movement[right] = false;
+	}
+	else
+	{
+		now = 0;
+		death = true;
+	}
 }
