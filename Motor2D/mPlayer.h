@@ -66,7 +66,6 @@ public:
 	bool loadRespawn = false;
 	int started_attack = 0;
 	Collider* attack_collider;
-	float last_dt;
 	int now = 0;
 };
 
