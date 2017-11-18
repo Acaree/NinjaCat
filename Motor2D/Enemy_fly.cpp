@@ -25,7 +25,7 @@ Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 	walkRight = App->tex->CreateAnimation("girl", "walkRight", true);
 	deadRight = App->tex->CreateAnimation("girl", "deadRight", false);
 	deadLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
-
+	flysound = App->audio->LoadFx("audio/glide.wav");
 	animation = &walkLeft;
 	
 	originalpos.x = position.x = x;
@@ -40,6 +40,11 @@ void Enemy_Fly::Move(float dt)
 		isDead = App->collision->CollisionToWorld(collider, movement);
 		speed = 90 * dt;
 		NormalizeAnimations(dt);
+		
+		if (soundtimer.Read() > 5000) {
+			App->audio->PlayFx(flysound, 1);
+			soundtimer.Start();
+		}
 		/*if (movement[death] == true)  //need think
 		{
 			if (now == 0) {

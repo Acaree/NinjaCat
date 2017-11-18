@@ -30,6 +30,8 @@ public:
 	j1Timer timer;
 	bool movingLeft = false;
 	void NormalizeAnimations(float dt);
+	uint flysound;
+	j1Timer soundtimer;
 };
 
 #endif
