@@ -57,7 +57,7 @@ void Enemy_Fly::Move(float dt)
 
 		if (player_tiles_pos.x - enemy_tiles_pos.x <= 4 && player_tiles_pos.x - enemy_tiles_pos.x >= -4 && player_tiles_pos.y - enemy_tiles_pos.y <= 4 && player_tiles_pos.y - enemy_tiles_pos.y >= -4)
 		{
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { player_tiles_pos.x-1,player_tiles_pos.y }, enemy_path);
 			//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 		}
 		else {

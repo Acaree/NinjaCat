@@ -185,7 +185,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 			{
 
 
@@ -210,11 +210,11 @@ void Player::InputsPlayer(bool* movement, float dt)
 				}
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
 				gliding = false;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
 			{
 				jumping = true;
 				speed_jump = original_speed_jump;
@@ -230,7 +230,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 				}
 		}
 
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && attacking == false)
+			if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && attacking == false)
 			{
 				started_attack = SDL_GetTicks();
 				attacking = true;
