@@ -42,7 +42,7 @@ void Enemy_Walk::Move(float dt)
 {
 	NormalizeAnimations(dt);
 
-	if (soundtimer.Read() > 10000) {
+	if (soundtimer.Read() > 6000) {
 		App->audio->PlayFx(zombiesound, 1);
 		soundtimer.Start();
 	}

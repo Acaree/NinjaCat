@@ -7,9 +7,11 @@
 	<map />
 	<scene />
 	<pathfinding />
-	<entities />
+	<entities>
+		<player x="256" y="1045" level1="true" />
+	</entities>
 	<:anonymous />
 	<renderer>
-		<camera x="-351" y="-745" />
+		<camera x="-56" y="-745" />
 	</renderer>
 </game_state>
