@@ -125,44 +125,13 @@ void Player::InputsPlayer(bool* movement, float dt)
 
 
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && attacking == false)
-		{
-			
-			if (lookingleft) {
-				animation = &hitLeft;
-				started_attack = SDL_GetTicks();
-				attacking = true;
-			}
-			else {
-				animation = &hitRight;
-				started_attack = SDL_GetTicks();
-				attacking = true;
-			}
-
-
-		}
-
-		if (started_attack + 500 < SDL_GetTicks() && attacking == true) {
-			if (lookingleft)
-			{
-				animation = &idleLeft;
-				
-			}
-			else
-			{
-				animation = &idleRight;
-			}
-			App->collision->EraseCollider(attack_collider);
-			started_attack = 0;
-			attacking = false;
-			
-		}
+	
 
 			if (collider->to_delete==false)
 			CalculateGravity();
 		
 
-		if (attacking == false) {
+		
 			if (lookingleft == true) {
 				animation = &idleLeft;
 			}
@@ -259,8 +228,39 @@ void Player::InputsPlayer(bool* movement, float dt)
 				else {
 					animation = &jumpRight;
 				}
-			}
 		}
+
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && attacking == false)
+			{
+				started_attack = SDL_GetTicks();
+				attacking = true;
+
+			}
+
+			if (started_attack + 325 < SDL_GetTicks() && attacking == true) {
+				if (lookingleft)
+				{
+					animation = &idleLeft;
+
+				}
+				else
+				{
+					animation = &idleRight;
+				}
+				App->collision->EraseCollider(attack_collider);
+				started_attack = 0;
+				attacking = false;
+
+			}
+
+			if (attacking == true) {
+				if (lookingleft) {
+					animation = &hitLeft;
+				}
+				else {
+					animation = &hitRight;
+				}
+			}
 	}
 
 }
