@@ -21,12 +21,12 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Entity(x, y)
 	
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
 	//base.PushBack({ 0,0,86,119 });
-	walkLeftFly = App->tex->CreateAnimation("girl", "walkLeft", true);
-	walkRightFly = App->tex->CreateAnimation("girl", "walkRight", true);
-	deadFlyRight = App->tex->CreateAnimation("girl", "deadRight", false);
-	deadFlyLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
+	walkLeft = App->tex->CreateAnimation("girl", "walkLeft", true);
+	walkRight = App->tex->CreateAnimation("girl", "walkRight", true);
+	deadRight = App->tex->CreateAnimation("girl", "deadRight", false);
+	deadLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
 
-	animation = &walkLeftFly;
+	animation = &walkLeft;
 	
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
@@ -38,11 +38,7 @@ void Enemy_Mouse::Move(float dt)
 {
 	
 		death = App->collision->CollisionToWorld(collider, movement);
-		float speed = 90 * dt;
-		walkLeftFly.speed = App->tex->NormalizeAnimSpeed("girl","walkLeft",dt);
-		walkRightFly.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
-		deadFlyLeft.speed = App->tex->NormalizeAnimSpeed("girl", "deadLeft", dt);
-		deadFlyRight.speed = App->tex->NormalizeAnimSpeed("girl", "deadRight", dt);
+		speed = 90 * dt;
 		/*if (movement[death] == true)  //need think
 		{
 			if (now == 0) {
@@ -70,12 +66,12 @@ void Enemy_Mouse::Move(float dt)
 				if (movingLeft) {
 					movingLeft = false;
 					timer.Start();
-					animation = &walkLeftFly;
+					animation = &walkLeft;
 				}
 				else {
 					movingLeft = true;
 					timer.Start();
-					animation = &walkRightFly;
+					animation = &walkRight;
 				}
 			}
 			if (movingLeft)
@@ -91,16 +87,16 @@ void Enemy_Mouse::Move(float dt)
 			iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 			if (death == true)
 			{
-				animation = &deadFlyLeft;
+				animation = &deadLeft;
 			}
 			else if (enemy_tiles_pos.x < enemy_path[i].x && (int)position.x < tileInMap.x && movement[right] == true) {
 				position.x += speed;
-				animation = &walkRightFly;
+				animation = &walkRight;
 				current_in_path = true;
 			}
 			else if (enemy_tiles_pos.x > enemy_path[i].x && (int)position.x > tileInMap.x && movement[left] == true) {
 				position.x -= speed;
-				animation = &walkLeftFly;
+				animation = &walkLeft;
 				current_in_path = true;
 			}
 			else if (enemy_tiles_pos.y <= enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
@@ -122,4 +118,15 @@ void Enemy_Mouse::Move(float dt)
 			i = 0;
 		}
 	
+}
+
+
+void Enemy_Mouse::NormalizeAnimations(float dt) {
+
+
+		walkLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
+		walkRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
+		deadLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
+		deadRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
+
 }

@@ -21,11 +21,9 @@ public:
 	
 	void CalculateGravity();
 	void Respawn();
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
 
 	void ResetAnimations();
-	void NormalizeAnimations(float dt,float last_dt);
+	void NormalizeAnimations(float dt);
 	void InputsPlayer(bool* movement, float dt);
 	void Dead();
 public:
@@ -48,23 +46,15 @@ public:
 	uint glidesound;
 
 
-	iPoint respawnTile1;//sobra
-	iPoint respawnTile2;//sobra
+	iPoint respawnTile1;
+	iPoint respawnTile2;
 	
-
-	float gravity = 1.0f;
 	float original_speed_jump=-20.0f;
-	float speed_jump;
 	bool jumping = false;
 	bool gliding = false;
 
 	bool lookingleft;
 	bool attacking = false;
-
-	bool movingleft;
-	bool movingright;
-
-	
 
 	int backgroundspeed;
 
@@ -72,10 +62,8 @@ public:
 	bool needRespawn1;
 	bool needRespawn2;
 	bool isLevel1;
-	bool movement[4] = { true,true,true,true };
 	bool changeLevel =false;
 	bool loadRespawn = false;
-	float speed;
 	int started_attack = 0;
 	Collider* attack_collider;
 	float last_dt;

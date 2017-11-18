@@ -95,6 +95,14 @@ bool j1Entities::Update(float dt)
 	{
 		if (entities[i] != nullptr)
 		{
+			entities[i]->NormalizeAnimations(dt);
+		}
+	}
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
 			if (entities[i]->death == true && entities[i]->isPlayer==false) {
 				delete entities[i];
 				entities[i] = nullptr;
@@ -153,6 +161,7 @@ bool j1Entities::ResetEntities()
 		if (entities[i] != nullptr)
 		{
 			entities[i]->collider->to_delete = true;
+			entities[i]->isPlayer;
 			delete entities[i];
 			entities[i] = nullptr;
 		}
@@ -225,4 +234,30 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 void j1Entities::OnCollision(Collider* c1, Collider* c2)
 {
 
+}
+
+bool j1Entities::Save(pugi::xml_node& config) const
+{
+	pugi::xml_node player_node = config.append_child("player");
+
+	player_node.append_attribute("x") = player->position.x;
+	player_node.append_attribute("y") = player->position.y;
+	player_node.append_attribute("level1") = player->isLevel1;
+	return true;
+}
+
+bool j1Entities::Load(pugi::xml_node& data)
+{
+	bool tmp = data.child("player").attribute("level1").as_bool();
+
+	if (tmp != player->isLevel1)
+	{
+		player->changeLevel = true;
+		player->loadRespawn = true;
+	}
+	player->position.x = data.child("player").attribute("x").as_int();
+	player->position.y = data.child("player").attribute("y").as_int();
+
+
+	return true;
 }

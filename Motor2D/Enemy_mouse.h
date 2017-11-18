@@ -11,23 +11,23 @@ class Enemy_Mouse : public Entity
 {
 private:
 	
-	Animation walkLeftFly;
-	Animation walkRightFly;
-	Animation deadFlyRight;
-	Animation deadFlyLeft;
+	Animation walkLeft;
+	Animation walkRight;
+	Animation deadRight;
+	Animation deadLeft;
 	
 public:
 	iPoint originalpos;
 
 	Enemy_Mouse(int x, int y);
 	void Move(float dt);
-	int i = 0;
+	int i = 0;//pathcount
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
-	bool movement[4] = { true,true,true,true };
 	int now = 0;
 	j1Timer timer;
 	bool movingLeft = false;
+	void NormalizeAnimations(float dt);
 };
 
 #endif

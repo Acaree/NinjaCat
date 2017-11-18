@@ -47,12 +47,7 @@ void Enemy_Walk::Move(float dt)
 		soundtimer.Start();
 	}
 
-	float speed = 30 * dt;
-
-	walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
-	walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
-	deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-	deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
+	speed = 30 * dt;
 
 	death = App->collision->CollisionToWorld(collider, movement);
 	
@@ -150,8 +145,16 @@ void Enemy_Walk::CalculateGravity() {
 
 	if (movement[down] == false && speed_jump > 0)
 	{
-		jumping = false;
-		gliding = false;
 		speed_jump = 0;
 	}
+}
+
+void Enemy_Walk::NormalizeAnimations(float dt) {
+
+
+		walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
+		walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
+		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
+		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
+
 }

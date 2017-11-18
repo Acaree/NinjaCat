@@ -97,7 +97,6 @@ public:
 private:
 
 	p2List<j1Module*>	modules;
-	uint				frames;
 	int					argc;
 	char**				args;
 
@@ -109,7 +108,6 @@ private:
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
-	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;
 	j1Timer				frame_time;

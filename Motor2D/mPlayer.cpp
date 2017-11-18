@@ -70,7 +70,6 @@ void Player::Move(float dt)
 
 		speed = 300 * dt;
 
-		NormalizeAnimations(dt, last_dt);
 		InputsPlayer(movement, dt);
 		
 		App->render->camera.x = 200 - position.x;
@@ -100,7 +99,6 @@ void Player::Move(float dt)
 		App->render->Blit(graphics, position.x, position.y, &(animation->GetCurrentFrame()));
 	}
 
-	last_dt = dt;
 }
 
 void Player::InputsPlayer(bool* movement, float dt)
@@ -154,6 +152,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 			
 		}
 
+			if (collider->to_delete==false)
 			CalculateGravity();
 		
 
@@ -260,10 +259,9 @@ void Player::InputsPlayer(bool* movement, float dt)
 
 }
 
-void Player::NormalizeAnimations(float dt, float last_dt)
+void Player::NormalizeAnimations(float dt)
 {
-	if(dt != last_dt)
-	{
+	
 		idleRight.speed = App->tex->NormalizeAnimSpeed("player", "idleRight", dt);
 		idleLeft.speed = App->tex->NormalizeAnimSpeed("player", "idleLeft", dt);
 		walkRight.speed = App->tex->NormalizeAnimSpeed("player", "walkRight", dt);
@@ -275,9 +273,6 @@ void Player::NormalizeAnimations(float dt, float last_dt)
 		jumpLeft.speed = App->tex->NormalizeAnimSpeed("player", "jumpLeft", dt);
 		hitRight.speed = App->tex->NormalizeAnimSpeed("player", "hitRight", dt);
 		hitLeft.speed = App->tex->NormalizeAnimSpeed("player", "hitLeft", dt);
-	}
-
-
 }
 void Player::ResetAnimations()
 {
@@ -299,31 +294,7 @@ void Player::ResetAnimations()
 
 }
 
-bool Player::Save(pugi::xml_node& config) const
-{
-	pugi::xml_node player = config.append_child("player");
 
-	player.append_attribute("x") = position.x;
-	player.append_attribute("y") = position.y;
-	player.append_attribute("level1") = isLevel1;
-	return true;
-}
-
-bool Player::Load(pugi::xml_node& data)
-{
-	bool tmp = data.child("player").attribute("level1").as_bool();
-		
-	if (tmp != isLevel1)
-	{
-		changeLevel = true;
-		loadRespawn = true;
-	}
-	position.x = data.child("player").attribute("x").as_int();
-	position.y = data.child("player").attribute("y").as_int();
-	
-
-	return true;
-}
 
 void Player::CalculateGravity() {
 	//Trap for colliders work "good" 

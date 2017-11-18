@@ -19,7 +19,6 @@
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
-	frames = 0;
 	want_to_save = want_to_load = false;
 
 	input = new j1Input();
@@ -111,7 +110,6 @@ bool j1App::Awake()
 // Called before the first frame
 bool j1App::Start()
 {
-	ptimer.Start();
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;

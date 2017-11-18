@@ -12,7 +12,6 @@ Entity::~Entity()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
-
 }
 
 const Collider* Entity::GetCollider() const
@@ -32,6 +31,8 @@ void Entity::Draw(SDL_Texture* sprites)
 
 
 }
+
+
 
 void Entity::OnCollision(Collider* collider)
 {

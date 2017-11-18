@@ -528,7 +528,6 @@ void j1Map::CreateEnemies() {
 				if (tileID == 144)
 				{
 					iPoint position = App->map->MapToWorld(x, y);
-
 					App->entity_m->AddEntity(ENTITY_PLAYER, position.x, position.y);
 
 				}

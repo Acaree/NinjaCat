@@ -43,6 +43,9 @@ public:
 
 	bool AddEntity(ENTITY_TYPES type, int x, int y);
 	
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	Player* player;
 private:
 

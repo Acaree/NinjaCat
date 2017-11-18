@@ -15,8 +15,9 @@ class Entity
 {
 protected:
 	
-
-
+	float gravity = 1.0f;
+	float speed_jump;
+	float speed;
 
 
 public:
@@ -27,14 +28,15 @@ public:
 	uint enemy;
 	Collider* collider = nullptr;
 	bool isPlayer = false;
-
+	bool movement[4] = { true,true,true,true };
 
 public:
 	Entity(int x, int y);
 	virtual ~Entity();
 
 	const Collider* GetCollider() const;
-
+	virtual void NormalizeAnimations(float dt) {};
+	virtual void CalculateGravity() {};
 	virtual void Move(float dt) {};
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);
