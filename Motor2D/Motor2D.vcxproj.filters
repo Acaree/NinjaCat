@@ -52,14 +52,14 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_mouse.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy_Walk.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="mPlayer.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_fly.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,14 +135,14 @@
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy_mouse.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy_Walk.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="mPlayer.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_fly.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

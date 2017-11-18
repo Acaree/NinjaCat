@@ -12,11 +12,11 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "p2DynArray.h"
-#include "Enemy_mouse.h"
+#include "Enemy_fly.h"
 #include "Entity.h"
 #include "j1Entities.h"
 #include "j1Textures.h"
-Enemy_Mouse::Enemy_Mouse(int x, int y) : Entity(x, y)
+Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 {
 	
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
@@ -34,7 +34,7 @@ Enemy_Mouse::Enemy_Mouse(int x, int y) : Entity(x, y)
 	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->entity_m );
 }
 
-void Enemy_Mouse::Move(float dt)
+void Enemy_Fly::Move(float dt)
 {
 	if(isDead==false)
 		isDead = App->collision->CollisionToWorld(collider, movement);
@@ -122,7 +122,7 @@ void Enemy_Mouse::Move(float dt)
 }
 
 
-void Enemy_Mouse::NormalizeAnimations(float dt) {
+void Enemy_Fly::NormalizeAnimations(float dt) {
 
 		walkLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
 		walkRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
@@ -131,7 +131,7 @@ void Enemy_Mouse::NormalizeAnimations(float dt) {
 
 }
 
-void Enemy_Mouse::Dead()
+void Enemy_Fly::Dead()
 {
 
 	if (now == 0) {

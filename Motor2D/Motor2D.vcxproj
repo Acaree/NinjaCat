@@ -77,7 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Enemy_mouse.cpp" />
+    <ClCompile Include="Enemy_fly.cpp" />
     <ClCompile Include="Enemy_Walk.cpp" />
     <ClCompile Include="j1Entities.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -100,7 +100,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Enemy_mouse.h" />
+    <ClInclude Include="Enemy_fly.h" />
     <ClInclude Include="Enemy_Walk.h" />
     <ClInclude Include="j1Entities.h" />
     <ClInclude Include="j1Map.h" />

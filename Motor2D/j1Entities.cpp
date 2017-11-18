@@ -6,7 +6,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "Entity.h"
-#include "Enemy_Mouse.h"
+#include "Enemy_Fly.h"
 #include "j1Map.h"
 #include "Enemy_Walk.h"
 #include "p2Log.h"
@@ -217,7 +217,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			break;
 
 		case ENTITY_TYPES::ENEMY_FLY:
-			entities[i] = new Enemy_Mouse(info.x, info.y);
+			entities[i] = new Enemy_Fly(info.x, info.y);
 			break;
 		case ENTITY_TYPES::ENEMY_WALK:
 			entities[i] = new Enemy_Walk(info.x, info.y);

@@ -1,5 +1,5 @@
-#ifndef __ENEMY_MOUSE_H__
-#define __ENEMY_MOUSE_H__
+#ifndef __ENEMY_FLY_H__
+#define __ENEMY_FLY_H__
 
 #include "Entity.h"
 #include "p2DynArray.h"
@@ -7,7 +7,7 @@
 #include "j1Timer.h"
 enum Direction;
 
-class Enemy_Mouse : public Entity
+class Enemy_Fly : public Entity
 {
 private:
 	
@@ -19,7 +19,7 @@ private:
 public:
 	iPoint originalpos;
 
-	Enemy_Mouse(int x, int y);
+	Enemy_Fly(int x, int y);
 	void Move(float dt);
 	void Dead();
 	bool isDead = false;
