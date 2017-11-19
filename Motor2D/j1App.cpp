@@ -41,8 +41,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(pathfinding);
-	AddModule(entity_m);
 	AddModule(collision);
+	AddModule(entity_m);
 	// render last to swap buffer
 	AddModule(render);
 }
@@ -179,6 +179,11 @@ void j1App::PrepareUpdate()
 		dt = frame_time.ReadSec();
 	else
 		dt = 0;
+
+	if (dt > 0.1)
+	{
+		dt = 0.03;
+	}
 
 	frame_time.Start();
 }
