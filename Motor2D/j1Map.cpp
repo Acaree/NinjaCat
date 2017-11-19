@@ -9,6 +9,7 @@
 #include "mCollision.h"
 #include "j1Input.h"
 #include "j1Entities.h"
+#include "Brofiler\Brofiler.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -486,7 +487,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 }
 
 void j1Map::CreateEnemies() {
-
+	BROFILER_CATEGORY("CreateEnemies", Profiler::Color::Aquamarine);
 	App->entity_m->ResetEntities();
 	if (App->map->data.layers.start->next->next != nullptr)
 	{

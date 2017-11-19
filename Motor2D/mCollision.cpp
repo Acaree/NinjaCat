@@ -4,6 +4,7 @@
 #include "mCollision.h"
 #include "j1Map.h"
 #include "j1Entities.h"
+#include "Brofiler\Brofiler.h"
 
 
 ModuleCollision::ModuleCollision()
@@ -72,6 +73,7 @@ bool ModuleCollision::Update(float dt)
 
 void ModuleCollision::DebugDraw()
 {
+	
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
@@ -197,6 +199,7 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 {
+	BROFILER_CATEGORY("CollisionToWorld", Profiler::Color::Aqua);
 	bool ret = false;
 	SDL_Rect playerRect = player->rect;
 	// number of gid, layer collision

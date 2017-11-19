@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "Enemy_Walk.h"
 #include "p2Log.h"
+#include "Brofiler\Brofiler.h"
 
 #define SPAWN_MARGIN 140
 #define DESPAWN_MARGIN 1400
@@ -74,6 +75,7 @@ bool j1Entities::PreUpdate()
 // Called before render is available
 bool j1Entities::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateEntities", Profiler::Color::Azure);
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
