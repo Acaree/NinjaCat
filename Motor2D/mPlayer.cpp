@@ -71,7 +71,7 @@ Player::~Player()
 // Update: draw background
 void Player::Move(float dt)
 {
-	
+		
 		App->collision->CollisionToWorld(collider, movement);
 
 		speed = 300 * dt;
@@ -128,7 +128,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 	
 
 			if (collider->to_delete==false)
-			CalculateGravity();
+			CalculateGravity(dt);
 		
 
 		
@@ -218,7 +218,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 			{
 				jumping = true;
 				speed_jump = original_speed_jump;
-				position.y += speed_jump;
+				position.y += speed_jump*dt*58;
 				App->audio->PlayFx(jumpsound);
 
 				if (lookingleft == true) {
@@ -302,19 +302,21 @@ void Player::ResetAnimations()
 
 
 
-void Player::CalculateGravity() {
+void Player::CalculateGravity(float dt) {
 	//Trap for colliders work "good" 
+
+	gravity = 58 * dt;
 	if (movement[down] == true) {
-		if (speed_jump < 20)
+		if (speed_jump < 10)
 		{
 			speed_jump += gravity;
 		}
 		else
 		{
-			speed_jump = 20;
+			speed_jump = 10;
 		}
 
-		position.y += speed_jump;
+		position.y += speed_jump*dt*58;
 	}
 	if (movement[down] == false && speed_jump > 0)
 	{

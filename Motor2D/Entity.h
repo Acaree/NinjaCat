@@ -36,7 +36,7 @@ public:
 
 	const Collider* GetCollider() const;
 	virtual void NormalizeAnimations(float dt) {};
-	virtual void CalculateGravity() {};
+	virtual void CalculateGravity(float dt) {};
 	virtual void Move(float dt) {};
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);

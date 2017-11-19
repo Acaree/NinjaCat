@@ -11,7 +11,7 @@ class Enemy_Walk : public Entity
 {
 private:
 
-	void CalculateGravity();
+	void CalculateGravity(float dt);
 
 	uint zombiesound;
 

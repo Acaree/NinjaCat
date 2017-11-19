@@ -53,7 +53,7 @@ void Enemy_Walk::Move(float dt)
 		isDead = App->collision->CollisionToWorld(collider, movement);
 	
 	if (movement[down] == true)
-		CalculateGravity();
+		CalculateGravity(dt);
 	/*if (movement[death] == true)  //need think
 	{
 	if (now == 0) {
@@ -131,7 +131,7 @@ void Enemy_Walk::Move(float dt)
 	}
 
 
-void Enemy_Walk::CalculateGravity() {
+void Enemy_Walk::CalculateGravity(float dt) {
 	//Trap for colliders work "good" 
 	if (speed_jump < 20)
 	{

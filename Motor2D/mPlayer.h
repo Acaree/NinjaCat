@@ -20,7 +20,7 @@ public:
 	void Draw(SDL_Texture* sprites);
 	void OnCollision(Collider* collider);
 	
-	void CalculateGravity();
+	void CalculateGravity(float dt);
 	void Respawn();
 
 	void ResetAnimations();
