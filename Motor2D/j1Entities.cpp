@@ -75,7 +75,7 @@ bool j1Entities::PreUpdate()
 // Called before render is available
 bool j1Entities::Update(float dt)
 {
-	BROFILER_CATEGORY("UpdateEntities", Profiler::Color::Azure);
+	BROFILER_CATEGORY("UpdateEntities", Profiler::Color::Black);
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)

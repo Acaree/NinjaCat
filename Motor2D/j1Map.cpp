@@ -33,6 +33,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("DrawMap", Profiler::Color::Blue);
 	if(map_loaded == false)
 		return;
 	p2List_item<MapLayer*>* item_layer = data.layers.start;

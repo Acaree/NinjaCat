@@ -192,6 +192,7 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("FinishUpdate", Profiler::Color::Green);
 	if(want_to_save == true)
 		SavegameNow();
 

@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "Brofiler\Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -244,6 +245,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination,  
 
 int j1PathFinding::CreatePathManhattan(const iPoint& origin, const iPoint& destination, p2DynArray<iPoint> &path)
 {
+	BROFILER_CATEGORY("PathManhattan", Profiler::Color::Red);
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
 
