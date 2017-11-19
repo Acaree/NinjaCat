@@ -94,11 +94,13 @@ public:
 
 	bool				pause = false;
 	int					capped_ms = -1;
+	int					cap;
 private:
 
 	p2List<j1Module*>	modules;
 	int					argc;
 	char**				args;
+	
 
 	p2SString			title;
 	p2SString			organization;

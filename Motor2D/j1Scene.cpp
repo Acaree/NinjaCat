@@ -123,10 +123,11 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
-		if (App->capped_ms == 1000/30)
-			App->capped_ms = 1000/60;
+		if (App->cap == 30)
+			App->cap = 60;
 		else
-			App->capped_ms = 1000/30;
+			App->cap=30;
+		App->capped_ms = 1000 / App->cap;
 	}
 
 	App->map->Draw();

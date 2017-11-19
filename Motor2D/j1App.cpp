@@ -102,7 +102,7 @@ bool j1App::Awake()
 	}
 	load_game=save_game = "save_game.xml";
 
-	int cap = app_config.attribute("framerate_cap").as_int();
+	cap = app_config.attribute("framerate_cap").as_int();
 	capped_ms = 1000 / cap;
 
 	return ret;
@@ -199,6 +199,7 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
+
 	// Framerate calculations --
 	
 		if (last_sec_frame_time.Read() > 1000)
@@ -214,8 +215,8 @@ void j1App::FinishUpdate()
 		uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 		static char title[256];
-		sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
-			avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+		sprintf_s(title, 256, "FPS: %i Av.FPS: %.2f Last Frame Ms: %u Capped on: %i",
+			frames_on_last_update, avg_fps, last_frame_ms, cap);
 		App->win->SetTitle(title);
 		if (vsync == false) {
 		if (capped_ms > 0 && last_frame_ms < capped_ms)
