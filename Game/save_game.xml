@@ -9,9 +9,9 @@
 	<pathfinding />
 	<:anonymous />
 	<entities>
-		<player x="2599.59595" y="800.337402" level1="false" />
+		<player x="610.000305" y="922.72699" level1="false" />
 	</entities>
 	<renderer>
-		<camera x="-2399" y="-500" />
+		<camera x="-410" y="-622" />
 	</renderer>
 </game_state>
