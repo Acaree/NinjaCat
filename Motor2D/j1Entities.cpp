@@ -254,10 +254,12 @@ bool j1Entities::Load(pugi::xml_node& data)
 	{
 		player->changeLevel = true;
 		player->loadRespawn = true;
+		App->map->respawnPosition = true;
 	}
 	player->position.x = data.child("player").attribute("x").as_int();
 	player->position.y = data.child("player").attribute("y").as_int();
-	App->map->respawnPosition = true;
+	
+	
 
 	return true;
 }

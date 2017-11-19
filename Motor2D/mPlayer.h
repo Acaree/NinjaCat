@@ -50,7 +50,7 @@ public:
 	iPoint respawnTile1;
 	iPoint respawnTile2;
 	
-	float original_speed_jump=-20.0f;
+	float original_speed_jump=-23.0f;
 	bool jumping = false;
 	bool gliding = false;
 

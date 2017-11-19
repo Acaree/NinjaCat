@@ -22,8 +22,8 @@
     <path>data.zip</path>
   </file_system>
   <player>
-    <level1 respawnX ="2" respawnY ="8" needRespawn="true"/>
-    <level2  respawnX ="2" respawnY ="5" needRespawn ="false"/>
+    <level1 respawnX ="2" respawnY ="9" needRespawn="true"/>
+    <level2  respawnX ="2" respawnY ="6" needRespawn ="false"/>
   </player>
   <map>
     <folder>maps/</folder>

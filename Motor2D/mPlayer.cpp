@@ -192,7 +192,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 				if (movement[down] == true)
 				{
 
-					speed_jump = 3.0f;
+					speed_jump = 1.0f;
 					if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || lookingleft == true) {
 						animation = &glideLeft;
 						if (gliding == false) {
