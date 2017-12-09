@@ -11,6 +11,9 @@
 
 class j1App;
 struct Collider;
+class UIElement;
+enum EventElement;
+
 class j1Module
 {
 public:
@@ -68,7 +71,10 @@ public:
 	{
 		return true;
 	}
-	virtual void OnCollision(Collider*, Collider*) {}
+	
+virtual void OnCollision(Collider*, Collider*) {}
+virtual void onUiTriggered(UIElement*, EventElement) {}
+
 public:
 
 	p2SString	name;

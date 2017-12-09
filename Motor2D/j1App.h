@@ -18,6 +18,8 @@ class j1Map;
 class j1Entities;
 class ModuleCollision;
 class j1PathFinding;
+class j1Fonts;
+class j1Gui;
 
 class j1App
 {
@@ -81,16 +83,18 @@ private:
 public:
 
 	// Modules
-	j1Window*			win;
-	j1Input*			input;
-	j1Render*			render;
-	j1Textures*			tex;
-	j1Audio*			audio;
-	j1Scene*			scene;
-	j1Map*				map;
-	j1Entities*			entity_m;
-	ModuleCollision*    collision;
-	j1PathFinding*		pathfinding;
+	j1Window*			win = NULL;
+	j1Input*			input = NULL;
+	j1Render*			render = NULL;
+	j1Textures*			tex = NULL;
+	j1Audio*			audio = NULL;
+	j1Scene*			scene = NULL;
+	j1Map*				map = NULL;
+	j1Entities*			entity_m = NULL;
+	ModuleCollision*    collision = NULL;
+	j1PathFinding*		pathfinding = NULL;
+	j1Fonts*			font = NULL;
+	j1Gui*				gui = NULL;
 
 	bool				pause = false;
 	int					capped_ms = -1;

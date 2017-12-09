@@ -1,4 +1,5 @@
 #include <iostream> 
+#include <sstream> 
 
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -13,6 +14,8 @@
 #include "j1App.h"
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 #include "mCollision.h"
 #include "Brofiler\Brofiler.h"
 
@@ -31,6 +34,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entity_m = new j1Entities();
 	collision = new ModuleCollision();
 	pathfinding = new j1PathFinding();
+	font = new j1Fonts();
+	gui = new j1Gui();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -43,6 +48,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(collision);
 	AddModule(entity_m);
+	AddModule(font);
+	AddModule(gui);
 	// render last to swap buffer
 	AddModule(render);
 }

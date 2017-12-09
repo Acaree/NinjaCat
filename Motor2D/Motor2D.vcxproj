@@ -80,6 +80,8 @@
     <ClCompile Include="Enemy_fly.cpp" />
     <ClCompile Include="Enemy_Walk.cpp" />
     <ClCompile Include="j1Entities.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -96,6 +98,10 @@
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="UiButton.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UiImagecpp.cpp" />
+    <ClCompile Include="UiLabel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -103,6 +109,8 @@
     <ClInclude Include="Enemy_fly.h" />
     <ClInclude Include="Enemy_Walk.h" />
     <ClInclude Include="j1Entities.h" />
+    <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
@@ -125,6 +133,10 @@
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="UiButton.h" />
+    <ClInclude Include="UiElement.h" />
+    <ClInclude Include="UiImage.h" />
+    <ClInclude Include="UiLabel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

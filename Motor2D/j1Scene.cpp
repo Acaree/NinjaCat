@@ -11,6 +11,7 @@
 #include "j1Entities.h"
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
+#include "j1Gui.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -44,6 +45,18 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+
+	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
+	UIButton* a, *b, *c;
+	a = App->gui->CreateButton({256,1180 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	//set parent
+	b->SetParent(a);
+	c->SetParent(b);
+	UILabel* d;
+	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
+	d->SetParent(a);
 
 	App->map->CreateEnemies();
 
@@ -131,7 +144,7 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-	
+
 
 	return true;
 }
