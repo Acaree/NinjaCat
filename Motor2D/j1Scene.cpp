@@ -35,7 +35,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->audio->PlayMusic("audio/music.ogg");
+	/*App->audio->PlayMusic("audio/music.ogg");
 	if (App->map->Load(map.GetString()) == true)
 	{
 		int w, h;
@@ -45,12 +45,12 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	App->map->CreateEnemies();
+	App->map->CreateEnemies();*/
 
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 	UIButton* a, *b, *c;
-	buttons.add(a = App->gui->CreateButton({256,1180 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
+	buttons.add(a = App->gui->CreateButton({256,0 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
 	buttons.add(b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
 	buttons.add(c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
 	//set parent
