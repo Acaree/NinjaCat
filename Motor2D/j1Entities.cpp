@@ -215,7 +215,6 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		{
 
 		case ENTITY_TYPES::NO_TYPE:
-			//enemies[i] = new Enemy_Balloon(info.x, info.y);
 			break;
 
 		case ENTITY_TYPES::ENEMY_FLY:
@@ -265,3 +264,20 @@ bool j1Entities::Load(pugi::xml_node& data)
 
 	return true;
 }
+
+Animation j1Entities::CreateAnimation(char* anim_type, char* anim, bool loop) {
+	Animation ret;
+
+	pugi::xml_document anim_file;
+	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
+	pugi::xml_node anim_node = anim_file.child("animations").child(anim_type).child(anim).child("frame");
+
+	while (anim_node != nullptr) {
+		ret.PushBack({ anim_node.attribute("x").as_int(),anim_node.attribute("y").as_int(),anim_node.attribute("width").as_int(),anim_node.attribute("height").as_int() });
+		anim_node = anim_node.next_sibling();
+	}
+	ret.speed = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float();
+	ret.loop = loop;
+	return ret;
+}
+

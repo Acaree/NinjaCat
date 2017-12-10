@@ -42,7 +42,9 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	bool AddEntity(ENTITY_TYPES type, int x, int y);
-	
+
+	Animation CreateAnimation(char* anim_type, char* anim, bool loop);
+
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 

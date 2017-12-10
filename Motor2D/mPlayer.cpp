@@ -13,6 +13,7 @@
 #include "j1Entities.h"
 #include "j1FadeToBlack.h"
 
+
 Player::Player(int x, int y) : Entity(x, y)
 {
 	pugi::xml_document config_file;
@@ -35,21 +36,21 @@ Player::Player(int x, int y) : Entity(x, y)
 	jumpsound = App->audio->LoadFx("audio/jump_fx.wav");
 	glidesound = App->audio->LoadFx("audio/glide.wav");
 
-	idleRight = App->tex->CreateAnimation("player", "idleRight", true);
-	idleLeft = App->tex->CreateAnimation("player", "idleLeft", true);
-	walkRight = App->tex->CreateAnimation("player", "walkRight", true);
-	walkLeft = App->tex->CreateAnimation("player", "walkLeft", true);
-	dead = App->tex->CreateAnimation("player", "dead", false);
-	glideRight = App->tex->CreateAnimation("player", "glideRight", true);
-	glideLeft = App->tex->CreateAnimation("player", "glideLeft", true);
-	jumpRight = App->tex->CreateAnimation("player", "jumpRight", false);
-	jumpLeft = App->tex->CreateAnimation("player", "jumpLeft", false);
-	hitLeft = App->tex->CreateAnimation("player", "hitLeft", false);
-	hitRight = App->tex->CreateAnimation("player", "hitRight", false);
+	idleRight = App->entity_m->CreateAnimation("player", "idleRight", true);
+	idleLeft = App->entity_m->CreateAnimation("player", "idleLeft", true);
+	walkRight = App->entity_m->CreateAnimation("player", "walkRight", true);
+	walkLeft = App->entity_m->CreateAnimation("player", "walkLeft", true);
+	dead = App->entity_m->CreateAnimation("player", "dead", false);
+	glideRight = App->entity_m->CreateAnimation("player", "glideRight", true);
+	glideLeft = App->entity_m->CreateAnimation("player", "glideLeft", true);
+	jumpRight = App->entity_m->CreateAnimation("player", "jumpRight", false);
+	jumpLeft = App->entity_m->CreateAnimation("player", "jumpLeft", false);
+	hitLeft = App->entity_m->CreateAnimation("player", "hitLeft", false);
+	hitRight = App->entity_m->CreateAnimation("player", "hitRight", false);
 
 	collider = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, App->entity_m);
 	animation = &idleRight;
-
+	generalSpeedAnimations = idleRight.speed;
 	
 
 	death = false;
@@ -130,9 +131,6 @@ void Player::InputsPlayer(bool* movement, float dt)
 
 	if (animation != &dead && dt != 0) {
 
-
-
-	
 
 			if (collider->to_delete==false)
 			CalculateGravity(dt);
@@ -274,18 +272,17 @@ void Player::InputsPlayer(bool* movement, float dt)
 
 void Player::NormalizeAnimations(float dt)
 {
-	
-		idleRight.speed = App->tex->NormalizeAnimSpeed("player", "idleRight", dt);
-		idleLeft.speed = App->tex->NormalizeAnimSpeed("player", "idleLeft", dt);
-		walkRight.speed = App->tex->NormalizeAnimSpeed("player", "walkRight", dt);
-		walkLeft.speed = App->tex->NormalizeAnimSpeed("player", "walkLeft", dt);
-		dead.speed = App->tex->NormalizeAnimSpeed("player", "dead", dt);
-		glideRight.speed = App->tex->NormalizeAnimSpeed("player", "glideRight", dt);
-		glideLeft.speed = App->tex->NormalizeAnimSpeed("player", "glideLeft", dt);
-		jumpRight.speed = App->tex->NormalizeAnimSpeed("player", "jumpRight", dt);
-		jumpLeft.speed = App->tex->NormalizeAnimSpeed("player", "jumpLeft", dt);
-		hitRight.speed = App->tex->NormalizeAnimSpeed("player", "hitRight", dt);
-		hitLeft.speed = App->tex->NormalizeAnimSpeed("player", "hitLeft", dt);
+	idleRight.speed = generalSpeedAnimations *dt;
+	idleLeft.speed = generalSpeedAnimations *dt;
+	walkRight.speed = generalSpeedAnimations *dt;
+	walkLeft.speed = generalSpeedAnimations *dt;
+	dead.speed = generalSpeedAnimations *dt;
+	glideRight.speed = generalSpeedAnimations *dt;
+	glideLeft.speed = generalSpeedAnimations *dt;
+	jumpRight.speed = generalSpeedAnimations *dt;
+	jumpLeft.speed = generalSpeedAnimations *dt;
+	hitRight.speed = generalSpeedAnimations *dt;
+	hitLeft.speed = generalSpeedAnimations *dt;
 }
 void Player::ResetAnimations()
 {

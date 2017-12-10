@@ -37,10 +37,6 @@ public:
 public:
 
 	p2List<SDL_Texture*>	textures;
-
-	Animation CreateAnimation(char* anim_type, char* anim, bool loop);
-
-	float NormalizeAnimSpeed(char* anim_type, char* anim, float dt);
 };
 
 

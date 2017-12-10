@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "UiButton.h"
 
 struct SDL_Texture;
 
@@ -32,10 +33,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void onUiTriggered(UIElement*, EventElement);
+
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
 	iPoint mouseTile;
+	p2List<UIButton*> buttons;
 };
 
 #endif // __j1SCENE_H__
