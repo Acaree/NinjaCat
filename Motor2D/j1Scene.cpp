@@ -45,6 +45,8 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+	App->map->CreateEnemies();
+
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 	UIButton* a, *b, *c;
@@ -58,7 +60,7 @@ bool j1Scene::Start()
 	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
 	d->SetParent(a);
 
-	App->map->CreateEnemies();
+	
 
 	return true;
 }

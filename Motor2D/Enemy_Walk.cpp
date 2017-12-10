@@ -22,10 +22,11 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
 	//base.PushBack({ 0,0,86,119 });
-	walkLeft = App->tex->CreateAnimation("zombie", "walkLeft", true);
-	walkRight = App->tex->CreateAnimation("zombie", "walkRight", true);
-	deadLeft = App->tex->CreateAnimation("zombie", "deadLeft", false);
-	deadRight = App->tex->CreateAnimation("zombie", "deadRight", false);
+	walkLeft = App->entity_m->CreateAnimation("zombie", "walkLeft", true);
+	walkRight = App->entity_m->CreateAnimation("zombie", "walkRight", true);
+	deadLeft = App->entity_m->CreateAnimation("zombie", "deadLeft", false);
+	deadRight = App->entity_m->CreateAnimation("zombie", "deadRight", false);
+	generalSpeedAnimations = walkLeft.speed;
 	//dead = App->tex->CreateAnimation("girl", "dead", false);
 	zombiesound = App->audio->LoadFx("audio/zombie.wav");
 
@@ -152,12 +153,10 @@ void Enemy_Walk::CalculateGravity(float dt) {
 
 void Enemy_Walk::NormalizeAnimations(float dt) {
 
-
-		walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
-		walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
-		deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-		deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
-
+		walkLeft.speed = generalSpeedAnimations*dt;
+		walkRight.speed = generalSpeedAnimations*dt;
+		deadLeft.speed = generalSpeedAnimations*dt;
+		deadRight.speed = generalSpeedAnimations*dt;
 }
 
 void Enemy_Walk::Dead()

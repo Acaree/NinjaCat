@@ -68,6 +68,8 @@ public:
 	int started_attack = 0;
 	Collider* attack_collider;
 	int now = 0;
+
+	
 	
 };
 

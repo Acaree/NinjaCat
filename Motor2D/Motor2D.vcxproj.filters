@@ -73,14 +73,14 @@
     <ClCompile Include="UiLabel.cpp">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="UiImagecpp.cpp">
-      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
+    <ClCompile Include="UiImage.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
