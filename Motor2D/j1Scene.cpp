@@ -48,9 +48,9 @@ bool j1Scene::Start()
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 	UIButton* a, *b, *c;
-	a = App->gui->CreateButton({256,1180 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
-	b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
-	c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	buttons.add(a = App->gui->CreateButton({256,1180 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
+	buttons.add(b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
+	buttons.add(c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
 	//set parent
 	b->SetParent(a);
 	c->SetParent(b);
@@ -143,6 +143,31 @@ bool j1Scene::Update(float dt)
 		App->capped_ms = 1000 / App->cap;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	{
+		bool focusButton = false;
+		for (uint i = 0; i < buttons.count(); i++)
+		{
+			if (buttons[i]->eventElement == FocusEventElement)
+			{
+				focusButton = true;
+				buttons[i]->eventElement = NoEventElement;
+				//onUiTriggered(buttons[i], NoEventElement);
+				if (i + 1 != buttons.count())
+					buttons[i + 1]->eventElement = FocusEventElement;
+				else
+					buttons[0]->eventElement = FocusEventElement;
+				break;
+			}
+
+		}
+		if (!focusButton && buttons.count() > 0) // 0 button focus && are buttons in the scene
+		{
+			buttons[0]->eventElement = FocusEventElement;
+		}
+
+	}
+
 	App->map->Draw();
 
 
@@ -166,4 +191,33 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
+{
+	if (UIelement->type == ButtonElement)
+	{
+		UIButton* b = (UIButton*)UIelement;
+		switch (EventElement)
+		{
+		case NoEventElement:
+			UIelement->rectUi = b->default_texture_rect;
+			break;
+		case MouseEnterEvent:
+			UIelement->rectUi = b->mouse_on_rect;
+			break;
+		case MouseLeaveEvent:
+			UIelement->rectUi = b->default_texture_rect;
+			break;
+		case MouseRightClickEvent:
+			UIelement->rectUi = b->clicked_rect;
+			break;
+		case MouseLeftClickEvent:
+			UIelement->rectUi = b->clicked_rect;
+			break;
+		case FocusEventElement:
+			UIelement->rectUi = b->mouse_on_rect;
+			break;
+		}
+	}
 }
