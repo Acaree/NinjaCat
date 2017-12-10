@@ -11,6 +11,7 @@
 #include "Animation.h"
 #include "j1Map.h"
 #include "j1Entities.h"
+#include "j1FadeToBlack.h"
 
 Player::Player(int x, int y) : Entity(x, y)
 {
@@ -110,7 +111,13 @@ void Player::Move(float dt)
 void Player::InputsPlayer(bool* movement, float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		changeLevel = true;
+		
+		if(App->map->isLevel1 == true)
+		App->fade->FadeToBlack("level2ND.tmx", 2.0);
+
+		else if (App->map->isLevel1 == false)
+		App->fade->FadeToBlack("level1ND.tmx", 2.0);
+
 	}
 
 	if (needRespawn1 == true || needRespawn2 == true || changeLevel == true) {
@@ -329,28 +336,7 @@ void Player::CalculateGravity(float dt) {
 void Player::Respawn()
 {
 	// set de level, clean up and load map
-	death = false;
-
-	if (changeLevel == true) {
-		if (animation != &dead) {
-			App->map->CleanUp();
-			changeLevel = false;
-			if (App->map->isLevel1 == true)
-			{
-
-				App->map->Load("level2ND.tmx");
-				App->map->isLevel1 = false;
-				needRespawn2 = true;
-			}
-			else if (App->map->isLevel1 == false)
-			{
-				App->map->Load("level1ND.tmx");
-				App->map->isLevel1 = true;
-				needRespawn1 = true;
-			}
-			animation = &idleRight;
-		}
-	}
+	death = false;	
 
 	if (needRespawn1 == true)
 	{

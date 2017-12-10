@@ -5,6 +5,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Render.h"
+#include "SDL\include\SDL_rect.h"
 
 struct Properties
 {
