@@ -51,7 +51,7 @@ bool j1Gui::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		drawDebug = !drawDebug;
-	if (UiElement.start != nullptr)
+	if (UiElement.start->data != nullptr)
 	{
 
 		p2List_item<UIElement*> *Ui_item = UiElement.start;
@@ -82,18 +82,20 @@ bool j1Gui::Update(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	for (uint i = 0; i < UiElement.count(); i++)
+	if (UiElement.start->data != nullptr)
 	{
-		if (UiElement[i]->toDelete == true)
+		for (uint i = 0; i < UiElement.count(); i++)
 		{
-			if (UiElement[i] != nullptr)
+			if (UiElement[i]->toDelete == true)
 			{
-				delete UiElement[i];
-				UiElement[i] = nullptr;
+				if (UiElement[i] != nullptr)
+				{
+					delete UiElement[i];
+					UiElement[i] = nullptr;
+				}
 			}
 		}
 	}
-	
 	return true;
 }
 

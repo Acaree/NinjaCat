@@ -80,7 +80,7 @@ bool j1Scene::PreUpdate()
 
 	if (buttons.count() != 0)
 	{//PLAY BUTTON
-		/*if (buttons[0]->eventElement == MouseLeftClickEvent)
+		if (buttons[0]->eventElement == MouseLeftClickEvent)
 		{
 			App->audio->PlayMusic("audio/music.ogg");
 			if (App->map->Load(map.GetString()) == true)
@@ -95,9 +95,9 @@ bool j1Scene::PreUpdate()
 			}
 			App->map->CreateEnemies();
 			App->fade->FadeToBlack("level1ND.tmx", 2.0);
-		}*/
-		//QUIT BUTTON
-		if (buttons[2]->eventElement == MouseLeftClickEvent)
+			buttons.clear();
+		}
+		else if (buttons[2]->eventElement == MouseLeftClickEvent) //quit button
 		{
 			return false;
 		}
