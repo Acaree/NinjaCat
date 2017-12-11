@@ -78,6 +78,7 @@ bool j1Scene::PreUpdate()
 	//iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint p = App->map->WorldToMap(x, y);
 
+	//Menu options
 	if (buttons.count() != 0)
 	{//PLAY BUTTON
 		if (buttons[0]->eventElement == MouseLeftClickEvent)
@@ -94,14 +95,24 @@ bool j1Scene::PreUpdate()
 				App->gui->DeleteUIElements();
 			}
 			App->map->CreateEnemies();
-			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+			//App->fade->FadeToBlack("level1ND.tmx", 2.0);
 			buttons.clear();
+		}
+		else if (buttons[1]->eventElement == MouseLeftClickEvent)
+		{
+			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
+			//31.542,421,457
+			UIImage* c;
+			c =App->gui->CreateImage({ 100,100 }, { 31,542,421,457 }, atlas, this, true);
+			c->positionToDraw = 3;
+
 		}
 		else if (buttons[2]->eventElement == MouseLeftClickEvent) //quit button
 		{
 			return false;
 		}
 	}
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if (origin_selected == true)
