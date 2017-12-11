@@ -51,26 +51,28 @@ bool j1Gui::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		drawDebug = !drawDebug;
-
-	p2List_item<UIElement*> *Ui_item = UiElement.start;
-
-	while (Ui_item != nullptr)
+	if (UiElement.start->data != nullptr)
 	{
 
-		Ui_item->data->Update(dt);
-		Ui_item = Ui_item->next;
+		p2List_item<UIElement*> *Ui_item = UiElement.start;
+
+		while (Ui_item != nullptr)
+		{
+
+			Ui_item->data->Update(dt);
+			Ui_item = Ui_item->next;
+		}
+
+		Ui_item = UiElement.start;
+		while (Ui_item != nullptr)
+		{
+			Ui_item->data->Draw();
+			if (drawDebug == true)
+				Ui_item->data->DebugDraw();
+			Ui_item = Ui_item->next;
+		}
+
 	}
-
-	Ui_item = UiElement.start;
-	while (Ui_item != nullptr)
-	{
-		Ui_item->data->Draw();
-		if (drawDebug == true)
-			Ui_item->data->DebugDraw();
-		Ui_item = Ui_item->next;
-	}
-
-
 
 
 
@@ -80,6 +82,20 @@ bool j1Gui::Update(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	if (UiElement.start->data != nullptr)
+	{
+		for (uint i = 0; i < UiElement.count(); i++)
+		{
+			if (UiElement[i]->toDelete == true)
+			{
+				if (UiElement[i] != nullptr)
+				{
+					delete UiElement[i];
+					UiElement[i] = nullptr;
+				}
+			}
+		}
+	}
 	return true;
 }
 
@@ -88,6 +104,15 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
+	for (uint i = 0; i < UiElement.count(); i++)
+	{
+		if (UiElement[i] != nullptr)
+		{
+			delete UiElement[i];
+			UiElement[i] = nullptr;
+		}
+	}
+	UiElement.clear();
 	return true;
 }
 
@@ -144,4 +169,14 @@ void j1Gui::SortByDrawOrder()
 			item = item->next;
 		}
 	}
+}
+
+bool j1Gui::DeleteUIElements()
+{
+	for (int i = 0; i < UiElement.count(); i++)
+	{
+		if (UiElement[i] != nullptr)
+			UiElement[i]->toDelete = true;
+	}
+	return true;
 }

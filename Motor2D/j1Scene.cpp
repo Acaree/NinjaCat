@@ -36,35 +36,15 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-/*
-	App->audio->PlayMusic("audio/music.ogg");
-	if (App->map->Load(map.GetString()) == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
 
-		RELEASE_ARRAY(data);
-	}
-	App->map->CreateEnemies();
-*/
-
-
+	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-	UIButton* a, *b, *c;
-	buttons.add(a = App->gui->CreateButton({256,0 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	buttons.add(b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	buttons.add(c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	//set parent
-	b->SetParent(a);
-	c->SetParent(b);
-	UILabel* d;
-	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
-	d->SetParent(a);
-
+	UIButton* playButton, *settingsButton, *quitButton;
+	App->gui->CreateImage({ 0,0 }, {0,0,1200,800},background,this,false);
+	buttons.add(playButton = App->gui->CreateButton({100,600 }, {276,0,138,142 },  { 138,0,138,142 } , { 0,0,138,142 }, atlas, this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
 	
-
 	return true;
 }
 
@@ -78,6 +58,31 @@ bool j1Scene::PreUpdate()
 	App->input->GetMousePosition(x, y);
 	//iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint p = App->map->WorldToMap(x, y);
+
+	//Menu options
+	if (buttons.count() != 0)
+	{//PLAY BUTTON
+		if (buttons[0]->eventElement == MouseLeftClickEvent)
+		{
+			App->audio->PlayMusic("audio/music.ogg");
+			
+			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+			buttons.clear();
+		}
+		else if (buttons[1]->eventElement == MouseLeftClickEvent)
+		{
+			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
+			//31.542,421,457
+			UIImage* c;
+			c =App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, atlas, this, true);
+			c->positionToDraw = 3;
+
+		}
+		else if (buttons[2]->eventElement == MouseLeftClickEvent) //quit button
+		{
+			return false;
+		}
+	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
@@ -99,12 +104,12 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
-	if (buttons[0]->eventElement == MouseLeftClickEvent) {
-		App->fade->FadeToBlack("level1ND.tmx",2.0);
+	
+		
 		
 
 
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
 		if (App->map->isLevel1 == true)
