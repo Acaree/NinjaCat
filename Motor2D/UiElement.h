@@ -42,6 +42,7 @@ public:
 	SDL_Rect rectUi = { 0,0,0,0 };
 	uint positionToDraw = 0;
 	bool dragable = false;
+	bool toDelete = false;
 protected:
 	UIElement* parent = nullptr;
 	iPoint positionUi = { 0,0 };

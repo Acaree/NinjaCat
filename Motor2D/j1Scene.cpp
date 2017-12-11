@@ -37,7 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	
-	App->audio->PlayMusic("audio/music.ogg");
+/*	App->audio->PlayMusic("audio/music.ogg");
 	if (App->map->Load(map.GetString()) == true)
 	{
 		int w, h;
@@ -47,7 +47,7 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	App->map->CreateEnemies();
+	App->map->CreateEnemies();*/
 
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
@@ -78,6 +78,30 @@ bool j1Scene::PreUpdate()
 	//iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint p = App->map->WorldToMap(x, y);
 
+	if (buttons.count() != 0)
+	{//PLAY BUTTON
+		/*if (buttons[0]->eventElement == MouseLeftClickEvent)
+		{
+			App->audio->PlayMusic("audio/music.ogg");
+			if (App->map->Load(map.GetString()) == true)
+			{
+				int w, h;
+				uchar* data = NULL;
+				if (App->map->CreateWalkabilityMap(w, h, &data))
+					App->pathfinding->SetMap(w, h, data);
+
+				RELEASE_ARRAY(data);
+				App->gui->DeleteUIElements();
+			}
+			App->map->CreateEnemies();
+			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+		}*/
+		//QUIT BUTTON
+		if (buttons[2]->eventElement == MouseLeftClickEvent)
+		{
+			return false;
+		}
+	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if (origin_selected == true)
@@ -98,12 +122,12 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
-	if (buttons[0]->eventElement == MouseLeftClickEvent) {
-		App->fade->FadeToBlack("level1ND.tmx",2.0);
+	
+		
 		
 
 
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 	{
 		if (App->map->isLevel1 == true)
