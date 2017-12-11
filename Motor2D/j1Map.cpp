@@ -61,15 +61,7 @@ void j1Map::Draw()
 						SDL_Rect rect = item_set->data->GetTileRect(tileID);
 						// if name is background print first
 						if (item_layer->data->name == "Background") {
-							if (App->entity_m->player->movement[left]) {
 								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
-							}
-							else if (App->entity_m->player->movement[right]) {
-								App->render->Blit(item_set->data->texture, position.x, position.y, &rect, 0.8);
-							}
-							else {
-								App->render->Blit(item_set->data->texture, position.x, position.y, &rect);
-							}
 						}
 						else{
 							App->render->Blit(item_set->data->texture, position.x, position.y, &rect);

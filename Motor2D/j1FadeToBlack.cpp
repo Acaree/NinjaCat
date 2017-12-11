@@ -5,6 +5,7 @@
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Entities.h"
+#include "j1Pathfinding.h"
 #include "j1Timer.h"
 #include "SDL/include/SDL_render.h"
 
@@ -46,37 +47,36 @@ bool j1FadeToBlack::Update(float dt)
 			current_step = fade_step::fade_from_black;
 			
 			App->map->CleanUp();
-			App->map->Load(map_on);
+
+			if (App->map->Load(map_on) == true)
+			{
+				int w, h;
+				uchar* data = NULL;
+				if (App->map->CreateWalkabilityMap(w, h, &data))
+					App->pathfinding->SetMap(w, h, data);
+
+				RELEASE_ARRAY(data);
+			}
+			
+			App->map->CreateEnemies();
+
 			if (App->map->isLevel1 == true)
 			{
 				App->map->isLevel1 = false;
-				App->entity_m->player->needRespawn1 = true;
 			}
 			else if (App->map->isLevel1 == false)
 			{
 				App->map->isLevel1 = true;
-				App->entity_m->player->needRespawn2 = true;
 			}
-			App->entity_m->player->animation = &App->entity_m->player->idleRight;
+			
 		}
 	} break;
 
 	case fade_step::fade_from_black:
 	{
 		normalized = 1.0f - normalized;
-
-		
+	
 		if (now >= total_time) {
-			
-			if (App->map->isLevel1 == true)
-			{
-				App->entity_m->player->needRespawn1 = true;
-			}
-			else {
-				App->entity_m->player->needRespawn2 = true;
-			}
-			App->entity_m->player->animation = &App->entity_m->player->idleRight;
-			
 			current_step = fade_step::none;
 		}
 	} break;

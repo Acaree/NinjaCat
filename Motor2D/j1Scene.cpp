@@ -36,7 +36,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	
+/*
 	App->audio->PlayMusic("audio/music.ogg");
 	if (App->map->Load(map.GetString()) == true)
 	{
@@ -48,6 +48,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	App->map->CreateEnemies();
+*/
 
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");

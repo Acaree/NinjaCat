@@ -8,6 +8,7 @@
 #include "Entity.h"
 #include "Enemy_Fly.h"
 #include "j1Map.h"
+#include "j1FadeToBlack.h"
 #include "Enemy_Walk.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
@@ -108,6 +109,17 @@ bool j1Entities::Update(float dt)
 			if (entities[i]->death == true && entities[i]->isPlayer==false) {
 				delete entities[i];
 				entities[i] = nullptr;
+			}
+		}
+	}
+
+	if (App->fade->IsFading() == true) {
+		if (player != nullptr) {
+			if (App->map->isLevel1 == true) {
+				player->needRespawn1 = true;
+			}
+			else {
+				player->needRespawn2 = true;
 			}
 		}
 	}
