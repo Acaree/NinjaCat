@@ -49,12 +49,13 @@ bool j1Scene::Start()
 	}
 	App->map->CreateEnemies();*/
 
-
+	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 	UIButton* playButton, *settingsButton, *quitButton;
-	buttons.add(playButton = App->gui->CreateButton({256,0 }, {276,0,138,142 },  { 138,0,138,142 } , { 0,0,138,142 }, atlas, this, true));
-	buttons.add(settingsButton = App->gui->CreateButton({ 256,200 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
-	buttons.add(quitButton = App->gui->CreateButton({ 256,400 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
+	App->gui->CreateImage({ 0,0 }, {0,0,1200,800},background,this,false);
+	buttons.add(playButton = App->gui->CreateButton({100,600 }, {276,0,138,142 },  { 138,0,138,142 } , { 0,0,138,142 }, atlas, this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
 	
 	
 
