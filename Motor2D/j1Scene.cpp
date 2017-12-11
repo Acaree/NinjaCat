@@ -51,16 +51,12 @@ bool j1Scene::Start()
 
 
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-	UIButton* a, *b, *c;
-	buttons.add(a = App->gui->CreateButton({256,0 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	buttons.add(b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	buttons.add(c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true));
-	//set parent
-	b->SetParent(a);
-	c->SetParent(b);
-	UILabel* d;
-	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
-	d->SetParent(a);
+	UIButton* playButton, *settingsButton, *quitButton;
+	buttons.add(playButton = App->gui->CreateButton({256,0 }, {276,0,138,142 },  { 138,0,138,142 } , { 0,0,138,142 }, atlas, this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 256,200 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 256,400 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
+	
+	
 
 	
 
@@ -103,7 +99,7 @@ bool j1Scene::PreUpdate()
 			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 			//31.542,421,457
 			UIImage* c;
-			c =App->gui->CreateImage({ 100,100 }, { 31,542,421,457 }, atlas, this, true);
+			c =App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, atlas, this, true);
 			c->positionToDraw = 3;
 
 		}
