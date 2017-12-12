@@ -66,8 +66,8 @@ bool j1Scene::PreUpdate()
 			//need change
 			settingsImage = App->gui->CreateImage({ -300,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
 			settingsImage->SetParent(settingsButton);
-			minusVolume = App->gui->CreateButton({50,100}, { 276,994,138,142 }, { 138,994,138,142 }, { 0,994,138,142 }, App->gui->GetAtlas(),this,false);
-			plusVolume = App->gui->CreateButton({ 250,100 }, { 276,1136,138,142 }, { 138,1136,138,142 }, { 0,1136,138,142 }, App->gui->GetAtlas(), this, false);
+			minusVolume = App->gui->CreateButton({50,100}, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(),this,false);
+			plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, {69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
 			minusVolume->SetParent(settingsImage);
 			plusVolume->SetParent(settingsImage);
 				
