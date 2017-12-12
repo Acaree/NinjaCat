@@ -41,6 +41,7 @@ private:
 	p2List<UIButton*> buttons;
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
 	UIImage* settingsImage = nullptr;
+	UIButton* plusVolume = nullptr, *minusVolume = nullptr;
 };
 
 #endif // __j1SCENE_H__

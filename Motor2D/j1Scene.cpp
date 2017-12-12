@@ -63,19 +63,23 @@ bool j1Scene::PreUpdate()
 		}
 		else if (settingsButton->eventElement == MouseLeftClickEvent)
 		{
-			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-		
-			
-			settingsImage = App->gui->CreateImage({ -300,100 }, { 0,426,414,426 }, atlas, this, true);
+			//need change
+			settingsImage = App->gui->CreateImage({ -300,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
 			settingsImage->SetParent(settingsButton);
-
-			
-
+			minusVolume = App->gui->CreateButton({50,100}, { 276,994,138,142 }, { 138,994,138,142 }, { 0,994,138,142 }, App->gui->GetAtlas(),this,false);
+			plusVolume = App->gui->CreateButton({ 250,100 }, { 276,1136,138,142 }, { 138,1136,138,142 }, { 0,1136,138,142 }, App->gui->GetAtlas(), this, false);
+			minusVolume->SetParent(settingsImage);
+			plusVolume->SetParent(settingsImage);
+				
 		}
 		else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
 		{
 			return false;
 		}
+		if (plusVolume != nullptr && plusVolume->eventElement == MouseLeftClickEvent)
+			App->audio->volume += 2;
+		else if(minusVolume != nullptr && minusVolume->eventElement == MouseLeftClickEvent)
+			App->audio->volume -= 2;
 	}
 	return true;
 }
