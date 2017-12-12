@@ -245,7 +245,4 @@ void j1Scene::DeleteSettings()
 	minusVolume->toDelete = true;
 	plusVolume->toDelete = true;
 	crossButton->toDelete = true;
-
-
-
 }
