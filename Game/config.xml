@@ -35,7 +35,10 @@
     <volume value ="50"/>
     </audio>
    <enemies>
-    
      <zombie posx="8" posy ="7"/>
-     </enemies>
+   </enemies>
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
+  
 </config>

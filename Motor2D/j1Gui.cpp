@@ -73,9 +73,6 @@ bool j1Gui::Update(float dt)
 		}
 	}
 
-
-
-
 	return true;
 
 }
@@ -113,6 +110,7 @@ bool j1Gui::CleanUp()
 		}
 	}
 	UiElement.clear();
+	App->tex->UnLoad(atlas);
 	return true;
 }
 

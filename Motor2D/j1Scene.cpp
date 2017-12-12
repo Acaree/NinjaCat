@@ -38,23 +38,12 @@ bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
 
-	/*if (App->map->Load("level1ND.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
-	}
-	*/
 	const SDL_Texture* background = App->tex->Load("maps/Background.png");
-	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
 	
 	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, atlas, this, true));
-	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
-	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
+	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true));
 
 
 	return true;
