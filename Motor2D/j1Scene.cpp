@@ -50,7 +50,7 @@ bool j1Scene::Start()
 	*/
 	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-	UIButton* playButton, *settingsButton, *quitButton;
+	
 	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
 	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, atlas, this, true));
 	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
@@ -63,25 +63,29 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	//iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint p = App->map->WorldToMap(x, y);
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (origin_selected == true)
+	//Menu options
+	if (buttons.count() != 0)
+	{//PLAY BUTTON
+		if (playButton->eventElement == MouseLeftClickEvent)
 		{
-			//App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
+			App->audio->PlayMusic("audio/music.ogg");
+
+			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+			App->gui->DeleteUIElements();
+			buttons.clear();
 		}
-		else
+		else if (settingsButton->eventElement == MouseLeftClickEvent)
 		{
-			origin = p;
-			origin_selected = true;
+			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
+			//31.542,421,457
+			UIImage* c;
+			c = App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, atlas, this, true);
+			c->positionToDraw = 3;
+
+		}
+		else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
+		{
+			return false;
 		}
 	}
 	return true;

@@ -38,7 +38,7 @@ private:
 	iPoint mouseCoordenates;
 	iPoint mouseTile;
 	p2List<UIButton*> buttons;
-	UIButton* playButton, *settingsButton, *quitButton;
+	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
 };
 
 #endif // __j1SCENE_H__

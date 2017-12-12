@@ -43,6 +43,7 @@ public:
 	UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, const SDL_Texture*, j1Module*, bool);
 	void SortByDrawOrder();
 	const SDL_Texture* GetAtlas() const;
+	bool DeleteUIElements();
 
 private:
 
