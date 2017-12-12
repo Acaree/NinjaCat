@@ -68,10 +68,9 @@ bool j1Scene::PreUpdate()
 	{//PLAY BUTTON
 		if (playButton->eventElement == MouseLeftClickEvent)
 		{
-			App->audio->PlayMusic("audio/music.ogg");
-
 			App->fade->FadeToBlack("level1ND.tmx", 2.0);
-			App->gui->DeleteUIElements();
+			App->map->level = level_1;
+			//App->gui->DeleteUIElements();
 			buttons.clear();
 		}
 		else if (settingsButton->eventElement == MouseLeftClickEvent)

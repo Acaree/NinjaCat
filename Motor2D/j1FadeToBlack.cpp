@@ -8,6 +8,7 @@
 #include "j1Pathfinding.h"
 #include "j1Timer.h"
 #include "SDL/include/SDL_render.h"
+#include "j1Gui.h"
 
 
 j1FadeToBlack::j1FadeToBlack()
@@ -57,6 +58,7 @@ bool j1FadeToBlack::Update(float dt)
 					App->pathfinding->SetMap(w, h, data);
 				RELEASE_ARRAY(data);
 				App->map->CreateEnemies();
+				App->gui->DeleteUIElements();
 			}
 
 			if (App->entity_m->player != nullptr) {

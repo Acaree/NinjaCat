@@ -52,24 +52,26 @@ bool j1Gui::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		drawDebug = !drawDebug;
 
-	p2List_item<UIElement*> *Ui_item = UiElement.start;
-
-	while (Ui_item != nullptr)
+	if (UiElement.start->data != nullptr)
 	{
+		p2List_item<UIElement*> *Ui_item = UiElement.start;
 
-		Ui_item->data->Update(dt);
-		Ui_item = Ui_item->next;
+		while (Ui_item != nullptr)
+		{
+
+			Ui_item->data->Update(dt);
+			Ui_item = Ui_item->next;
+		}
+
+		Ui_item = UiElement.start;
+		while (Ui_item != nullptr)
+		{
+			Ui_item->data->Draw();
+			if (drawDebug == true)
+				Ui_item->data->DebugDraw();
+			Ui_item = Ui_item->next;
+		}
 	}
-
-	Ui_item = UiElement.start;
-	while (Ui_item != nullptr)
-	{
-		Ui_item->data->Draw();
-		if (drawDebug == true)
-			Ui_item->data->DebugDraw();
-		Ui_item = Ui_item->next;
-	}
-
 
 
 
