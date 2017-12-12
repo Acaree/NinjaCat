@@ -52,7 +52,7 @@ bool j1Gui::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		drawDebug = !drawDebug;
 
-	if (UiElement.start->data != nullptr)
+	/*if (UiElement.start->data != nullptr)
 	{
 		p2List_item<UIElement*> *Ui_item = UiElement.start;
 
@@ -71,6 +71,25 @@ bool j1Gui::Update(float dt)
 				Ui_item->data->DebugDraw();
 			Ui_item = Ui_item->next;
 		}
+	}*/
+	for (uint i = 0; i < UiElement.count(); i++)
+	{
+		if (UiElement[i] != nullptr)
+		{
+			UiElement[i]->Update(dt);
+		}
+	}
+
+	for (uint i = 0; i < UiElement.count(); i++)
+	{
+		if (UiElement[i] != nullptr)
+		{
+			UiElement[i]->Draw();
+			if (drawDebug == true)
+			{
+				UiElement[i]->DebugDraw();
+			}
+		}
 	}
 
 	return true;
@@ -79,20 +98,20 @@ bool j1Gui::Update(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	if (UiElement.start->data != nullptr)
-	{
+	
 		for (uint i = 0; i < UiElement.count(); i++)
 		{
+			if (UiElement[i] != nullptr)
+			{
 			if (UiElement[i]->toDelete == true)
 			{
-				if (UiElement[i] != nullptr)
-				{
+				
 					delete UiElement[i];
 					UiElement[i] = nullptr;
 				}
 			}
 		}
-	}
+	
 	return true;
 }
 
@@ -156,15 +175,17 @@ void j1Gui::SortByDrawOrder()
 	{
 		swap = false;
 		p2List_item<UIElement*> *item = UiElement.start;
-
-		while (item != nullptr && item->next != nullptr)
+		if (item->data != nullptr)
 		{
-			if (item->data->positionToDraw > item->next->data->positionToDraw)
+			while (item != nullptr && item->next != nullptr)
 			{
-				SWAP(item->data, item->next->data);
-				swap = true;
+				if (item->data->positionToDraw > item->next->data->positionToDraw)
+				{
+					SWAP(item->data, item->next->data);
+					swap = true;
+				}
+				item = item->next;
 			}
-			item = item->next;
 		}
 	}
 }

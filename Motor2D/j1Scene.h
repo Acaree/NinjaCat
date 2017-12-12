@@ -6,6 +6,14 @@
 #include "UiImage.h"
 struct SDL_Texture;
 
+enum Scene
+{
+	Main_scene,
+	Settings_scene,
+	Levels_scene,
+	None_scene
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -34,6 +42,9 @@ public:
 	bool CleanUp();
 
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
+	void CreateMainScene();
+	void CreateSettingsScene();
+	void DeleteSettings();
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
@@ -41,7 +52,9 @@ private:
 	p2List<UIButton*> buttons;
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
 	UIImage* settingsImage = nullptr;
-	UIButton* plusVolume = nullptr, *minusVolume = nullptr;
+	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
+	Scene actualScene = None_scene;
+
 };
 
 #endif // __j1SCENE_H__

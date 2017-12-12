@@ -126,7 +126,8 @@ public:
 			}
 		}
 
-		RELEASE(item);
+		//RELEASE(item);
+
 		--size;
 		return(true);
 	}

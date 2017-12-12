@@ -12,9 +12,7 @@ UIElement::UIElement(iPoint position, j1Module* listener, bool drag) : localPosi
 
 UIElement::~UIElement()
 {
-	if (texture != nullptr)
-		if (App->tex->UnLoad((SDL_Texture*)texture))
-			texture = nullptr;
+
 }
 
 void UIElement::Update(float dt)

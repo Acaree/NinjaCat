@@ -37,50 +37,61 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
-
-	const SDL_Texture* background = App->tex->Load("maps/Background.png");
-	
-	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true));
-	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true));
-	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true));
-
+	CreateMainScene();
+	actualScene = Main_scene;
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	//Menu options
-	if (buttons.count() != 0)
-	{//PLAY BUTTON
-		if (playButton->eventElement == MouseLeftClickEvent)
+	
+
+
+	switch (actualScene)
+	{
+	case Main_scene:
+		if (buttons.count() != 0)
 		{
-			App->fade->FadeToBlack("level1ND.tmx", 2.0);
-			App->map->level = level_1;
-			
-			buttons.clear();
-		}
-		else if (settingsButton->eventElement == MouseLeftClickEvent)
-		{
-			//need change
-			settingsImage = App->gui->CreateImage({ -300,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
-			settingsImage->SetParent(settingsButton);
-			minusVolume = App->gui->CreateButton({50,100}, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(),this,false);
-			plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, {69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
-			minusVolume->SetParent(settingsImage);
-			plusVolume->SetParent(settingsImage);
+			if (playButton->eventElement == MouseLeftClickEvent)
+			{
+				App->fade->FadeToBlack("level1ND.tmx", 2.0);
+				App->map->level = level_1;
+
+				buttons.clear();
+			}
+			else if (settingsButton->eventElement == MouseLeftClickEvent)
+			{
 				
+				CreateSettingsScene();
+				actualScene = Settings_scene;
+			}
+			else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
+				return false;
+			
 		}
-		else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
+		break;
+
+	case Settings_scene:
+		if (plusVolume->eventElement == MouseLeftClickEvent)
 		{
-			return false;
-		}
-		if (plusVolume != nullptr && plusVolume->eventElement == MouseLeftClickEvent)
 			App->audio->volume += 2;
-		else if(minusVolume != nullptr && minusVolume->eventElement == MouseLeftClickEvent)
+			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+		}
+		else if (minusVolume->eventElement == MouseLeftClickEvent)
+		{
 			App->audio->volume -= 2;
+			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+		}
+		else if (crossButton->eventElement == MouseLeftClickEvent)
+		{
+			DeleteSettings();
+			actualScene = Main_scene;
+		}
+		break;
 	}
+	//Menu options
+
 	return true;
 }
 
@@ -153,7 +164,7 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 	//Volume Control
-	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+	
 
 	return true;
 }
@@ -206,3 +217,35 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 	}
 }
 
+void j1Scene::CreateMainScene()
+{
+	const SDL_Texture* background = App->tex->Load("maps/Background.png");
+
+	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
+	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true));
+}
+
+void j1Scene::CreateSettingsScene()
+{
+	settingsImage = App->gui->CreateImage({ -500,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	settingsImage->SetParent(settingsButton);
+	minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
+	minusVolume->SetParent(settingsImage);
+	plusVolume->SetParent(settingsImage);
+	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	crossButton->SetParent(settingsImage);
+}
+
+void j1Scene::DeleteSettings()
+{
+	settingsImage->toDelete = true;
+	minusVolume->toDelete = true;
+	plusVolume->toDelete = true;
+	crossButton->toDelete = true;
+
+
+
+}
