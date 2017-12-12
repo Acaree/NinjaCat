@@ -49,6 +49,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+	volume = config.child("volume").attribute("value").as_int();
 
 	return ret;
 }
@@ -128,7 +129,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 			}
 		}
 	}
-
+	Mix_VolumeMusic((int)(volume * 1, 28));
 	LOG("Successfully playing %s", path);
 	return ret;
 }

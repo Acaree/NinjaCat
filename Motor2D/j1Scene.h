@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "UiButton.h"
+#include "UiImage.h"
 struct SDL_Texture;
 
 class j1Scene : public j1Module
@@ -39,6 +40,7 @@ private:
 	iPoint mouseTile;
 	p2List<UIButton*> buttons;
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
+	UIImage* settingsImage = nullptr;
 };
 
 #endif // __j1SCENE_H__

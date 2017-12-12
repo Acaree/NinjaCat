@@ -70,16 +70,18 @@ bool j1Scene::PreUpdate()
 		{
 			App->fade->FadeToBlack("level1ND.tmx", 2.0);
 			App->map->level = level_1;
-			//App->gui->DeleteUIElements();
+			
 			buttons.clear();
 		}
 		else if (settingsButton->eventElement == MouseLeftClickEvent)
 		{
 			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-			//31.542,421,457
-			UIImage* c;
-			c = App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, atlas, this, true);
-			c->positionToDraw = 3;
+		
+			
+			settingsImage = App->gui->CreateImage({ -300,100 }, { 0,426,414,426 }, atlas, this, true);
+			settingsImage->SetParent(settingsButton);
+
+			
 
 		}
 		else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
@@ -158,7 +160,8 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-
+	//Volume Control
+	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 
 	return true;
 }

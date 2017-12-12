@@ -31,7 +31,9 @@
   <scene>
     <map name ="level1ND.tmx"/> 
   </scene>
-  
+  <audio>
+    <volume value ="50"/>
+    </audio>
    <enemies>
     
      <zombie posx="8" posy ="7"/>
