@@ -46,8 +46,6 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate()
 {
 	
-
-
 	switch (actualScene)
 	{
 	case Main_scene:
@@ -57,18 +55,17 @@ bool j1Scene::PreUpdate()
 			{
 				App->fade->FadeToBlack("level1ND.tmx", 2.0);
 				App->map->level = level_1;
-
+				actualScene = Levels_scene;
 				buttons.clear();
+				CreateLevelScene();
 			}
 			else if (settingsButton->eventElement == MouseLeftClickEvent)
 			{
-				
 				CreateSettingsScene();
 				actualScene = Settings_scene;
 			}
 			else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
 				return false;
-			
 		}
 		break;
 
@@ -89,6 +86,11 @@ bool j1Scene::PreUpdate()
 			actualScene = Main_scene;
 		}
 		break;
+
+	case Levels_scene:
+		iPoint p = {(int)( 100 - App->render->camera.x / App->win->scale ),(int)( 100 - App->render->camera.y / App->win->scale) };
+		pauseButton->SetLocalPosition(p);
+		break;
 	}
 	//Menu options
 
@@ -97,7 +99,7 @@ bool j1Scene::PreUpdate()
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
-{
+{ 
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
@@ -176,7 +178,7 @@ bool j1Scene::PostUpdate()
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-
+	
 	return ret;
 }
 
@@ -245,4 +247,10 @@ void j1Scene::DeleteSettings()
 	minusVolume->toDelete = true;
 	plusVolume->toDelete = true;
 	crossButton->toDelete = true;
+}
+
+void j1Scene::CreateLevelScene()
+{
+	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 0,852,138,142 }, { 0,852,138,142 }, { 0,852,138,142 }, App->gui->GetAtlas(),this,false);
+
 }

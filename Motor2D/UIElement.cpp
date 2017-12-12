@@ -77,3 +77,14 @@ void UIElement::SetParent(UIElement* parent)
 	this->parent = parent;
 	positionToDraw = parent->positionToDraw + 1;
 }
+
+void UIElement::SetLocalPosition(iPoint p)
+{
+	localPosition.x = p.x;
+	localPosition.y = p.y;
+}
+
+void UIElement::ChangeTexture(const SDL_Texture &tex)
+{
+	texture = &tex;
+}

@@ -49,7 +49,7 @@ bool j1Gui::Update(float dt)
 		SortByDrawOrder();
 		needOrderList = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		drawDebug = !drawDebug;
 
 	/*if (UiElement.start->data != nullptr)
@@ -108,8 +108,7 @@ bool j1Gui::PostUpdate()
 				p2List_item<UIElement*>*tmp = UiElement.At(i);
 				
 				UiElement.del(tmp);
-					/*delete UiElement[i];
-					UiElement[i] = nullptr;*/
+					
 				}
 			}
 		}

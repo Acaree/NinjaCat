@@ -44,6 +44,7 @@ public:
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
 	void CreateMainScene();
 	void CreateSettingsScene();
+	void CreateLevelScene();
 	void DeleteSettings();
 private:
 	p2SString map;
@@ -53,8 +54,8 @@ private:
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
 	UIImage* settingsImage = nullptr;
 	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
+	UIButton* pauseButton = nullptr;
 	Scene actualScene = None_scene;
-
 };
 
 #endif // __j1SCENE_H__
