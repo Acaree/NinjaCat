@@ -48,19 +48,14 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
+	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-	UIButton* a, *b, *c;
-	a = App->gui->CreateButton({0,0 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
-	b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
-	c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
-	//set parent
-	b->SetParent(a);
-	c->SetParent(b);
-	UILabel* d;
-	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
-	d->SetParent(a);
+	UIButton* playButton, *settingsButton, *quitButton;
+	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
+	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, atlas, this, true));
+	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
+	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
 
-	//App->map->CreateEnemies();
 
 	return true;
 }
@@ -183,3 +178,33 @@ bool j1Scene::CleanUp()
 
 	return true;
 }
+
+void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
+{
+	if (UIelement->type == ButtonElement)
+	{
+		UIButton* b = (UIButton*)UIelement;
+		switch (EventElement)
+		{
+		case NoEventElement:
+			UIelement->rectUi = b->default_texture_rect;
+			break;
+		case MouseEnterEvent:
+			UIelement->rectUi = b->mouse_on_rect;
+			break;
+		case MouseLeaveEvent:
+			UIelement->rectUi = b->default_texture_rect;
+			break;
+		case MouseRightClickEvent:
+			UIelement->rectUi = b->clicked_rect;
+			break;
+		case MouseLeftClickEvent:
+			UIelement->rectUi = b->clicked_rect;
+			break;
+		case FocusEventElement:
+			UIelement->rectUi = b->mouse_on_rect;
+			break;
+		}
+	}
+}
+
