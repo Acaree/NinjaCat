@@ -353,14 +353,16 @@ void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
-	if (App->entity_m->player->animation != &App->entity_m->player->dead) {
+	
+	//Fadecommit POSIBLE BUG: The line below was to avoid a bug.
+	//if (App->entity_m->player->animation != &App->entity_m->player->dead) {
 		if (load_game.GetString() != "save_game.xml")
 		{
 			load_game = "save_game.xml";
 		}
 		want_to_load = true;
 	}
-}
+//}
 
 // ---------------------------------------
 void j1App::SaveGame() const

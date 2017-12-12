@@ -8,7 +8,6 @@
 #include "Entity.h"
 #include "Enemy_Fly.h"
 #include "j1Map.h"
-#include "j1FadeToBlack.h"
 #include "Enemy_Walk.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
@@ -109,17 +108,6 @@ bool j1Entities::Update(float dt)
 			if (entities[i]->death == true && entities[i]->isPlayer==false) {
 				delete entities[i];
 				entities[i] = nullptr;
-			}
-		}
-	}
-
-	if (App->fade->IsFading() == true) {
-		if (player != nullptr) {
-			if (App->map->isLevel1 == true) {
-				player->needRespawn1 = true;
-			}
-			else {
-				player->needRespawn2 = true;
 			}
 		}
 	}
@@ -227,6 +215,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		{
 
 		case ENTITY_TYPES::NO_TYPE:
+			//enemies[i] = new Enemy_Balloon(info.x, info.y);
 			break;
 
 		case ENTITY_TYPES::ENEMY_FLY:
@@ -255,7 +244,8 @@ bool j1Entities::Save(pugi::xml_node& config) const
 
 	player_node.append_attribute("x") = player->position.x;
 	player_node.append_attribute("y") = player->position.y;
-	player_node.append_attribute("level1") = App->map->isLevel1;
+	//fadecommit: need to change how to save the lvl
+	//player_node.append_attribute("level1") = App->map->isLevel1;
 	return true;
 }
 
@@ -263,12 +253,14 @@ bool j1Entities::Load(pugi::xml_node& data)
 {
 	bool tmp = data.child("player").attribute("level1").as_bool();
 
-	if (tmp != App->map->isLevel1)
+	//fadecommit: same as save
+	/*if (tmp != App->map->isLevel1)
 	{
 		player->changeLevel = true;
 		player->loadRespawn = true;
 		App->map->respawnPosition = true;
 	}
+	*/
 	player->position.x = data.child("player").attribute("x").as_int();
 	player->position.y = data.child("player").attribute("y").as_int();
 	
@@ -276,20 +268,3 @@ bool j1Entities::Load(pugi::xml_node& data)
 
 	return true;
 }
-
-Animation j1Entities::CreateAnimation(char* anim_type, char* anim, bool loop) {
-	Animation ret;
-
-	pugi::xml_document anim_file;
-	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
-	pugi::xml_node anim_node = anim_file.child("animations").child(anim_type).child(anim).child("frame");
-
-	while (anim_node != nullptr) {
-		ret.PushBack({ anim_node.attribute("x").as_int(),anim_node.attribute("y").as_int(),anim_node.attribute("width").as_int(),anim_node.attribute("height").as_int() });
-		anim_node = anim_node.next_sibling();
-	}
-	ret.speed = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float();
-	ret.loop = loop;
-	return ret;
-}
-

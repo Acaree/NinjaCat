@@ -9,9 +9,9 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Entities.h"
-#include "j1FadeToBlack.h"
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
+#include "j1FadeToBlack.h"
 #include "j1Gui.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -36,15 +36,32 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
+	App->audio->PlayMusic("audio/music.ogg");
 
-	const SDL_Texture* background = App->tex->Load("maps/Background.png");
+	/*if (App->map->Load("level1ND.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	*/
 	const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-	UIButton* playButton, *settingsButton, *quitButton;
-	App->gui->CreateImage({ 0,0 }, {0,0,1200,800},background,this,false);
-	buttons.add(playButton = App->gui->CreateButton({100,600 }, {276,0,138,142 },  { 138,0,138,142 } , { 0,0,138,142 }, atlas, this, true));
-	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, atlas, this, true));
-	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, atlas, this, true));
-	
+	UIButton* a, *b, *c;
+	a = App->gui->CreateButton({0,0 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	b = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	c = App->gui->CreateButton({ 0,100 }, { 0,113,229,69 }, { 411,169,229,69 }, { 642,169,229,69 }, atlas, this, true);
+	//set parent
+	b->SetParent(a);
+	c->SetParent(b);
+	UILabel* d;
+	d = App->gui->CreateLabel({ -100,50 }, "hello world", { 226,186,31,255 }, App->font->default, this, false);
+	d->SetParent(a);
+
+	//App->map->CreateEnemies();
+
 	return true;
 }
 
@@ -58,31 +75,6 @@ bool j1Scene::PreUpdate()
 	App->input->GetMousePosition(x, y);
 	//iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint p = App->map->WorldToMap(x, y);
-
-	//Menu options
-	if (buttons.count() != 0)
-	{//PLAY BUTTON
-		if (buttons[0]->eventElement == MouseLeftClickEvent)
-		{
-			App->audio->PlayMusic("audio/music.ogg");
-			
-			App->fade->FadeToBlack("level1ND.tmx", 2.0);
-			buttons.clear();
-		}
-		else if (buttons[1]->eventElement == MouseLeftClickEvent)
-		{
-			const SDL_Texture* atlas = App->tex->Load("gui/atlas.png");
-			//31.542,421,457
-			UIImage* c;
-			c =App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, atlas, this, true);
-			c->positionToDraw = 3;
-
-		}
-		else if (buttons[2]->eventElement == MouseLeftClickEvent) //quit button
-		{
-			return false;
-		}
-	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
@@ -104,33 +96,48 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
-	
-		
-		
-
-
-	
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
-	{
-		if (App->map->isLevel1 == true)
+	if (App->entity_m->player != nullptr) {
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			App->entity_m->player->needRespawn1 = true;
+			if (App->map->level == level_1)
+			{
+				App->entity_m->player->needRespawn1 = true;
+			}
+			else
+			{
+				App->entity_m->player->changeLevel = true;
+			}
 		}
-		else
+
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			App->entity_m->player->changeLevel = true;
+			if (App->map->level == level_1)
+			{
+				App->entity_m->player->needRespawn1 = true;
+			}
+			else
+			{
+				App->entity_m->player->needRespawn2 = true;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		{
+			if (App->entity_m->player->godMode == true)
+				App->entity_m->player->godMode = false;
+			else
+				App->entity_m->player->godMode = true;
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
-	{
-		if (App->map->isLevel1 == true)
-		{
-			App->entity_m->player->needRespawn1 = true;
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		//fadecommit esto no esta bien, funciona pero esta mal
+		if (App->map->level == level_2 || App->map->level == start_screen) {
+			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+			App->map->level = level_1;
 		}
-		else
-		{
-			App->entity_m->player->needRespawn2 = true;
+		else if (App->map->level == level_1) {
+			App->fade->FadeToBlack("level2ND.tmx", 2.0);
+			App->map->level = level_2;
 		}
 	}
 
@@ -142,13 +149,7 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN  && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		App->SaveGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		if (App->entity_m->player->godMode == true)
-			App->entity_m->player->godMode = false;
-		else
-			App->entity_m->player->godMode = true;
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		if (App->cap == 30)
@@ -156,31 +157,6 @@ bool j1Scene::Update(float dt)
 		else
 			App->cap=30;
 		App->capped_ms = 1000 / App->cap;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
-	{
-		bool focusButton = false;
-		for (uint i = 0; i < buttons.count(); i++)
-		{
-			if (buttons[i]->eventElement == FocusEventElement)
-			{
-				focusButton = true;
-				buttons[i]->eventElement = NoEventElement;
-				//onUiTriggered(buttons[i], NoEventElement);
-				if (i + 1 != buttons.count())
-					buttons[i + 1]->eventElement = FocusEventElement;
-				else
-					buttons[0]->eventElement = FocusEventElement;
-				break;
-			}
-
-		}
-		if (!focusButton && buttons.count() > 0) // 0 button focus && are buttons in the scene
-		{
-			buttons[0]->eventElement = FocusEventElement;
-		}
-
 	}
 
 	App->map->Draw();
@@ -206,33 +182,4 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
-}
-
-void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
-{
-	if (UIelement->type == ButtonElement)
-	{
-		UIButton* b = (UIButton*)UIelement;
-		switch (EventElement)
-		{
-		case NoEventElement:
-			UIelement->rectUi = b->default_texture_rect;
-			break;
-		case MouseEnterEvent:
-			UIelement->rectUi = b->mouse_on_rect;
-			break;
-		case MouseLeaveEvent:
-			UIelement->rectUi = b->default_texture_rect;
-			break;
-		case MouseRightClickEvent:
-			UIelement->rectUi = b->clicked_rect;
-			break;
-		case MouseLeftClickEvent:
-			UIelement->rectUi = b->clicked_rect;
-			break;
-		case FocusEventElement:
-			UIelement->rectUi = b->mouse_on_rect;
-			break;
-		}
-	}
 }

@@ -21,7 +21,7 @@ protected:
 
 
 public:
-	iPoint position;
+	fPoint position;
 	Animation* animation = nullptr;
 	float hitpoints;
 	bool death = false;
@@ -30,7 +30,6 @@ public:
 	bool isPlayer = false;
 	bool movement[4] = { true,true,true,true };
 	int now = 0;
-	uint generalSpeedAnimations = 0;
 public:
 	Entity(int x, int y);
 	virtual ~Entity();

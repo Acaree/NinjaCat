@@ -37,8 +37,6 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
-
-public:
 	uint		width;
 	uint		height;
 	uint		scale;

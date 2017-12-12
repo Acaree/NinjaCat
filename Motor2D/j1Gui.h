@@ -44,8 +44,6 @@ public:
 	void SortByDrawOrder();
 	const SDL_Texture* GetAtlas() const;
 
-	bool DeleteUIElements();
-
 private:
 
 	SDL_Texture* atlas = nullptr;
@@ -53,7 +51,6 @@ private:
 	p2List<UIElement*> UiElement;
 	bool drawDebug = false;
 	bool needOrderList = false;
-	
 };
 
 #endif // __j1GUI_H__

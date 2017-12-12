@@ -21,13 +21,13 @@ Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 	
 	//collider = App->collision->AddCollider({ 0, 0,24, 24 }, COLLIDER_TYPE::COLLIDER_FLYING_ENEMY, (Module*)App->enemies);
 	//base.PushBack({ 0,0,86,119 });
-	walkLeft = App->entity_m->CreateAnimation("girl", "walkLeft", true);
-	walkRight = App->entity_m->CreateAnimation("girl", "walkRight", true);
-	deadRight = App->entity_m->CreateAnimation("girl", "deadRight", false);
-	deadLeft = App->entity_m->CreateAnimation("girl", "deadLeft", false);
+	walkLeft = App->tex->CreateAnimation("girl", "walkLeft", true);
+	walkRight = App->tex->CreateAnimation("girl", "walkRight", true);
+	deadRight = App->tex->CreateAnimation("girl", "deadRight", false);
+	deadLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
 	flysound = App->audio->LoadFx("audio/glide.wav");
 	animation = &walkLeft;
-	generalSpeedAnimations = walkLeft.speed;
+	
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 	
@@ -130,10 +130,10 @@ void Enemy_Fly::Move(float dt)
 
 void Enemy_Fly::NormalizeAnimations(float dt) {
 
-	walkLeft.speed = generalSpeedAnimations*dt;
-	walkRight.speed = generalSpeedAnimations*dt;
-	deadLeft.speed = generalSpeedAnimations*dt;
-	deadRight.speed = generalSpeedAnimations*dt;
+		walkLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
+		walkRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
+		deadLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
+		deadRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
 
 }
 
