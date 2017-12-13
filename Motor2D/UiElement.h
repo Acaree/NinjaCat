@@ -36,7 +36,7 @@ public:
 	virtual void DebugDraw() const;
 	void SetParent(UIElement*);
 	void SetLocalPosition(iPoint);
-	void ChangeTexture(const SDL_Texture&);
+	void ChangeTexture(const SDL_Texture*);
 	virtual ~UIElement();
 
 	ElementType type = ElementType::NoTypeElement;

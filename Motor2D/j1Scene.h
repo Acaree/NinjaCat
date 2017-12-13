@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "UiButton.h"
 #include "UiImage.h"
+#include "UiLabel.h"
 struct SDL_Texture;
 
 enum Scene
@@ -55,6 +56,8 @@ private:
 	UIImage* settingsImage = nullptr;
 	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
 	UIButton* pauseButton = nullptr;
+	SDL_Texture* current_volume_tex = nullptr;
+	UILabel* current_volume_label = nullptr;
 	Scene actualScene = None_scene;
 };
 

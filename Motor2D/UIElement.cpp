@@ -84,7 +84,7 @@ void UIElement::SetLocalPosition(iPoint p)
 	localPosition.y = p.y;
 }
 
-void UIElement::ChangeTexture(const SDL_Texture &tex)
+void UIElement::ChangeTexture(const SDL_Texture* tex)
 {
-	texture = &tex;
+	texture = tex;
 }

@@ -13,6 +13,7 @@
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
+#include <stdio.h>
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,7 +46,11 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	
+	//change volume to a char* from int
+	std::string s = std::to_string(App->audio->volume);
+	char* s2 = (char *)alloca(s.size() + 1);
+	memcpy(s2, s.c_str(), s.size() + 1);
+
 	switch (actualScene)
 	{
 	case Main_scene:
@@ -72,12 +77,14 @@ bool j1Scene::PreUpdate()
 	case Settings_scene:
 		if (plusVolume->eventElement == MouseLeftClickEvent)
 		{
-			App->audio->volume += 2;
+			if (App->audio->volume < 100)
+				App->audio->volume += 10;
 			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 		}
 		else if (minusVolume->eventElement == MouseLeftClickEvent)
 		{
-			App->audio->volume -= 2;
+			if (App->audio->volume > 0)
+				App->audio->volume -= 10;
 			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 		}
 		else if (crossButton->eventElement == MouseLeftClickEvent)
@@ -85,6 +92,11 @@ bool j1Scene::PreUpdate()
 			DeleteSettings();
 			actualScene = Main_scene;
 		}
+		//if (App->audio->volume > 50)
+		
+			current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+		//else
+			//current_volume_label->ChangeTexture(App->font->Print("00", { 0,0,0 }, App->font->default));
 		break;
 
 	case Levels_scene:
@@ -239,6 +251,8 @@ void j1Scene::CreateSettingsScene()
 	plusVolume->SetParent(settingsImage);
 	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
 	crossButton->SetParent(settingsImage);
+	current_volume_label = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
+	current_volume_label->SetParent(settingsImage);
 }
 
 void j1Scene::DeleteSettings()
@@ -247,6 +261,7 @@ void j1Scene::DeleteSettings()
 	minusVolume->toDelete = true;
 	plusVolume->toDelete = true;
 	crossButton->toDelete = true;
+	current_volume_label->toDelete = true;
 }
 
 void j1Scene::CreateLevelScene()
