@@ -99,22 +99,24 @@ bool j1Scene::PreUpdate()
 			break;
 
 		case level_1:
-			//pauseButton->SetLocalPosition(p);
-			//if (settingsImage != nullptr)
-				//settingsImage->SetLocalPosition(p);
-
+		
 			if (pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 			{
 				if (App->pause == true)
 					App->pause = false;
 				else
+				{
 					App->pause = true;
+					CreatePauseMenu();
+				}
 				pauseMenu = true;
-				CreatePauseMenu();
 			}
 			else if (pauseButton->eventElement != MouseLeftClickEvent)
 				pauseMenu = false;
 
+			if(crossButton != nullptr)
+			if (crossButton->eventElement == MouseLeftClickEvent)
+				DeletePauseMenu();
 			break;
 
 		case level_2:
@@ -203,6 +205,8 @@ bool j1Scene::Update(float dt)
 		pauseButton->Draw();
 	if (settingsImage != nullptr)
 		settingsImage->Draw();
+	if (crossButton != nullptr)
+		crossButton->Draw();
 	return true;
 }
 
@@ -306,5 +310,12 @@ void j1Scene::CreatePauseMenu()
 {
 	settingsImage = App->gui->CreateImage({ 0,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
 	settingsImage->SetParent(pauseButton);
+	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	crossButton->SetParent(settingsImage);
+}
 
+void j1Scene::DeletePauseMenu()
+{
+	settingsImage->toDelete = true;
+	crossButton->toDelete = true;
 }

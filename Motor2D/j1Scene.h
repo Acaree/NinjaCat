@@ -51,6 +51,7 @@ public:
 	void DeleteSettings();
 	void DeleteMainMenuSettings();
 	void CreatePauseMenu();
+	void DeletePauseMenu();
 private:
 	p2SString map;
 	iPoint mouseCoordenates;

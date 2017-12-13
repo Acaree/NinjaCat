@@ -3,7 +3,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "j1Gui.h"
+
 
 UIElement::UIElement(iPoint position, j1Module* listener, bool drag) : localPosition(position), listener(listener), dragable(drag)
 {
@@ -78,7 +78,6 @@ void UIElement::SetParent(UIElement* parent)
 {
 	this->parent = parent;
 	positionToDraw = parent->positionToDraw + 1;
-	App->gui->needOrderList = true;
 }
 
 void UIElement::SetLocalPosition(iPoint p)
