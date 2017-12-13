@@ -54,9 +54,7 @@ bool j1Scene::PreUpdate()
 		switch (level)
 		{
 		case start_screen:
-			if (buttons.count() != 0)
-			{
-				if (playButton->eventElement == MouseLeftClickEvent)
+				if (start_playButton->eventElement == MouseLeftClickEvent)
 				{
 					App->fade->FadeToBlack(level_1, 2.0);
 					DeleteMainMenuSettings();
@@ -64,30 +62,29 @@ bool j1Scene::PreUpdate()
 					CreateLevelScene();
 					level = level_1;
 				}
-				else if (settingsButton->eventElement == MouseLeftClickEvent)
+				else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 				{
 					CreateSettingsScene();
 					level = settings_screen;
 				}
-				else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
+				else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
 					return false;
-			}
 			break;
 
 		case settings_screen:
-				if (plusVolume->eventElement == MouseLeftClickEvent)
+				if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
 				{
 					if (App->audio->volume < 100)
 						App->audio->volume += 10;
 					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 				}
-				else if (minusVolume->eventElement == MouseLeftClickEvent)
+				else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
 				{
 					if (App->audio->volume > 0)
 						App->audio->volume -= 10;
 					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 				}
-				else if (crossButton->eventElement == MouseLeftClickEvent)
+				else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
 				{
 					DeleteSettings();
 					//ERROR,BUG need think
@@ -97,12 +94,12 @@ bool j1Scene::PreUpdate()
 					level = start_screen;
 				}
 
-			current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+			settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
 			break;
 
 		case level_1:
 		
-			if (pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
+			if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 			{
 				if (App->pause == true)
 					App->pause = false;
@@ -113,22 +110,22 @@ bool j1Scene::PreUpdate()
 				}
 				pauseMenu = true;
 			}
-			else if (pauseButton->eventElement != MouseLeftClickEvent)
+			else if (level_pauseButton->eventElement != MouseLeftClickEvent)
 				pauseMenu = false;
 
-			if (crossButton != nullptr)
+			if (pause_crossButton != nullptr)
 			{
-				if (crossButton->eventElement == MouseLeftClickEvent || playButton->eventElement == MouseLeftClickEvent)
+				if (pause_crossButton->eventElement == MouseLeftClickEvent || pause_playButton->eventElement == MouseLeftClickEvent)
 				{
 					DeletePauseMenu();
 					App->pause = true;
 				}
-				else if (settingsButton->eventElement == MouseLeftClickEvent)
+				else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 				{
 					CreateSettingsScene();
 					level = settings_screen;
 				}
-				else if (returnButton->eventElement == MouseLeftClickEvent)
+				else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 				{
 					DeletePauseMenu();
 					level = start_screen;
@@ -220,12 +217,14 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 	//guarrada
+	/*
 	if (pauseButton != nullptr)
 		pauseButton->Draw();
 	if (settingsImage != nullptr)
 		settingsImage->Draw();
 	if (crossButton != nullptr)
 		crossButton->Draw();
+		*/
 	return true;
 }
 
@@ -282,72 +281,73 @@ void j1Scene::CreateMainScene()
 {
 	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 
-	mainImage=App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true));
-	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true));
-	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true));
+	start_mainImage=App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
+	start_playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true);
+	start_settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true);
+	start_quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true);
 }
 
 void j1Scene::CreateSettingsScene()
 {
-	settingsImage = App->gui->CreateImage({ -500,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
-	settingsImage->SetParent(settingsButton);
-	minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
-	minusVolume->SetParent(settingsImage);
-	plusVolume->SetParent(settingsImage);
-	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	crossButton->SetParent(settingsImage);
-	current_volume_label = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
-	current_volume_label->SetParent(settingsImage);
+	settingsmm_settingsImage = App->gui->CreateImage({ -500,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	settingsmm_settingsImage->SetParent(start_settingsButton);
+	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
+	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
 }
 
 void j1Scene::DeleteSettings()
 {
-	settingsImage->toDelete = true;
-	minusVolume->toDelete = true;
-	plusVolume->toDelete = true;
-	crossButton->toDelete = true;
-	current_volume_label->toDelete = true;
+	settingsmm_settingsImage->toDelete = true;
+	settingsmm_minusVolume->toDelete = true;
+	settingsmm_plusVolume->toDelete = true;
+	settingsmm_crossButton->toDelete = true;
+	settingsmm_volumeLabel->toDelete = true;
 }
 
 void j1Scene::CreateLevelScene()
 {
-	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
+	level_pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
 
 }
 
 void j1Scene::DeleteMainMenuSettings()
 {
-	mainImage->toDelete = true;
-	playButton->toDelete = true;
-	settingsButton->toDelete = true;
-	quitButton->toDelete = true;
+	start_mainImage->toDelete = true;
+	start_playButton->toDelete = true;
+	start_settingsButton->toDelete = true;
+	start_quitButton->toDelete = true;
 }
 
 void j1Scene::CreatePauseMenu()
 {
-	settingsImage = App->gui->CreateImage({ 0,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
-	settingsImage->SetParent(pauseButton);
-	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	crossButton->SetParent(settingsImage);
+	pause_settingsImage = App->gui->CreateImage({ 0,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	pause_settingsImage->SetParent(level_pauseButton);
+	pause_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	pause_crossButton->SetParent(pause_settingsImage);
 
-	playButton = App->gui->CreateButton({ 100,100 }, { 396,1575,189,68 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
-	replayButton = App->gui->CreateButton({100,200 }, { 396,1643,189,68 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
-	settingsButton = App->gui->CreateButton({ 100,300 }, { 396,1711,189,68 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
-	returnButton = App->gui->CreateButton({ 100,400 }, { 396,1779,189,68 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_playButton = App->gui->CreateButton({ 100,100 }, { 396,1575,189,68 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_replayButton = App->gui->CreateButton({100,200 }, { 396,1643,189,68 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_settingsButton = App->gui->CreateButton({ 100,300 }, { 396,1711,189,68 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_returnButton = App->gui->CreateButton({ 100,400 }, { 396,1779,189,68 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
 
-	playButton->SetParent(settingsImage);
-	replayButton->SetParent(settingsImage);
-	settingsButton->SetParent(settingsImage);
-	returnButton->SetParent(settingsImage);
+	pause_playButton->SetParent(pause_settingsImage);
+	pause_replayButton->SetParent(pause_settingsImage);
+	pause_settingsButton->SetParent(pause_settingsImage);
+	pause_returnButton->SetParent(pause_settingsImage);
 }
 
 void j1Scene::DeletePauseMenu()
 {
-	settingsImage->toDelete = true;
-	crossButton->toDelete = true;
-	playButton->toDelete = true;
-	settingsButton->toDelete = true;
-	returnButton->toDelete = true;
+	pause_settingsImage->toDelete = true;
+	pause_crossButton->toDelete = true;
+	pause_playButton->toDelete = true;
+	pause_replayButton->toDelete = true;
+	pause_settingsButton->toDelete = true;
+	pause_returnButton->toDelete = true;
 }

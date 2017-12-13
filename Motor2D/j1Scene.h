@@ -57,10 +57,23 @@ private:
 	iPoint mouseCoordenates;
 	iPoint mouseTile;
 	p2List<UIButton*> buttons;
-	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
-	UIImage* mainImage = nullptr,*settingsImage = nullptr;
-	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
-	UIButton* pauseButton = nullptr, *returnButton = nullptr, *replayButton = nullptr;
+
+	//pause menu gui
+	UIImage* pause_settingsImage = nullptr;
+	UIButton* pause_crossButton = nullptr, *pause_playButton = nullptr, *pause_replayButton = nullptr, *pause_settingsButton = nullptr, *pause_returnButton = nullptr;
+
+	//main menu gui
+	UIImage* start_mainImage = nullptr;
+	UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr;
+
+	//settings main menu
+	UIImage* settingsmm_settingsImage = nullptr;
+	UIButton* settingsmm_minusVolume = nullptr, *settingsmm_plusVolume = nullptr, *settingsmm_crossButton = nullptr;
+	UILabel* settingsmm_volumeLabel = nullptr;
+
+	//level gui
+	UIButton* level_pauseButton = nullptr;
+	
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
 	bool pauseMenu = false;
