@@ -1,0 +1,1 @@
+el boton de replay si nada mas empezar en el nivel le das a replay se bugea
