@@ -50,7 +50,7 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
-	iPoint p = { (int)(( 35+ App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
+	iPoint p = { (int)(( -App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
 
 	
 		switch (level)
@@ -100,6 +100,13 @@ bool j1Scene::PreUpdate()
 
 		case level_1:
 			pauseButton->SetLocalPosition(p);
+			if (pauseButton->eventElement == MouseLeftClickEvent)
+			{
+				if (App->pause == true)
+					App->pause = false;
+				else
+					App->pause = true;
+			}
 			break;
 
 		case level_2:
