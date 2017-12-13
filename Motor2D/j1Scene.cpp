@@ -312,7 +312,7 @@ void j1Scene::CreateMainScene()
 
 void j1Scene::CreateSettingsScene()
 {
-	settingsmm_settingsImage = App->gui->CreateImage({ App->render->camera.x + App->render->camera.w/2,App->render->camera.y + App->render->camera.h / 3 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
 	
 	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
 	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
