@@ -188,7 +188,6 @@ bool j1Scene::Update(float dt)
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		//fadecommit esto no esta bien, funciona pero esta mal
 		if (level == level_2 || level == start_screen) {
 			App->fade->FadeToBlack(level_1, 2.0);
 		}

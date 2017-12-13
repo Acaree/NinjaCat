@@ -60,6 +60,14 @@ bool j1Gui::Update(float dt)
 		}
 	}
 
+	
+
+	return true;
+
+}
+// Called after all Updates
+bool j1Gui::PostUpdate()
+{
 	for (uint i = 0; i < UiElement.count(); i++)
 	{
 		if (UiElement[i] != nullptr)
@@ -72,13 +80,6 @@ bool j1Gui::Update(float dt)
 		}
 	}
 
-	return true;
-
-}
-// Called after all Updates
-bool j1Gui::PostUpdate()
-{
-	
 		for (uint i = 0; i < UiElement.count(); i++)
 		{
 			if (UiElement[i] != nullptr)
