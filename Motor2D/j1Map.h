@@ -8,12 +8,7 @@
 #include "j1Render.h"
 #include "SDL\include\SDL_rect.h"
 
-enum actual_level {
-	none = 0,
-	start_screen,
-	level_1,
-	level_2,
-};
+
 
 struct Properties
 {
@@ -144,8 +139,6 @@ private:
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
-	
-	actual_level level = start_screen;
 	bool respawnPosition = false;
 	MapData data;
 

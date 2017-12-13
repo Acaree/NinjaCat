@@ -2,7 +2,7 @@
 #define __J1FADETOBLACK_H__
 
 #include "j1Module.h"
-#include "j1Map.h"
+#include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
 
 class j1FadeToBlack : public j1Module
@@ -34,8 +34,6 @@ private:
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
-
-public:
 	char* map_on;
 };
 

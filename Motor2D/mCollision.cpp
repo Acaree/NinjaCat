@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "mCollision.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include "j1Entities.h"
 #include "Brofiler\Brofiler.h"
 
@@ -325,13 +326,13 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 				if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
 				{
 					App->entity_m->player->changeLevel = true;
-					if (App->map->level == level_1)
+					if (App->scene->level == level_1)
 					{
-						App->map->level = level_2;
+						App->scene->level = level_2;
 					}
 					else
 					{
-						App->map->level = level_1;
+						App->scene->level = level_1;
 					}
 				}
 			}

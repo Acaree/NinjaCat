@@ -39,7 +39,7 @@ bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
 	CreateMainScene();
-	actualScene = Main_scene;
+	level=start_screen;
 	return true;
 }
 
@@ -50,56 +50,61 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
+	iPoint p = { (int)(100 - App->render->camera.x / App->win->scale),(int)(100 - App->render->camera.y / App->win->scale) };
 
-	switch (actualScene)
-	{
-	case Main_scene:
-		if (buttons.count() != 0)
+	
+		switch (level)
 		{
-			if (playButton->eventElement == MouseLeftClickEvent)
+		case start_screen:
+			if (buttons.count() != 0)
 			{
-				App->fade->FadeToBlack(level_1, 2.0);
-				actualScene = Levels_scene;
-				buttons.clear();
-				CreateLevelScene();
+				if (playButton->eventElement == MouseLeftClickEvent)
+				{
+					App->fade->FadeToBlack(level_1, 2.0);
+					buttons.clear();
+					CreateLevelScene();
+				}
+				else if (settingsButton->eventElement == MouseLeftClickEvent)
+				{
+					CreateSettingsScene();
+					level = settings_screen;
+				}
+				else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
+					return false;
 			}
-			else if (settingsButton->eventElement == MouseLeftClickEvent)
-			{
-				CreateSettingsScene();
-				actualScene = Settings_scene;
-			}
-			else if (quitButton->eventElement == MouseLeftClickEvent) //quit button
-				return false;
-		}
-		break;
+			break;
 
-	case Settings_scene:
-		if (plusVolume->eventElement == MouseLeftClickEvent)
-		{
-			if (App->audio->volume < 100)
-				App->audio->volume += 10;
-			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-		}
-		else if (minusVolume->eventElement == MouseLeftClickEvent)
-		{
-			if (App->audio->volume > 0)
-				App->audio->volume -= 10;
-			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-		}
-		else if (crossButton->eventElement == MouseLeftClickEvent)
-		{
-			DeleteSettings();
-			actualScene = Main_scene;
-		}
-		
-		current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
-		break;
+		case settings_screen:
+				if (plusVolume->eventElement == MouseLeftClickEvent)
+				{
+					if (App->audio->volume < 100)
+						App->audio->volume += 10;
+					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+				}
+				else if (minusVolume->eventElement == MouseLeftClickEvent)
+				{
+					if (App->audio->volume > 0)
+						App->audio->volume -= 10;
+					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+				}
+				else if (crossButton->eventElement == MouseLeftClickEvent)
+				{
+					DeleteSettings();
+					level = start_screen;
+				}
 
-	case Levels_scene:
-		iPoint p = {(int)( 100 - App->render->camera.x / App->win->scale ),(int)( 100 - App->render->camera.y / App->win->scale) };
-		pauseButton->SetLocalPosition(p);
-		break;
-	}
+			current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+			break;
+
+		case level_1:
+			pauseButton->SetLocalPosition(p);
+			break;
+
+		case level_2:
+			pauseButton->SetLocalPosition(p);
+			break;
+		}
+
 	//Menu options
 
 	return true;
@@ -112,7 +117,7 @@ bool j1Scene::Update(float dt)
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			if (App->map->level == level_1)
+			if (level == level_1)
 			{
 				App->entity_m->player->needRespawn1 = true;
 			}
@@ -124,7 +129,7 @@ bool j1Scene::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			if (App->map->level == level_1)
+			if (level == level_1)
 			{
 				App->entity_m->player->needRespawn1 = true;
 			}
@@ -144,13 +149,11 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		//fadecommit esto no esta bien, funciona pero esta mal
-		if (App->map->level == level_2 || App->map->level == start_screen) {
+		if (level == level_2 || level == start_screen) {
 			App->fade->FadeToBlack(level_1, 2.0);
-			App->map->level = level_1;
 		}
-		else if (App->map->level == level_1) {
+		else if (level == level_1) {
 			App->fade->FadeToBlack(level_2, 2.0);
-			App->map->level = level_2;
 		}
 	}
 

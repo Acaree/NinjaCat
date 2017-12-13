@@ -10,6 +10,7 @@
 #include "p2Log.h"
 #include "Animation.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include "j1Entities.h"
 #include "j1FadeToBlack.h"
 
@@ -383,7 +384,7 @@ void Player::Dead()
 		now = 0;
 		//dead_start = false;
 		
-		if (App->map->level == level_1)
+		if (App->scene->level == level_1)
 		{
 			needRespawn1 = true;
 		}

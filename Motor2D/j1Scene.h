@@ -7,12 +7,12 @@
 #include "UiLabel.h"
 struct SDL_Texture;
 
-enum Scene
-{
-	Main_scene,
-	Settings_scene,
-	Levels_scene,
-	None_scene
+enum actual_level {
+	none = 0,
+	start_screen,
+	settings_screen,
+	level_1,
+	level_2,
 };
 
 class j1Scene : public j1Module
@@ -42,6 +42,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	actual_level level = none;
+
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
 	void CreateMainScene();
 	void CreateSettingsScene();
@@ -58,7 +60,6 @@ private:
 	UIButton* pauseButton = nullptr;
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
-	Scene actualScene = None_scene;
 };
 
 #endif // __j1SCENE_H__

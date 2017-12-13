@@ -3,6 +3,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include "j1Render.h"
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
@@ -64,11 +65,11 @@ bool j1FadeToBlack::Update(float dt)
 			if (App->entity_m->player != nullptr) {
 				App->entity_m->player->Respawn();
 
-				if (App->map->level == level_1)
+				if (App->scene->level == level_1)
 				{
 					App->entity_m->player->needRespawn1 = true;
 				}
-				else if (App->map->level == level_2)
+				else if (App->scene->level == level_2)
 				{
 					App->entity_m->player->needRespawn2 = true;
 				}
@@ -123,7 +124,7 @@ bool j1FadeToBlack::FadeToBlack(actual_level level_to_fade, float time)
 			map_on = "level2ND.tmx";
 			break;
 
-			App->map->level = level_fading_to;
+			App->scene->level = level_fading_to;
 		}
 	}
 
