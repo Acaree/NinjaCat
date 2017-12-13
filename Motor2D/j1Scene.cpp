@@ -50,7 +50,7 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
-	iPoint p = { (int)((300 - App->render->camera.x) / App->win->scale),(int)((300 - App->render->camera.y )/ App->win->scale) };
+	iPoint p = { (int)(( 35+ App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
 
 	
 		switch (level)
@@ -115,6 +115,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
+	//guarrada : for test
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		int i = 0;
@@ -272,7 +273,7 @@ void j1Scene::DeleteSettings()
 
 void j1Scene::CreateLevelScene()
 {
-	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 300}, { 276,852,138,142 }, {138,852,138,142 }, { 0,852,138,142 }, App->gui->GetAtlas(),this,false);
+	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 300}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
 
 }
 
