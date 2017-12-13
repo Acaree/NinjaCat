@@ -3,7 +3,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
-
+#include "j1Gui.h"
 
 UIElement::UIElement(iPoint position, j1Module* listener, bool drag) : localPosition(position), listener(listener), dragable(drag)
 {
@@ -22,7 +22,7 @@ void UIElement::Update(float dt)
 	if (parent != nullptr)
 		positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
 	else
-		positionUi = { localPosition.x, localPosition.y };
+		positionUi = { localPosition.x - App->render->camera.x, localPosition.y - App->render->camera.y };
 
 
 	App->input->GetMousePosition(mouse.x, mouse.y);
@@ -78,6 +78,7 @@ void UIElement::SetParent(UIElement* parent)
 {
 	this->parent = parent;
 	positionToDraw = parent->positionToDraw + 1;
+	App->gui->needOrderList = true;
 }
 
 void UIElement::SetLocalPosition(iPoint p)

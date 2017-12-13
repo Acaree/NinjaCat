@@ -50,7 +50,7 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
-	iPoint p = { (int)(( -App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
+	//iPoint p = { (int)(( -App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
 
 	
 		switch (level)
@@ -99,18 +99,26 @@ bool j1Scene::PreUpdate()
 			break;
 
 		case level_1:
-			pauseButton->SetLocalPosition(p);
-			if (pauseButton->eventElement == MouseLeftClickEvent)
+			//pauseButton->SetLocalPosition(p);
+			//if (settingsImage != nullptr)
+				//settingsImage->SetLocalPosition(p);
+
+			if (pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 			{
 				if (App->pause == true)
 					App->pause = false;
 				else
 					App->pause = true;
+				pauseMenu = true;
+				CreatePauseMenu();
 			}
+			else if (pauseButton->eventElement != MouseLeftClickEvent)
+				pauseMenu = false;
+
 			break;
 
 		case level_2:
-			pauseButton->SetLocalPosition(p);
+		//	pauseButton->SetLocalPosition(p);
 			break;
 		}
 
@@ -193,6 +201,8 @@ bool j1Scene::Update(float dt)
 	//guarrada
 	if (pauseButton != nullptr)
 		pauseButton->Draw();
+	if (settingsImage != nullptr)
+		settingsImage->Draw();
 	return true;
 }
 
@@ -280,7 +290,7 @@ void j1Scene::DeleteSettings()
 
 void j1Scene::CreateLevelScene()
 {
-	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 300}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
+	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
 
 }
 
@@ -290,4 +300,11 @@ void j1Scene::DeleteMainMenuSettings()
 	playButton->toDelete = true;
 	settingsButton->toDelete = true;
 	quitButton->toDelete = true;
+}
+
+void j1Scene::CreatePauseMenu()
+{
+	settingsImage = App->gui->CreateImage({ 0,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	settingsImage->SetParent(pauseButton);
+
 }

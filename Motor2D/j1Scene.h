@@ -50,6 +50,7 @@ public:
 	void CreateLevelScene();
 	void DeleteSettings();
 	void DeleteMainMenuSettings();
+	void CreatePauseMenu();
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
@@ -61,6 +62,7 @@ private:
 	UIButton* pauseButton = nullptr;
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
+	bool pauseMenu = false;
 };
 
 #endif // __j1SCENE_H__
