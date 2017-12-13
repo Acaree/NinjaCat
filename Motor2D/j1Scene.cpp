@@ -90,6 +90,10 @@ bool j1Scene::PreUpdate()
 				else if (crossButton->eventElement == MouseLeftClickEvent)
 				{
 					DeleteSettings();
+					//ERROR,BUG need think
+					if (App->pause == true)
+						level = level_1;
+					else
 					level = start_screen;
 				}
 
@@ -114,9 +118,23 @@ bool j1Scene::PreUpdate()
 
 			if (crossButton != nullptr)
 			{
-				if (crossButton->eventElement == MouseLeftClickEvent)
+				if (crossButton->eventElement == MouseLeftClickEvent || playButton->eventElement == MouseLeftClickEvent)
+				{
 					DeletePauseMenu();
-				
+					App->pause = true;
+				}
+				else if (settingsButton->eventElement == MouseLeftClickEvent)
+				{
+					CreateSettingsScene();
+					level = settings_screen;
+				}
+				else if (returnButton->eventElement == MouseLeftClickEvent)
+				{
+					DeletePauseMenu();
+					level = start_screen;
+					App->fade->FadeToBlack(level,2.0f);
+					CreateMainScene();
+				}
 			}
 			break;
 
