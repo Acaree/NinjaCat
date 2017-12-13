@@ -2,6 +2,7 @@
 #define __J1FADETOBLACK_H__
 
 #include "j1Module.h"
+#include "j1Map.h"
 #include "SDL\include\SDL_rect.h"
 
 class j1FadeToBlack : public j1Module
@@ -16,7 +17,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool FadeToBlack(char* map_on, float time);
+	bool FadeToBlack(actual_level, float);
 	bool IsFading() const;
 
 private:
@@ -27,6 +28,8 @@ private:
 		fade_to_black,
 		fade_from_black
 	} current_step = fade_step::none;
+	
+	actual_level level_fading_to;
 
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;

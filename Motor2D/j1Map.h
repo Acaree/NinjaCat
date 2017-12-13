@@ -9,7 +9,8 @@
 #include "SDL\include\SDL_rect.h"
 
 enum actual_level {
-	start_screen = 0,
+	none = 0,
+	start_screen,
 	level_1,
 	level_2,
 };

@@ -55,7 +55,7 @@ bool j1FadeToBlack::Update(float dt)
 				int w, h;
 				uchar* data = NULL;
 				if (App->map->CreateWalkabilityMap(w, h, &data))
-					App->pathfinding->SetMap(w, h, data);
+				App->pathfinding->SetMap(w, h, data);
 				RELEASE_ARRAY(data);
 				App->map->CreateEnemies();
 				App->gui->DeleteUIElements();
@@ -66,12 +66,10 @@ bool j1FadeToBlack::Update(float dt)
 
 				if (App->map->level == level_1)
 				{
-					App->map->level == level_2;
 					App->entity_m->player->needRespawn1 = true;
 				}
 				else if (App->map->level == level_2)
 				{
-					App->map->level == level_1;
 					App->entity_m->player->needRespawn2 = true;
 				}
 				App->entity_m->player->animation = &App->entity_m->player->idleRight;
@@ -96,17 +94,37 @@ bool j1FadeToBlack::Update(float dt)
 }
 
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(char* map_on, float time)
+bool j1FadeToBlack::FadeToBlack(actual_level level_to_fade, float time)
 {
 	bool ret = false;
-
+	
+	level_fading_to = level_to_fade;
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
-		this->map_on = map_on;
+		switch (level_fading_to) {
+		
+		case none:
+				map_on = nullptr;
+			break;
+
+		case start_screen:
+			map_on = nullptr;
+		break;
+
+		case level_1:
+			map_on = "level1ND.tmx";
+			break;
+
+		case level_2:
+			map_on = "level2ND.tmx";
+			break;
+
+			App->map->level = level_fading_to;
+		}
 	}
 
 	return ret;

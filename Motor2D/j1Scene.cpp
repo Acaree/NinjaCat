@@ -58,8 +58,7 @@ bool j1Scene::PreUpdate()
 		{
 			if (playButton->eventElement == MouseLeftClickEvent)
 			{
-				App->fade->FadeToBlack("level1ND.tmx", 2.0);
-				App->map->level = level_1;
+				App->fade->FadeToBlack(level_1, 2.0);
 				actualScene = Levels_scene;
 				buttons.clear();
 				CreateLevelScene();
@@ -92,11 +91,8 @@ bool j1Scene::PreUpdate()
 			DeleteSettings();
 			actualScene = Main_scene;
 		}
-		//if (App->audio->volume > 50)
 		
-			current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
-		//else
-			//current_volume_label->ChangeTexture(App->font->Print("00", { 0,0,0 }, App->font->default));
+		current_volume_label->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
 		break;
 
 	case Levels_scene:
@@ -149,11 +145,11 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		//fadecommit esto no esta bien, funciona pero esta mal
 		if (App->map->level == level_2 || App->map->level == start_screen) {
-			App->fade->FadeToBlack("level1ND.tmx", 2.0);
+			App->fade->FadeToBlack(level_1, 2.0);
 			App->map->level = level_1;
 		}
 		else if (App->map->level == level_1) {
-			App->fade->FadeToBlack("level2ND.tmx", 2.0);
+			App->fade->FadeToBlack(level_2, 2.0);
 			App->map->level = level_2;
 		}
 	}
@@ -177,8 +173,6 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-	//Volume Control
-	
 
 	return true;
 }
