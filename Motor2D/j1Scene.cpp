@@ -113,7 +113,7 @@ bool j1Scene::PreUpdate()
 			//need new scene or restructured
 			if (pause_playButton != nullptr)
 			{
-				if (pause_playButton->eventElement == MouseLeftClickEvent)
+				if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
 				{
 					if (App->pause == true)
 						App->pause = false;
@@ -122,15 +122,8 @@ bool j1Scene::PreUpdate()
 				}
 				else if (level_pauseButton->eventElement != MouseLeftClickEvent)
 					pauseMenu = false;
-
-				if (pause_crossButton != nullptr)
-				{
-					if (pause_crossButton->eventElement == MouseLeftClickEvent)
-					{
-						DeletePauseMenu();
-						App->pause = true;
-					}
-					else if (pause_replayButton->eventElement == MouseLeftClickEvent)
+				
+					if (pause_replayButton->eventElement == MouseLeftClickEvent)
 					{
 						if (level == level_1)
 						{
@@ -155,7 +148,7 @@ bool j1Scene::PreUpdate()
 						App->fade->FadeToBlack(level, 2.0f);
 						CreateMainScene();
 					}
-				}
+				
 			}
 			break;
 
@@ -354,10 +347,10 @@ void j1Scene::CreatePauseMenu()
 	pause_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
 	pause_crossButton->SetParent(pause_settingsImage);
 
-	pause_playButton = App->gui->CreateButton({ 100,100 }, { 380,1575,189,67 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_replayButton = App->gui->CreateButton({100,200 }, { 380,1643,189,67 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_settingsButton = App->gui->CreateButton({ 100,300 }, { 380,1711,189,67 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_returnButton = App->gui->CreateButton({ 100,400 }, { 380,1779,189,67 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_playButton = App->gui->CreateButton({ 100,30 }, { 380,1575,189,67 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_replayButton = App->gui->CreateButton({100,130 }, { 380,1643,189,67 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_settingsButton = App->gui->CreateButton({ 100,230 }, { 380,1711,189,67 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_returnButton = App->gui->CreateButton({ 100,330 }, { 380,1779,189,67 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
 
 	pause_playButton->SetParent(pause_settingsImage);
 	pause_replayButton->SetParent(pause_settingsImage);
