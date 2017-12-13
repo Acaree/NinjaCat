@@ -60,7 +60,7 @@ private:
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
 	UIImage* mainImage = nullptr,*settingsImage = nullptr;
 	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
-	UIButton* pauseButton = nullptr;
+	UIButton* pauseButton = nullptr, *returnButton = nullptr, *replayButton = nullptr;
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
 	bool pauseMenu = false;

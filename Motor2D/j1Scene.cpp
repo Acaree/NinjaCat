@@ -50,9 +50,7 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
-	//iPoint p = { (int)(( -App->render->camera.x + App->render->camera.w/2) / App->win->scale),(int)(( - App->render->camera.y )/ App->win->scale) };
 
-	
 		switch (level)
 		{
 		case start_screen:
@@ -114,9 +112,12 @@ bool j1Scene::PreUpdate()
 			else if (pauseButton->eventElement != MouseLeftClickEvent)
 				pauseMenu = false;
 
-			if(crossButton != nullptr)
-			if (crossButton->eventElement == MouseLeftClickEvent)
-				DeletePauseMenu();
+			if (crossButton != nullptr)
+			{
+				if (crossButton->eventElement == MouseLeftClickEvent)
+					DeletePauseMenu();
+				
+			}
 			break;
 
 		case level_2:
@@ -312,10 +313,23 @@ void j1Scene::CreatePauseMenu()
 	settingsImage->SetParent(pauseButton);
 	crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
 	crossButton->SetParent(settingsImage);
+
+	playButton = App->gui->CreateButton({ 100,100 }, { 396,1575,189,68 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
+	replayButton = App->gui->CreateButton({100,200 }, { 396,1643,189,68 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
+	settingsButton = App->gui->CreateButton({ 100,300 }, { 396,1711,189,68 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
+	returnButton = App->gui->CreateButton({ 100,400 }, { 396,1779,189,68 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
+
+	playButton->SetParent(settingsImage);
+	replayButton->SetParent(settingsImage);
+	settingsButton->SetParent(settingsImage);
+	returnButton->SetParent(settingsImage);
 }
 
 void j1Scene::DeletePauseMenu()
 {
 	settingsImage->toDelete = true;
 	crossButton->toDelete = true;
+	playButton->toDelete = true;
+	settingsButton->toDelete = true;
+	returnButton->toDelete = true;
 }
