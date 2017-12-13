@@ -26,6 +26,8 @@ void UIElement::Update(float dt)
 
 
 	App->input->GetMousePosition(mouse.x, mouse.y);
+	mouse.x = mouse.x - App->render->camera.x;
+	mouse.y = mouse.y - App->render->camera.y;
 
 	if (mouse.x >= positionUi.x && mouse.x <= positionUi.x + rectUi.w && mouse.y >= positionUi.y && mouse.y <= positionUi.y + rectUi.h)
 	{

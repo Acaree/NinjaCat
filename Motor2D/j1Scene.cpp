@@ -116,7 +116,9 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 { 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		CreateLevelScene();
+	{
+		int i = 0;
+	}
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
@@ -180,7 +182,9 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-
+	//guarrada
+	if (pauseButton != nullptr)
+		pauseButton->Draw();
 	return true;
 }
 
@@ -268,7 +272,7 @@ void j1Scene::DeleteSettings()
 
 void j1Scene::CreateLevelScene()
 {
-	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 0,852,138,142 }, { 0,852,138,142 }, { 0,852,138,142 }, App->gui->GetAtlas(),this,false);
+	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 300}, { 276,852,138,142 }, {138,852,138,142 }, { 0,852,138,142 }, App->gui->GetAtlas(),this,false);
 
 }
 
