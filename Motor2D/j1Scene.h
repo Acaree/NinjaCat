@@ -49,13 +49,14 @@ public:
 	void CreateSettingsScene();
 	void CreateLevelScene();
 	void DeleteSettings();
+	void DeleteMainMenuSettings();
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
 	iPoint mouseTile;
 	p2List<UIButton*> buttons;
 	UIButton* playButton= nullptr, *settingsButton = nullptr, *quitButton= nullptr;
-	UIImage* settingsImage = nullptr;
+	UIImage* mainImage = nullptr,*settingsImage = nullptr;
 	UIButton* plusVolume = nullptr, *minusVolume = nullptr, *crossButton = nullptr;
 	UIButton* pauseButton = nullptr;
 	SDL_Texture* current_volume_tex = nullptr;

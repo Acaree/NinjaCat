@@ -50,7 +50,7 @@ bool j1Scene::PreUpdate()
 	std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
-	iPoint p = { (int)(100 - App->render->camera.x / App->win->scale),(int)(100 - App->render->camera.y / App->win->scale) };
+	iPoint p = { (int)((300 - App->render->camera.x) / App->win->scale),(int)((300 - App->render->camera.y )/ App->win->scale) };
 
 	
 		switch (level)
@@ -61,8 +61,10 @@ bool j1Scene::PreUpdate()
 				if (playButton->eventElement == MouseLeftClickEvent)
 				{
 					App->fade->FadeToBlack(level_1, 2.0);
+					DeleteMainMenuSettings();
 					buttons.clear();
 					CreateLevelScene();
+					level = level_1;
 				}
 				else if (settingsButton->eventElement == MouseLeftClickEvent)
 				{
@@ -113,6 +115,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		CreateLevelScene();
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
@@ -183,6 +187,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+	
 	bool ret = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -232,7 +237,7 @@ void j1Scene::CreateMainScene()
 {
 	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 
-	App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
+	mainImage=App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
 	buttons.add(playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true));
 	buttons.add(settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true));
 	buttons.add(quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true));
@@ -265,4 +270,12 @@ void j1Scene::CreateLevelScene()
 {
 	pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 0,852,138,142 }, { 0,852,138,142 }, { 0,852,138,142 }, App->gui->GetAtlas(),this,false);
 
+}
+
+void j1Scene::DeleteMainMenuSettings()
+{
+	mainImage->toDelete = true;
+	playButton->toDelete = true;
+	settingsButton->toDelete = true;
+	quitButton->toDelete = true;
 }

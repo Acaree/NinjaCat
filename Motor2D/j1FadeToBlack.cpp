@@ -59,7 +59,7 @@ bool j1FadeToBlack::Update(float dt)
 				App->pathfinding->SetMap(w, h, data);
 				RELEASE_ARRAY(data);
 				App->map->CreateEnemies();
-				App->gui->DeleteUIElements();
+				//App->gui->DeleteUIElements();
 			}
 
 			if (App->entity_m->player != nullptr) {
