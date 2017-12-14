@@ -58,10 +58,11 @@ bool j1Scene::PreUpdate()
 				if (start_playButton->eventElement == MouseLeftClickEvent)
 				{
 					App->fade->FadeToBlack(level_1, 2.0);
+					level = level_1;
 					DeleteMainMenuSettings();
 					buttons.clear();
 					CreateLevelScene();
-					level = level_1;
+					
 				}
 				else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 				{
@@ -89,9 +90,12 @@ bool j1Scene::PreUpdate()
 				{
 					DeleteSettings();
 					//ERROR,BUG need think
+					/*
 					if (App->pause == true)
 						level = level_1;
 					else
+					level = start_screen;
+					*/
 					level = start_screen;
 				}
 
@@ -99,6 +103,9 @@ bool j1Scene::PreUpdate()
 			break;
 
 		case level_1:
+			if (pauseMenu == false) {
+				App->pause = false;
+			}
 			if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 			{
 				if (App->pause == true)
@@ -148,10 +155,12 @@ bool j1Scene::PreUpdate()
 					}
 					else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 					{
+						level_pauseButton->toDelete = true;
 						DeletePauseMenu();
 						level = start_screen;
 						App->fade->FadeToBlack(level, 2.0f);
 						CreateMainScene();
+						pauseMenu = false;
 					}
 					
 			}

@@ -42,6 +42,7 @@ bool j1FadeToBlack::Update(float dt)
 	{
 	case fade_step::fade_to_black:
 	{
+		App->pause = true;
 		if (now >= total_time)
 		{
 			total_time += total_time;
@@ -84,6 +85,7 @@ bool j1FadeToBlack::Update(float dt)
 
 		if (now >= total_time)
 			current_step = fade_step::none;
+		App->pause = false;
 	} break;
 	}
 
@@ -100,10 +102,10 @@ bool j1FadeToBlack::FadeToBlack(actual_level level_to_fade, float time)
 	bool ret = false;
 	
 	level_fading_to = level_to_fade;
-	if (current_step == fade_step::none)
-	{
-		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
+	
+	start_time = SDL_GetTicks();
+	current_step = fade_step::fade_to_black;
+		
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
 		switch (level_fading_to) {
@@ -126,8 +128,6 @@ bool j1FadeToBlack::FadeToBlack(actual_level level_to_fade, float time)
 
 			App->scene->level = level_fading_to;
 		}
-	}
-
 	return ret;
 }
 

@@ -206,145 +206,147 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 	// number of gid, layer collision
 	uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
 	MapLayer* layerCollision;
-	if (App->map->data.layers.start->next->next != nullptr)
-	{
-		layerCollision = App->map->data.layers.start->next->next->data;
-		//points rect player, +- 34 set de x  smaller rect than original, -- bug
-		iPoint rightUp = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y);
-		iPoint rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 34, playerRect.y + playerRect.h);
-		iPoint leftUp = App->map->WorldToMap(playerRect.x, playerRect.y);
-		iPoint leftDown = App->map->WorldToMap(playerRect.x + 34, playerRect.y + playerRect.h);
-		//tiles in point of rect player
-		int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
-		int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
-		int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-		int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
+	if (App->map->data.layers.start != nullptr) {
+		if (App->map->data.layers.start->next->next != nullptr)
+		{
+			layerCollision = App->map->data.layers.start->next->next->data;
+			//points rect player, +- 34 set de x  smaller rect than original, -- bug
+			iPoint rightUp = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y);
+			iPoint rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 34, playerRect.y + playerRect.h);
+			iPoint leftUp = App->map->WorldToMap(playerRect.x, playerRect.y);
+			iPoint leftDown = App->map->WorldToMap(playerRect.x + 34, playerRect.y + playerRect.h);
+			//tiles in point of rect player
+			int rightUpPlayer = layerCollision->Get(rightUp.x, rightUp.y);
+			int rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+			int leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+			int leftUpPlayer = layerCollision->Get(leftUp.x, leftUp.y);
 
-		for (int i = up; i <= death; i++)
-			switch (i)
-			{
-			case right:
-				rightDown = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
-				rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
-				leftDown = App->map->WorldToMap(playerRect.x + 50, playerRect.y + playerRect.h);
-				leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-				//3 options: player in front of wall, player whit  "floor" , point rectangle player right down floor and rest don't collision
-				if ((wall == leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer != wall))
+			for (int i = up; i <= death; i++)
+				switch (i)
 				{
-					movement[right] = false;
-				}
-				else
-				{
-					movement[right] = true;
-				}
-				if (player->type == COLLIDER_WALKENEMY)
-				{
-					if (leftDownPlayer == 0)
+				case right:
+					rightDown = App->map->WorldToMap(playerRect.x + playerRect.w, playerRect.y + playerRect.h);
+					rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+					leftDown = App->map->WorldToMap(playerRect.x + 50, playerRect.y + playerRect.h);
+					leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+					//3 options: player in front of wall, player whit  "floor" , point rectangle player right down floor and rest don't collision
+					if ((wall == leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer == wall) || (wall != leftDownPlayer && wall == rightDownPlayer && rightUpPlayer != wall))
 					{
 						movement[right] = false;
 					}
-				}
-				break;
+					else
+					{
+						movement[right] = true;
+					}
+					if (player->type == COLLIDER_WALKENEMY)
+					{
+						if (leftDownPlayer == 0)
+						{
+							movement[right] = false;
+						}
+					}
+					break;
 
-			case left:
-				rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 50, playerRect.y + playerRect.h);
-				rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
-				leftDown = App->map->WorldToMap(playerRect.x, playerRect.y + playerRect.h);
-				leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
-				// same right but left
-				if ((wall == rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer != wall))
-				{
-					movement[left] = false;
-				}
-				else
-				{
-					movement[left] = true;
-				}
-				if (player->type == COLLIDER_WALKENEMY)
-				{
-					leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y+1);
-					if (leftDownPlayer == 0)
+				case left:
+					rightDown = App->map->WorldToMap(playerRect.x + playerRect.w - 50, playerRect.y + playerRect.h);
+					rightDownPlayer = layerCollision->Get(rightDown.x, rightDown.y);
+					leftDown = App->map->WorldToMap(playerRect.x, playerRect.y + playerRect.h);
+					leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y);
+					// same right but left
+					if ((wall == rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer == wall) || (wall != rightDownPlayer && wall == leftDownPlayer && leftUpPlayer != wall))
 					{
 						movement[left] = false;
 					}
-				}
-				
-				break;
+					else
+					{
+						movement[left] = true;
+					}
+					if (player->type == COLLIDER_WALKENEMY)
+					{
+						leftDownPlayer = layerCollision->Get(leftDown.x, leftDown.y + 1);
+						if (leftDownPlayer == 0)
+						{
+							movement[left] = false;
+						}
+					}
+
+					break;
 
 
-			case down:
-				
+				case down:
+
 					if (wall == leftDownPlayer || wall == rightDownPlayer || dead == leftDownPlayer || dead == rightDownPlayer)
 					{
 						movement[down] = false;
-					
+
 					}
 					else
 					{
 						movement[down] = true;
 					}
-				
-				break;
 
-			case up:
+					break;
 
-				if (wall == leftUpPlayer || wall == rightUpPlayer)
-				{
-					movement[up] = false;
-				}
-				else
-				{
-					movement[up] = true;
-				}
-				break;
+				case up:
 
-			case death:
-				//check all positions 
-				if(App->entity_m->player->godMode ==false)
-				{
-				if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->entity_m->player->death == false)
-				{
-					App->entity_m->player->death = true;
-				}
-				else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
-				{
-
-					if (player->CheckCollision(App->entity_m->player->collider->rect))
+					if (wall == leftUpPlayer || wall == rightUpPlayer)
 					{
-						if (App->entity_m->player->attacking == false)
-							App->entity_m->player->death = true;
-						else {
-							ret = true;
-
-							if (player->type == COLLIDER_ENEMY)
-							{
-								App->entity_m->player->score += 20;
-							}
-							else if(player->type == COLLIDER_WALKENEMY)
-							{
-								App->entity_m->player->score += 10;
-							}
-						}
-					}
-
-				}
-
-				}
-			case nextLevel:
-
-				if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
-				{
-					App->entity_m->player->changeLevel = true;
-					if (App->scene->level == level_1)
-					{
-						App->scene->level = level_2;
+						movement[up] = false;
 					}
 					else
 					{
-						App->scene->level = level_1;
+						movement[up] = true;
+					}
+					break;
+
+				case death:
+					//check all positions 
+					if (App->entity_m->player->godMode == false)
+					{
+						if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->entity_m->player->death == false)
+						{
+							App->entity_m->player->death = true;
+						}
+						else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
+						{
+
+							if (player->CheckCollision(App->entity_m->player->collider->rect))
+							{
+								if (App->entity_m->player->attacking == false)
+									App->entity_m->player->death = true;
+								else {
+									ret = true;
+
+									if (player->type == COLLIDER_ENEMY)
+									{
+										App->entity_m->player->score += 20;
+									}
+									else if (player->type == COLLIDER_WALKENEMY)
+									{
+										App->entity_m->player->score += 10;
+									}
+								}
+							}
+
+						}
+
+					}
+				case nextLevel:
+
+					if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)
+					{
+						App->entity_m->player->changeLevel = true;
+						if (App->scene->level == level_1)
+						{
+							App->scene->level = level_2;
+						}
+						else
+						{
+							App->scene->level = level_1;
+						}
 					}
 				}
-			}
+		}
 	}
 	return ret;
 }
