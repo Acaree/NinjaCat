@@ -11,6 +11,7 @@
 #include "Enemy_Walk.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
+#include "Coin.h"
 
 #define SPAWN_MARGIN 140
 #define DESPAWN_MARGIN 1400
@@ -92,7 +93,7 @@ bool j1Entities::Update(float dt)
 			entities[i]->Draw(sprites);
 		}
 	}
-
+	//REVISAR: YA SE NORMALIZA EN CADA CLASE Y si se hace deberia de ser antes de mover
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
@@ -227,6 +228,9 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		case ENTITY_TYPES::ENTITY_PLAYER:
 			entities[i] = player = new Player(info.x, info.y);
 			entities[i]->isPlayer = true;
+			break;
+		case ENTITY_TYPES::COIN:
+			entities[i] = new Coin(info.x, info.y);
 			break;
 		}
 

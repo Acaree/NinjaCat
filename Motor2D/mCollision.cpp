@@ -308,12 +308,12 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 							App->entity_m->player->death = true;
 							App->entity_m->player->life--;
 						}
-						else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
+						else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY || player->type == COLLIDER_COIN)
 						{
 
-							if (player->CheckCollision(App->entity_m->player->collider->rect))
+							if (player->CheckCollision(App->entity_m->player->collider->rect) )
 							{
-								if (App->entity_m->player->attacking == false)
+								if (App->entity_m->player->attacking == false && player->type != COLLIDER_COIN)
 									App->entity_m->player->death = true;
 								else {
 									ret = true;
@@ -326,12 +326,18 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 									{
 										App->entity_m->player->score += 10;
 									}
+									else if (player->type == COLLIDER_COIN)
+									{
+										App->entity_m->player->score += 5;
+									
+									}
 								}
 							}
 
 						}
 
 					}
+					break;
 				case nextLevel:
 
 					if (rightDownPlayer == changeLvl || rightUpPlayer == changeLvl)

@@ -500,10 +500,10 @@ void j1Map::CreateEnemies() {
 				{
 					tileID = 0;
 				}
-				else {
+				else
+				{
 					tileID = item_layer->data->Get(x, y);
 				}
-
 				if (tileID == 145)
 				{
 					iPoint position = App->map->MapToWorld(x, y);
@@ -511,8 +511,7 @@ void j1Map::CreateEnemies() {
 					App->entity_m->AddEntity(ENEMY_FLY, position.x, position.y);
 
 				}
-
-				if (tileID == 146)
+				else if (tileID == 146)
 				{
 					iPoint position = App->map->MapToWorld(x, y);
 
@@ -520,7 +519,7 @@ void j1Map::CreateEnemies() {
 
 				}
 
-				if (tileID == 144)
+				else if (tileID == 144)
 				{
 					if (respawnPosition == false)
 					{
@@ -532,6 +531,13 @@ void j1Map::CreateEnemies() {
 						App->entity_m->AddEntity(ENTITY_PLAYER, App->entity_m->player->position.x, App->entity_m->player->position.y);
 						respawnPosition = false;
 					}
+				}
+				else if (tileID == 147)
+				{
+					iPoint position = App->map->MapToWorld(x, y);
+
+					App->entity_m->AddEntity(COIN, position.x, position.y);
+
 				}
 
 			}
