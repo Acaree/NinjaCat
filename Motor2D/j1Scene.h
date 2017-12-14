@@ -11,6 +11,7 @@ enum actual_level {
 	none = 0,
 	start_screen,
 	settings_screen,
+	pause_screen,
 	level_1,
 	level_2,
 };

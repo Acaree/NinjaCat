@@ -107,9 +107,19 @@ bool j1Scene::PreUpdate()
 				{
 					App->pause = true;
 					CreatePauseMenu();
+					level = pause_screen;
 				}
 				pauseMenu = true;
 			}
+			if (App->entity_m->player != nullptr)
+			{
+				std::string m = std::to_string(App->entity_m->player->score);
+				char* m2 = (char *)alloca(m.size() + 1);
+				memcpy(m2, m.c_str(), m.size() + 1);
+				level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
+			}
+			break;
+		case pause_screen:
 			//need new scene or restructured
 			if (pause_playButton != nullptr)
 			{
@@ -119,22 +129,17 @@ bool j1Scene::PreUpdate()
 						App->pause = false;
 					DeletePauseMenu();
 					pauseMenu = false;
+					level = level_1;
 				}
 				else if (level_pauseButton->eventElement != MouseLeftClickEvent)
 					pauseMenu = false;
 				
 					if (pause_replayButton->eventElement == MouseLeftClickEvent)
 					{
-						if (level == level_1)
-						{
-							App->entity_m->player->needRespawn1 = true;
-						}
-						else
-						{
-							App->entity_m->player->needRespawn2 = true;
-						}
+						App->entity_m->player->needRespawn1 = true;
 						DeletePauseMenu();
 						App->pause = false;
+						level = level_1;
 					}
 					else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 					{
@@ -150,16 +155,9 @@ bool j1Scene::PreUpdate()
 					}
 					
 			}
-			else
-			{
-				if (App->entity_m->player != nullptr)
-				{
-					std::string m = std::to_string(App->entity_m->player->score);
-					char* m2 = (char *)alloca(m.size() + 1);
-					memcpy(m2, m.c_str(), m.size() + 1);
-					level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
-				}
-			}
+			
+				
+			
 			break;
 
 		case level_2:
