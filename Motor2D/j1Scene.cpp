@@ -51,6 +51,7 @@ bool j1Scene::PreUpdate()
 	char* s2 = (char *)alloca(s.size() + 1);
 	memcpy(s2, s.c_str(), s.size() + 1);
 
+	
 		switch (level)
 		{
 		case start_screen:
@@ -98,7 +99,6 @@ bool j1Scene::PreUpdate()
 			break;
 
 		case level_1:
-		
 			if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 			{
 				if (App->pause == true)
@@ -148,7 +148,17 @@ bool j1Scene::PreUpdate()
 						App->fade->FadeToBlack(level, 2.0f);
 						CreateMainScene();
 					}
-				
+					
+			}
+			else
+			{
+				if (App->entity_m->player != nullptr)
+				{
+					std::string m = std::to_string(App->entity_m->player->score);
+					char* m2 = (char *)alloca(m.size() + 1);
+					memcpy(m2, m.c_str(), m.size() + 1);
+					level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
+				}
 			}
 			break;
 
@@ -329,7 +339,7 @@ void j1Scene::DeleteSettings()
 void j1Scene::CreateLevelScene()
 {
 	level_pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
-
+	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
 }
 
 void j1Scene::DeleteMainMenuSettings()
