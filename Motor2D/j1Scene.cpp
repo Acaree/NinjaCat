@@ -375,3 +375,13 @@ void j1Scene::DeletePauseMenu()
 	pause_settingsButton->toDelete = true;
 	pause_returnButton->toDelete = true;
 }
+
+void j1Scene::SetLife(uint life)
+{
+	//full life
+	for (int i = 0; i < life; i++)
+	{
+		App->gui->CreateImage({ 76*i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
+	}
+
+}

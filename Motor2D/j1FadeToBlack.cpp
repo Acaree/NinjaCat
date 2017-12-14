@@ -59,12 +59,12 @@ bool j1FadeToBlack::Update(float dt)
 				App->pathfinding->SetMap(w, h, data);
 				RELEASE_ARRAY(data);
 				App->map->CreateEnemies();
-				//App->gui->DeleteUIElements();
+				
 			}
 
+			//Never enter
 			if (App->entity_m->player != nullptr) {
 				App->entity_m->player->Respawn();
-
 				if (App->scene->level == level_1)
 				{
 					App->entity_m->player->needRespawn1 = true;
@@ -74,6 +74,7 @@ bool j1FadeToBlack::Update(float dt)
 					App->entity_m->player->needRespawn2 = true;
 				}
 				App->entity_m->player->animation = &App->entity_m->player->idleRight;
+				
 			}
 		}
 	} break;
@@ -83,7 +84,9 @@ bool j1FadeToBlack::Update(float dt)
 		normalized = 1.0f - normalized;
 
 		if (now >= total_time)
+		{
 			current_step = fade_step::none;
+		}
 	} break;
 	}
 

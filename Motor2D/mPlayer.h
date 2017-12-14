@@ -69,7 +69,7 @@ public:
 	Collider* attack_collider;
 	int now = 0;
 	uint score = 0;
-	
+	uint life = 3;
 };
 
 #endif
