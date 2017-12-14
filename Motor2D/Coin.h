@@ -20,6 +20,7 @@ public:
 private:
 	Animation rotateAnimation;
 	bool isDead = false;
+	uint sound;
 };
 
 
