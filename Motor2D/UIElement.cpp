@@ -22,12 +22,11 @@ void UIElement::Update(float dt)
 	if (parent != nullptr)
 		positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
 	else
-		positionUi = { localPosition.x - App->render->camera.x, localPosition.y - App->render->camera.y };
+		positionUi = {localPosition.x, localPosition.y};
 
 
 	App->input->GetMousePosition(mouse.x, mouse.y);
-	mouse.x = mouse.x - App->render->camera.x;
-	mouse.y = mouse.y - App->render->camera.y;
+	
 
 	if (mouse.x >= positionUi.x && mouse.x <= positionUi.x + rectUi.w && mouse.y >= positionUi.y && mouse.y <= positionUi.y + rectUi.h)
 	{
@@ -64,7 +63,7 @@ void UIElement::Update(float dt)
 
 void UIElement::Draw()
 {
-	App->render->Blit(texture, positionUi.x, positionUi.y, &rectUi);
+	App->render->Blit(texture, positionUi.x, positionUi.y, &rectUi,0.0f);
 }
 
 void UIElement::DebugDraw() const

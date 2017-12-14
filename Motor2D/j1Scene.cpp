@@ -125,6 +125,10 @@ bool j1Scene::PreUpdate()
 				memcpy(m2, m.c_str(), m.size() + 1);
 				level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
 			}
+
+			if (App->entity_m->player != nullptr) {
+				SetLife(App->entity_m->player->life);
+			}
 			break;
 		case pause_screen:
 			//need new scene or restructured
@@ -345,7 +349,7 @@ void j1Scene::DeleteSettings()
 
 void j1Scene::CreateLevelScene()
 {
-	level_pauseButton = App->gui->CreateButton({App->render->camera.x + App->render->camera.w/2, 0}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
+	level_pauseButton = App->gui->CreateButton({App->render->camera.w/2, 5}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
 }
 
