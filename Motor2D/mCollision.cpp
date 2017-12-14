@@ -288,7 +288,6 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 					break;
 
 				case up:
-
 					if (wall == leftUpPlayer || wall == rightUpPlayer)
 					{
 						movement[up] = false;
@@ -298,6 +297,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						movement[up] = true;
 					}
 					break;
+			
 
 				case death:
 					//check all positions 
@@ -306,6 +306,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->entity_m->player->death == false)
 						{
 							App->entity_m->player->death = true;
+							App->entity_m->player->life--;
 						}
 						else if (player->type == COLLIDER_ENEMY || player->type == COLLIDER_WALKENEMY)
 						{
