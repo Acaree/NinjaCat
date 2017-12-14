@@ -315,6 +315,15 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 							App->entity_m->player->death = true;
 						else {
 							ret = true;
+
+							if (player->type == COLLIDER_ENEMY)
+							{
+								App->entity_m->player->score += 20;
+							}
+							else if(player->type == COLLIDER_WALKENEMY)
+							{
+								App->entity_m->player->score += 10;
+							}
 						}
 					}
 
