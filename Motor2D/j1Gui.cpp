@@ -129,9 +129,9 @@ UIImage* j1Gui::CreateImage(iPoint position, SDL_Rect rect, const SDL_Texture* t
 	return newImage;
 }
 
-UILabel* j1Gui::CreateLabel(iPoint position, char* text, SDL_Color color, _TTF_Font* font, j1Module* listener, bool dragable)
+UILabel* j1Gui::CreateLabel(iPoint position, char* text, SDL_Color color, _TTF_Font* font, j1Module* listener, bool dragable, uint wrap_length)
 {
-	const SDL_Texture* tex = App->font->Print(text, color, font);
+	const SDL_Texture* tex = App->font->Print(text, color, font,wrap_length);
 
 	UILabel* newLabel = new UILabel(position, tex, ElementType::LabelElement, listener, dragable);
 	App->tex->GetSize(tex, (uint&)newLabel->rectUi.w, (uint&)newLabel->rectUi.h);
