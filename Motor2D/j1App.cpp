@@ -18,6 +18,7 @@
 #include "j1Gui.h"
 #include "j1FadeToBlack.h"
 #include "mCollision.h"
+#include "j1MainMenu.h"
 #include "Brofiler\Brofiler.h"
 
 // Constructor
@@ -38,7 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new j1Fonts();
 	gui = new j1Gui();
 	fade = new j1FadeToBlack();
-
+	mainMenu = new j1MainMenu();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -46,8 +47,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
-	AddModule(gui);
+	
 	AddModule(scene);
+	AddModule(gui);
+	AddModule(mainMenu);
 	AddModule(pathfinding);
 	AddModule(collision);
 	AddModule(entity_m);

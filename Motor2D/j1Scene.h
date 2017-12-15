@@ -46,20 +46,21 @@ public:
 	actual_level level = none;
 
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
-	void CreateMainScene();
-	void CreateSettingsScene();
+	//void CreateMainScene();
+	//void CreateSettingsScene();
 	void CreateLevelScene();
-	void DeleteSettings();
-	void DeleteMainMenuSettings();
+	//void DeleteSettings();
+	//void DeleteMainMenuSettings();
 	void CreatePauseMenu();
 	void DeletePauseMenu();
 
 	void SetLife(uint);
+	p2List<UIButton*> buttons;
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
 	iPoint mouseTile;
-	p2List<UIButton*> buttons;
+	
 
 	//pause menu gui
 	UIImage* pause_settingsImage = nullptr;

@@ -88,6 +88,9 @@
     <ClCompile Include="UISlider.cpp">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="UISlider.h">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

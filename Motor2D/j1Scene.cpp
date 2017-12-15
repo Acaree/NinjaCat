@@ -38,7 +38,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
-	CreateMainScene();
+	//CreateMainScene();
 	level=start_screen;
 	return true;
 }
@@ -47,15 +47,15 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate()
 {
 	//change volume to a char* from int
-	std::string s = std::to_string(App->audio->volume);
+	/*std::string s = std::to_string(App->audio->volume);
 	char* s2 = (char *)alloca(s.size() + 1);
-	memcpy(s2, s.c_str(), s.size() + 1);
+	memcpy(s2, s.c_str(), s.size() + 1);*/
 
 	
 		switch (level)
 		{
 		case start_screen:
-				if (start_playButton->eventElement == MouseLeftClickEvent)
+				/*if (start_playButton->eventElement == MouseLeftClickEvent)
 				{
 					App->fade->FadeToBlack(level_1, 2.0);
 					level = level_1;
@@ -70,11 +70,11 @@ bool j1Scene::PreUpdate()
 					level = settings_screen;
 				}
 				else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
-					return false;
+					return false;*/
 			break;
 
 		case settings_screen:
-				if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
+				/*if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
 				{
 					if (App->audio->volume < 100)
 						App->audio->volume += 10;
@@ -90,16 +90,16 @@ bool j1Scene::PreUpdate()
 				{
 					DeleteSettings();
 					//ERROR,BUG need think
-					/*
+					
 					if (App->pause == true)
 						level = level_1;
 					else
 					level = start_screen;
-					*/
+					
 					level = start_screen;
 				}
 
-			settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+			settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));*/
 			break;
 
 		case level_1:
@@ -162,7 +162,7 @@ bool j1Scene::PreUpdate()
 					}
 					else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 					{
-						CreateSettingsScene();
+						//CreateSettingsScene();
 						level = settings_screen;
 					}
 					else if (pause_returnButton->eventElement == MouseLeftClickEvent)
@@ -171,7 +171,7 @@ bool j1Scene::PreUpdate()
 						DeletePauseMenu();
 						level = start_screen;
 						App->fade->FadeToBlack(level, 2.0f);
-						CreateMainScene();
+						//CreateMainScene();
 						pauseMenu = false;
 					}
 					
@@ -313,38 +313,24 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 	}
 }
 
-void j1Scene::CreateMainScene()
+/*void j1Scene::CreateMainScene()
 {
-	const SDL_Texture* background = App->tex->Load("maps/Background.png");
-
-	start_mainImage=App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	start_playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true);
-	start_settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true);
-	start_quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true);
-}
-
-void j1Scene::CreateSettingsScene()
-{
-	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
 	
-	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
-	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
-	settingsmm_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
-	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
-	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
-}
+}*/
 
-void j1Scene::DeleteSettings()
+/*void j1Scene::CreateSettingsScene()
+{
+	
+}*/
+
+/*void j1Scene::DeleteSettings()
 {
 	settingsmm_settingsImage->toDelete = true;
 	settingsmm_minusVolume->toDelete = true;
 	settingsmm_plusVolume->toDelete = true;
 	settingsmm_crossButton->toDelete = true;
 	settingsmm_volumeLabel->toDelete = true;
-}
+}*/
 
 void j1Scene::CreateLevelScene()
 {
@@ -353,13 +339,7 @@ void j1Scene::CreateLevelScene()
 	
 }
 
-void j1Scene::DeleteMainMenuSettings()
-{
-	start_mainImage->toDelete = true;
-	start_playButton->toDelete = true;
-	start_settingsButton->toDelete = true;
-	start_quitButton->toDelete = true;
-}
+
 
 void j1Scene::CreatePauseMenu()
 {
