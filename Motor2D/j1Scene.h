@@ -77,6 +77,7 @@ private:
 	//level gui
 	UIButton* level_pauseButton = nullptr;
 	UILabel* level_scoreLabel = nullptr;
+	p2List<UIImage*> level_lifesImage;
 	
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
