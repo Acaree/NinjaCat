@@ -63,16 +63,17 @@ bool j1FadeToBlack::Update(float dt)
 				
 			}
 
-			//Never enter
 			if (App->entity_m->player != nullptr) {
 				App->entity_m->player->Respawn();
 				if (App->scene->level == level_1)
 				{
 					App->entity_m->player->needRespawn1 = true;
+					App->entity_m->player_life = 3;
 				}
 				else if (App->scene->level == level_2)
 				{
 					App->entity_m->player->needRespawn2 = true;
+					App->entity_m->player_life = 3;
 				}
 				App->entity_m->player->animation = &App->entity_m->player->idleRight;
 				

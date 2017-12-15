@@ -121,12 +121,12 @@ bool j1Scene::PreUpdate()
 			if (App->entity_m->player != nullptr)
 			{
 				if (level_lifesImage[0] == nullptr) {
-					for (int i = 0; i < App->entity_m->player->life; i++)
+					for (int i = 0; i < App->entity_m->player_life; i++)
 					{
 						level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
 					}
 
-					for (int i = 3; i > App->entity_m->player->life; i--) {
+					for (int i = 3; i > App->entity_m->player_life; i--) {
 						level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
 					}
 				}
@@ -134,7 +134,7 @@ bool j1Scene::PreUpdate()
 				char* m2 = (char *)alloca(m.size() + 1);
 				memcpy(m2, m.c_str(), m.size() + 1);
 				level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
-				SetLife(App->entity_m->player->life);
+				SetLife(App->entity_m->player_life);
 			}
 
 			break;

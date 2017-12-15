@@ -60,7 +60,7 @@ private:
 	p2DynArray<iPoint> flyPositions;
 	p2DynArray<iPoint> walkPositions;
 public:
-	float damage;
+	uint player_life = 3;
 
 	
 };

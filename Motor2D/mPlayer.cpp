@@ -382,7 +382,7 @@ void Player::Dead()
 	else {
 		animation = &idleRight;
 		now = 0;
-		life--;
+		App->entity_m->player_life--;
 		
 		if (App->scene->level == level_1)
 		{
