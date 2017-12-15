@@ -391,6 +391,7 @@ void j1Scene::DeletePauseMenu()
 
 void j1Scene::SetLife(uint life)
 {
+
 	if (level_lifesImage[0] != nullptr) {
 		for (int i = 0; i < life; i++)
 		{
@@ -398,7 +399,7 @@ void j1Scene::SetLife(uint life)
 		}
 
 		for (int i = 3; i > life; i--) {
-			level_lifesImage[i]->ChangeTextureRect({ 460, 0, 76, 75 });
+			level_lifesImage[i-1]->ChangeTextureRect({ 460, 0, 76, 75 });
 		}
 	}
 }
