@@ -13,7 +13,8 @@ enum ElementType
 	NoTypeElement,
 	ButtonElement,
 	LabelElement,
-	ImageElement
+	ImageElement,
+	SliderElement
 };
 
 enum EventElement

@@ -85,6 +85,9 @@
     <ClCompile Include="UiImage.cpp">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="UISlider.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="UISlider.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
