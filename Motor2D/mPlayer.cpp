@@ -382,13 +382,13 @@ void Player::Dead()
 	else {
 		animation = &idleRight;
 		now = 0;
-		//dead_start = false;
+		life--;
 		
 		if (App->scene->level == level_1)
 		{
 			needRespawn1 = true;
 		}
-		else
+		else if (App->scene->level == level_2)
 		{
 			needRespawn2 = true;
 		}

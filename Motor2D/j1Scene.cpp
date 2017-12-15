@@ -120,6 +120,16 @@ bool j1Scene::PreUpdate()
 			}
 			if (App->entity_m->player != nullptr)
 			{
+				if (level_lifesImage[0] == nullptr) {
+					for (int i = 0; i < App->entity_m->player->life; i++)
+					{
+						level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
+					}
+
+					for (int i = 3; i > App->entity_m->player->life; i--) {
+						level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
+					}
+				}
 				std::string m = std::to_string(App->entity_m->player->score);
 				char* m2 = (char *)alloca(m.size() + 1);
 				memcpy(m2, m.c_str(), m.size() + 1);
@@ -251,15 +261,6 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-	//guarrada
-	/*
-	if (pauseButton != nullptr)
-		pauseButton->Draw();
-	if (settingsImage != nullptr)
-		settingsImage->Draw();
-	if (crossButton != nullptr)
-		crossButton->Draw();
-		*/
 	return true;
 }
 
@@ -349,6 +350,7 @@ void j1Scene::CreateLevelScene()
 {
 	level_pauseButton = App->gui->CreateButton({App->render->camera.w/2, 5}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
+	
 }
 
 void j1Scene::DeleteMainMenuSettings()
@@ -389,12 +391,14 @@ void j1Scene::DeletePauseMenu()
 
 void j1Scene::SetLife(uint life)
 {
-	for (int i = 0; i < life; i++)
-	{
-		App->gui->CreateImage({ 76*i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
-	}
+	if (level_lifesImage[0] != nullptr) {
+		for (int i = 0; i < life; i++)
+		{
+			level_lifesImage[i]->ChangeTextureRect({ 537,0,76,75 });
+		}
 
-	for (int i = 3; i > life; i--) {
-		App->gui->CreateImage({ 76*(i-1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
+		for (int i = 3; i > life; i--) {
+			level_lifesImage[i]->ChangeTextureRect({ 460, 0, 76, 75 });
+		}
 	}
 }

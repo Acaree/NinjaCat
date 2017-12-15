@@ -37,6 +37,7 @@ public:
 	void SetParent(UIElement*);
 	void SetLocalPosition(iPoint);
 	void ChangeTexture(const SDL_Texture*);
+	void ChangeTextureRect(SDL_Rect);
 	virtual ~UIElement();
 
 	ElementType type = ElementType::NoTypeElement;

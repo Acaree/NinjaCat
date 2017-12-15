@@ -89,3 +89,8 @@ void UIElement::ChangeTexture(const SDL_Texture* tex)
 {
 	texture = tex;
 }
+
+void UIElement::ChangeTextureRect(SDL_Rect new_rect)
+{
+	rectUi = new_rect;
+}

@@ -102,7 +102,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="UiButton.cpp" />
     <ClCompile Include="UIElement.cpp" />
-    <ClCompile Include="UiImagecpp.cpp" />
+    <ClCompile Include="UiImage.cpp" />
     <ClCompile Include="UiLabel.cpp" />
   </ItemGroup>
   <ItemGroup>
