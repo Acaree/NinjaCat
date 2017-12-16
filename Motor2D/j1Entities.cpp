@@ -33,7 +33,7 @@ bool j1Entities::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("maps/enemySprites.png");
-
+	player_life = 3;
 	
 
 	return true;
