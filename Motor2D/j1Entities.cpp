@@ -34,8 +34,6 @@ bool j1Entities::Start()
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("maps/enemySprites.png");
 	player_life = 3;
-	
-
 	return true;
 }
 
@@ -265,10 +263,9 @@ bool j1Entities::Load(pugi::xml_node& data)
 		App->map->respawnPosition = true;
 	}
 	*/
+	// ERROR : CONTINUE BUTTON
 	player->position.x = data.child("player").attribute("x").as_int();
 	player->position.y = data.child("player").attribute("y").as_int();
 	
-	
-
 	return true;
 }

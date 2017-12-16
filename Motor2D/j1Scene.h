@@ -36,12 +36,13 @@ public:
 
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
 	//void CreateMainScene();
-	//void CreateSettingsScene();
+	void CreateSettingsScene();
 	void CreateLevelScene();
 	//void DeleteSettings();
 	//void DeleteMainMenuSettings();
 	void CreatePauseMenu();
 	void DeletePauseMenu();
+	void DeleteSettings();
 
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
@@ -73,6 +74,7 @@ private:
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
 	bool pauseMenu = false;
+	bool settingsIsOpen = false;
 };
 
 #endif // __j1SCENE_H__
