@@ -12,6 +12,7 @@
 #include "mPlayer.h"
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
+#include "j1MainMenu.h"
 #include "j1Gui.h"
 #include <stdio.h>
 
@@ -28,6 +29,9 @@ j1Scene::~j1Scene()
 bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+	App->map->Enable();
+	App->entity_m->Enable();
+	App->pathfinding->Enable();
 	bool ret = true;
 	map = config.child("map").attribute("name").as_string();
 
@@ -38,162 +42,101 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music.ogg");
-	//CreateMainScene();
-	level=start_screen;
+		
+	if (App->level == level_1) {
+		App->map->Load("level1ND.tmx");
+	}
+
+	else if (App->level == level_2) {
+		App->map->Load("level2ND.tmx");
+	}
+
+	if (App->map != nullptr) {
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+		RELEASE_ARRAY(data);
+		App->map->CreateEnemies();
+		App->gui->DeleteUIElements();
+	}
+	if (App->entity_m->player != nullptr) {
+		if (App->level == level_1)
+		{
+			App->entity_m->player->needRespawn1 = true;
+		}
+		else if (App->level == level_2)
+		{
+			App->entity_m->player->needRespawn2 = true;
+		}
+		App->entity_m->player->Respawn();
+		App->entity_m->player->animation = &App->entity_m->player->idleRight;
+	}
+	CreateLevelScene();
 	return true;
 }
 
-// Called each loop iteration
+
 bool j1Scene::PreUpdate()
 {
-	//change volume to a char* from int
-	/*std::string s = std::to_string(App->audio->volume);
-	char* s2 = (char *)alloca(s.size() + 1);
-	memcpy(s2, s.c_str(), s.size() + 1);*/
 
-	
-		switch (level)
-		{
-		case start_screen:
-				/*if (start_playButton->eventElement == MouseLeftClickEvent)
-				{
-					App->fade->FadeToBlack(level_1, 2.0);
-					level = level_1;
-					DeleteMainMenuSettings();
-					buttons.clear();
-					CreateLevelScene();
-					
-				}
-				else if (start_settingsButton->eventElement == MouseLeftClickEvent)
-				{
-					CreateSettingsScene();
-					level = settings_screen;
-				}
-				else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
-					return false;*/
-			break;
-
-		case settings_screen:
-				/*if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
-				{
-					if (App->audio->volume < 100)
-						App->audio->volume += 10;
-					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-				}
-				else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
-				{
-					if (App->audio->volume > 0)
-						App->audio->volume -= 10;
-					Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-				}
-				else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
-				{
-					DeleteSettings();
-					//ERROR,BUG need think
-					
-					if (App->pause == true)
-						level = level_1;
-					else
-					level = start_screen;
-					
-					level = start_screen;
-				}
-
-			settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));*/
-			break;
-
-		case level_1:
-			if (pauseMenu == false) {
-				App->pause = false;
-			}
-			if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
-			{
-				if (App->pause == true)
-					App->pause = false;
-				else
-				{
-					App->pause = true;
-					CreatePauseMenu();
-					level = pause_screen;
-				}
-				pauseMenu = true;
-			}
-			if (App->entity_m->player != nullptr)
-			{
-				if (level_lifesImage[0] == nullptr) {
-					for (int i = 0; i < App->entity_m->player_life; i++)
-					{
-						level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
-					}
-
-					for (int i = 3; i > App->entity_m->player_life; i--) {
-						level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
-					}
-				}
-				std::string m = std::to_string(App->entity_m->player->score);
-				char* m2 = (char *)alloca(m.size() + 1);
-				memcpy(m2, m.c_str(), m.size() + 1);
-				level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
-				SetLife(App->entity_m->player_life);
-			}
-
-			break;
-		case pause_screen:
-			//need new scene or restructured
-			if (pause_playButton != nullptr)
-			{
-				if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
-				{
-					if (App->pause == true)
-						App->pause = false;
-					DeletePauseMenu();
-					pauseMenu = false;
-					level = level_1;
-				}
-				else if (level_pauseButton->eventElement != MouseLeftClickEvent)
-					pauseMenu = false;
-				
-					if (pause_replayButton->eventElement == MouseLeftClickEvent)
-					{
-						App->entity_m->player->needRespawn1 = true;
-						DeletePauseMenu();
-						App->pause = false;
-						level = level_1;
-					}
-					else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
-					{
-						//CreateSettingsScene();
-						level = settings_screen;
-					}
-					else if (pause_returnButton->eventElement == MouseLeftClickEvent)
-					{
-						level_pauseButton->toDelete = true;
-						DeletePauseMenu();
-						level = start_screen;
-						App->fade->FadeToBlack(level, 2.0f);
-						//CreateMainScene();
-						pauseMenu = false;
-					}
-					
-			}
-			
-				
-			
-			break;
-
-		case level_2:
-		//	pauseButton->SetLocalPosition(p);
-			break;
+		if (pauseMenu == false) {
+			App->pause = false;
 		}
-
-	//Menu options
-
-	return true;
-}
+		if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
+		{
+				App->pause = true;
+				CreatePauseMenu();
+				pauseMenu = true;
+		}
+		if (App->entity_m->player != nullptr) {
+			std::string m = std::to_string(App->entity_m->player->score);
+			char* m2 = (char *)alloca(m.size() + 1);
+			memcpy(m2, m.c_str(), m.size() + 1);
+			level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
+			SetLife(App->entity_m->player_life);
+		}
+			return true;
+		}
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
+	if (pauseMenu == true) {
+			if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
+			{
+				if (App->pause == true)
+				App->pause = false;
+				DeletePauseMenu();
+				pauseMenu = false;
+			}
+
+			if (pause_replayButton->eventElement == MouseLeftClickEvent)
+			{
+				if (App->level = level_1) {
+					App->entity_m->player->needRespawn1 = true;
+				}
+
+				else {
+					App->entity_m->player->needRespawn2 = true;
+				}
+				DeletePauseMenu();
+				App->pause = false;
+			}
+			else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
+			{
+				//CreateSettingsScene();
+				//level = settings_screen;
+			}
+			else if (pause_returnButton->eventElement == MouseLeftClickEvent)
+			{
+				level_pauseButton->toDelete = true;
+				DeletePauseMenu();
+				App->fade->FadeToBlack(this,App->mainMenu,start_screen, 2.0f);
+				//CreateMainScene();
+				pauseMenu = false;
+			}
+	}
 	//guarrada : for test
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
@@ -203,7 +146,7 @@ bool j1Scene::Update(float dt)
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			if (level == level_1)
+			if (App->level == level_1)
 			{
 				App->entity_m->player->needRespawn1 = true;
 			}
@@ -215,7 +158,7 @@ bool j1Scene::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
 		{
-			if (level == level_1)
+			if (App->level == level_1)
 			{
 				App->entity_m->player->needRespawn1 = true;
 			}
@@ -234,11 +177,11 @@ bool j1Scene::Update(float dt)
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		if (level == level_2 || level == start_screen) {
-			App->fade->FadeToBlack(level_1, 2.0);
+		if (App->level == level_2) {
+			//fade to score, main menu or level 1. to decide
 		}
-		else if (level == level_1) {
-			App->fade->FadeToBlack(level_2, 2.0);
+		else if (App->level == level_1) {
+			App->fade->FadeToBlack(this,this,level_2, 2.0);
 		}
 	}
 
@@ -334,9 +277,22 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 
 void j1Scene::CreateLevelScene()
 {
-	level_pauseButton = App->gui->CreateButton({App->render->camera.w/2, 5}, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(),this,false);
+	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(), this, false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
-	
+
+	if (App->entity_m->player != nullptr)
+	{
+		if (level_lifesImage[0] == nullptr) {
+			for (int i = 0; i < App->entity_m->player_life; i++)
+			{
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
+			}
+
+			for (int i = 3; i > App->entity_m->player_life; i--) {
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
+			}
+		}
+	}
 }
 
 
@@ -383,3 +339,156 @@ void j1Scene::SetLife(uint life)
 		}
 	}
 }
+
+
+
+
+
+
+
+//previous preupdate
+
+/*
+//change volume to a char* from int
+//std::string s = std::to_string(App->audio->volume);
+//char* s2 = (char *)alloca(s.size() + 1);
+//memcpy(s2, s.c_str(), s.size() + 1);
+
+
+switch (App->level)
+{
+case start_screen:
+	/if (start_playButton->eventElement == MouseLeftClickEvent)
+	{
+	App->fade->FadeToBlack(level_1, 2.0);
+	level = level_1;
+	DeleteMainMenuSettings();
+	buttons.clear();
+	CreateLevelScene();
+
+	}
+	else if (start_settingsButton->eventElement == MouseLeftClickEvent)
+	{
+	CreateSettingsScene();
+	level = settings_screen;
+	}
+	else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
+	return false;/
+	break;
+
+case settings_screen:
+	/if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
+	{
+	if (App->audio->volume < 100)
+	App->audio->volume += 10;
+	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+	}
+	else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
+	{
+	if (App->audio->volume > 0)
+	App->audio->volume -= 10;
+	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+	}
+	else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
+	{
+	DeleteSettings();
+	//ERROR,BUG need think
+
+	if (App->pause == true)
+	level = level_1;
+	else
+	level = start_screen;
+
+	level = start_screen;
+	}
+
+	settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));/
+	break;
+
+case level_1:
+	if (pauseMenu == false) {
+		App->pause = false;
+	}
+	if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
+	{
+		if (App->pause == true)
+			App->pause = false;
+		else
+		{
+			App->pause = true;
+			CreatePauseMenu();
+			level = pause_screen;
+		}
+		pauseMenu = true;
+	}
+	if (App->entity_m->player != nullptr)
+	{
+		if (level_lifesImage[0] == nullptr) {
+			for (int i = 0; i < App->entity_m->player_life; i++)
+			{
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
+			}
+
+			for (int i = 3; i > App->entity_m->player_life; i--) {
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
+			}
+		}
+		std::string m = std::to_string(App->entity_m->player->score);
+		char* m2 = (char *)alloca(m.size() + 1);
+		memcpy(m2, m.c_str(), m.size() + 1);
+		level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
+		SetLife(App->entity_m->player_life);
+	}
+
+	break;
+case pause_screen:
+	//need new scene or restructured
+	if (pause_playButton != nullptr)
+	{
+		if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
+		{
+			if (App->pause == true)
+				App->pause = false;
+			DeletePauseMenu();
+			pauseMenu = false;
+			level = level_1;
+		}
+		else if (level_pauseButton->eventElement != MouseLeftClickEvent)
+			pauseMenu = false;
+
+		if (pause_replayButton->eventElement == MouseLeftClickEvent)
+		{
+			App->entity_m->player->needRespawn1 = true;
+			DeletePauseMenu();
+			App->pause = false;
+			level = level_1;
+		}
+		else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
+		{
+			//CreateSettingsScene();
+			level = settings_screen;
+		}
+		else if (pause_returnButton->eventElement == MouseLeftClickEvent)
+		{
+			level_pauseButton->toDelete = true;
+			DeletePauseMenu();
+			level = start_screen;
+			App->fade->FadeToBlack(level, 2.0f);
+			//CreateMainScene();
+			pauseMenu = false;
+		}
+
+	}
+
+
+
+	break;
+
+case level_2:
+	//	pauseButton->SetLocalPosition(p);
+	break;
+}
+
+//Menu options
+
+return true;*/

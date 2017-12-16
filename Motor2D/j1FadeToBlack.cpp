@@ -14,7 +14,7 @@
 
 j1FadeToBlack::j1FadeToBlack()
 {
-	
+
 	name.create("fade");
 }
 
@@ -25,14 +25,14 @@ j1FadeToBlack::~j1FadeToBlack()
 bool j1FadeToBlack::Start()
 {
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
-	screen = { 0,0, (int) (App->win->width*App->win->scale), (int) (App->win->height*App->win->scale) };
+	screen = { 0,0, (int)(App->win->width*App->win->scale), (int)(App->win->height*App->win->scale) };
 	return true;
 }
 
 // Update: draw background
 bool j1FadeToBlack::Update(float dt)
 {
-	if (current_step == fade_step::none)
+	if(current_step == fade_step::none)
 		return true;
 
 	Uint32 now = SDL_GetTicks() - start_time;
@@ -42,42 +42,14 @@ bool j1FadeToBlack::Update(float dt)
 	{
 	case fade_step::fade_to_black:
 	{
-		App->pause = true;
 		if (now >= total_time)
 		{
+			m_off->Disable();
+			m_on->Enable();
+			// ---
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;
-
-
-			App->map->CleanUp();
-
-			if (App->map->Load(map_on) == true)
-			{
-				int w, h;
-				uchar* data = NULL;
-				if (App->map->CreateWalkabilityMap(w, h, &data))
-				App->pathfinding->SetMap(w, h, data);
-				RELEASE_ARRAY(data);
-				App->map->CreateEnemies();
-				
-			}
-
-			if (App->entity_m->player != nullptr) {
-				App->entity_m->player->Respawn();
-				if (App->scene->level == level_1)
-				{
-					App->entity_m->player->needRespawn1 = true;
-					App->entity_m->player_life = 3;
-				}
-				else if (App->scene->level == level_2)
-				{
-					App->entity_m->player->needRespawn2 = true;
-					App->entity_m->player_life = 3;
-				}
-				App->entity_m->player->animation = &App->entity_m->player->idleRight;
-				
-			}
 		}
 	} break;
 
@@ -86,13 +58,7 @@ bool j1FadeToBlack::Update(float dt)
 		normalized = 1.0f - normalized;
 
 		if (now >= total_time)
-		{
-		current_step = fade_step::none;
-
-		App->pause = false;
-
-		}
-
+			current_step = fade_step::none;
 	} break;
 	}
 
@@ -103,38 +69,84 @@ bool j1FadeToBlack::Update(float dt)
 	return true;
 }
 
+//previous update
+/*if (current_step == fade_step::none)
+return true;
+
+Uint32 now = SDL_GetTicks() - start_time;
+float normalized = MIN(1.0f, (float)now / (float)total_time);
+
+switch (current_step)
+{
+case fade_step::fade_to_black:
+{
+if (now >= total_time)
+{
+total_time += total_time;
+start_time = SDL_GetTicks();
+current_step = fade_step::fade_from_black;
+
+
+App->map->CleanUp();
+
+if (App->map->Load(map_on) == true)
+{
+int w, h;
+uchar* data = NULL;
+if (App->map->CreateWalkabilityMap(w, h, &data))
+App->pathfinding->SetMap(w, h, data);
+RELEASE_ARRAY(data);
+App->map->CreateEnemies();
+App->gui->DeleteUIElements();
+}
+
+if (App->entity_m->player != nullptr) {
+App->entity_m->player->Respawn();
+
+if (App->level == level_1)
+{
+App->entity_m->player->needRespawn1 = true;
+}
+else if (App->level == level_2)
+{
+App->entity_m->player->needRespawn2 = true;
+}
+App->entity_m->player->animation = &App->entity_m->player->idleRight;
+}
+}
+} break;
+
+case fade_step::fade_from_black:
+{
+normalized = 1.0f - normalized;
+
+if (now >= total_time)
+current_step = fade_step::none;
+} break;
+}
+
+// Finally render the black square with alpha on the screen
+SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
+SDL_RenderFillRect(App->render->renderer, &screen);
+
+return true;*/
+
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(actual_level level_to_fade, float time)
+bool j1FadeToBlack::FadeToBlack(j1Module *module_off, j1Module *module_on, actual_level level_to_fade, float time)
 {
 	bool ret = false;
-	
-	level_fading_to = level_to_fade;
-	
-	start_time = SDL_GetTicks();
-	current_step = fade_step::fade_to_black;
-		
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
+
+	if (current_step == fade_step::none)
+	{
+		current_step = fade_step::fade_to_black;
+		start_time = SDL_GetTicks();
+		total_time = (Uint32)(time  *0.5f  *1000.0f);
+		m_on = module_on;
+		m_off = module_off;
+		App->level = level_to_fade;
 		ret = true;
-		switch (level_fading_to) {
-		
-		case none:
-				map_on = nullptr;
-			break;
+	}
 
-		case start_screen:
-			map_on = nullptr;
-		break;
-
-		case level_1:
-			map_on = "level1ND.tmx";
-			break;
-
-		case level_2:
-			map_on = "level2ND.tmx";
-			break;
-
-			App->scene->level = level_fading_to;
-		}
 	return ret;
 }
 

@@ -17,7 +17,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool FadeToBlack(actual_level, float);
+	bool FadeToBlack(j1Module*, j1Module*, actual_level, float);
 	bool IsFading() const;
 
 private:
@@ -28,13 +28,14 @@ private:
 		fade_to_black,
 		fade_from_black
 	} current_step = fade_step::none;
-	
+
 	actual_level level_fading_to;
 
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
-	char* map_on;
+	j1Module* m_on;
+	j1Module* m_off;
 };
 
 #endif //__MODULEFADETOBLACK_H__

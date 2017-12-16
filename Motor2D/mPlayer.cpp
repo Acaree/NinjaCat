@@ -384,11 +384,11 @@ void Player::Dead()
 		now = 0;
 		App->entity_m->player_life--;
 		
-		if (App->scene->level == level_1)
+		if (App->level == level_1)
 		{
 			needRespawn1 = true;
 		}
-		else if (App->scene->level == level_2)
+		else if (App->level == level_2)
 		{
 			needRespawn2 = true;
 		}

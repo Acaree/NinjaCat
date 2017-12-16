@@ -18,12 +18,12 @@ class j1Module
 {
 public:
 
-	j1Module() : active(false)
+	j1Module() : enabled(false)
 	{}
 
 	void Init()
 	{
-		active = true;
+		enabled = true;
 	}
 
 	// Called before render is available
@@ -71,6 +71,24 @@ public:
 	{
 		return true;
 	}
+
+	void Enable()
+	{
+		if (enabled == false)
+		{
+			enabled = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (enabled == true)
+		{
+			enabled = false;
+			CleanUp();
+		}
+	}
 	
 virtual void OnCollision(Collider*, Collider*) {}
 virtual void onUiTriggered(UIElement*, EventElement) {}
@@ -78,7 +96,7 @@ virtual void onUiTriggered(UIElement*, EventElement) {}
 public:
 
 	p2SString	name;
-	bool		active;
+	bool		enabled=true;
 
 };
 

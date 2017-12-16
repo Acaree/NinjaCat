@@ -47,7 +47,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
-	
 	AddModule(scene);
 	AddModule(gui);
 	AddModule(mainMenu);
@@ -84,6 +83,11 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
+
+	scene->Disable();
+	entity_m->Disable();
+	pathfinding->Disable();
+	map->Disable();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -254,7 +258,7 @@ bool j1App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->enabled == false) {
 			continue;
 		}
 
@@ -276,7 +280,7 @@ bool j1App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->enabled == false) {
 			continue;
 		}
 
@@ -298,7 +302,7 @@ bool j1App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->enabled == false) {
 			continue;
 		}
 

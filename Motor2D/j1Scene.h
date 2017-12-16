@@ -7,15 +7,6 @@
 #include "UiLabel.h"
 struct SDL_Texture;
 
-enum actual_level {
-	none = 0,
-	start_screen,
-	settings_screen,
-	pause_screen,
-	level_1,
-	level_2,
-};
-
 class j1Scene : public j1Module
 {
 public:
@@ -42,8 +33,6 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
-	actual_level level = none;
 
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
 	//void CreateMainScene();

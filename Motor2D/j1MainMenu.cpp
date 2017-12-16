@@ -34,8 +34,8 @@ bool j1MainMenu::PreUpdate()
 	{
 		if (start_playButton->eventElement == MouseLeftClickEvent)
 		{
-			App->fade->FadeToBlack(level_1, 2.0);
-			App->scene->level = level_1;
+			App->fade->FadeToBlack(this,App->scene,level_1, 2.0);
+			App->level = level_1;
 			DeleteMainMenuSettings();
 			App->scene->buttons.clear();
 			App->scene->CreateLevelScene();
@@ -44,7 +44,6 @@ bool j1MainMenu::PreUpdate()
 		else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 		{
 			CreateSettingsScene();
-			App->scene->level = settings_screen;
 			settingsIsOpen = true;
 		}
 		else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
@@ -71,11 +70,11 @@ bool j1MainMenu::PreUpdate()
 			//ERROR,BUG need think
 
 			if (App->pause == true)
-				App->scene->level = level_1;
+				App->level = level_1;
 			else
-				App->scene->level = start_screen;
+				App->level = start_screen;
 
-			App->scene->level = start_screen;
+			App->level = start_screen;
 		}
 		std::string s = std::to_string(App->audio->volume);
 		char* s2 = (char *)alloca(s.size() + 1);

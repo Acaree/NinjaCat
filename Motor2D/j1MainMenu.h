@@ -14,6 +14,7 @@ class j1MainMenu : public j1Module
 public:
 	j1MainMenu();
 
+	//virtual ~j1MainMenu();
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 	

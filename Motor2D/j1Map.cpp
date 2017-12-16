@@ -483,66 +483,68 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 void j1Map::CreateEnemies() {
 	BROFILER_CATEGORY("CreateEnemies", Profiler::Color::Aquamarine);
 	App->entity_m->ResetEntities();
-	if (App->map->data.layers.start->next->next != nullptr)
-	{
-		//DRAW COLLISIONS
-		p2List_item<MapLayer*>* item_layer = App->map->data.layers.start->next->next;
-		p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next->next;
-
-
-		for (int x = 0; x < item_layer->data->width; x++)
+	if (App->map->data.layers.start != nullptr){
+		if (App->map->data.layers.start->next->next != nullptr)
 		{
-			for (int y = 0; y < item_layer->data->height; y++)
+			//DRAW COLLISIONS
+			p2List_item<MapLayer*>* item_layer = App->map->data.layers.start->next->next;
+			p2List_item<TileSet*>* item_set = App->map->data.tilesets.start->next->next;
+
+
+			for (int x = 0; x < item_layer->data->width; x++)
 			{
-				int tileID = 0;
-
-				if (x > item_layer->data->width || y > item_layer->data->height)
+				for (int y = 0; y < item_layer->data->height; y++)
 				{
-					tileID = 0;
-				}
-				else
-				{
-					tileID = item_layer->data->Get(x, y);
-				}
-				if (tileID == 145)
-				{
-					iPoint position = App->map->MapToWorld(x, y);
+					int tileID = 0;
 
-					App->entity_m->AddEntity(ENEMY_FLY, position.x, position.y);
-
-				}
-				else if (tileID == 146)
-				{
-					iPoint position = App->map->MapToWorld(x, y);
-
-					App->entity_m->AddEntity(ENEMY_WALK, position.x, position.y);
-
-				}
-
-				else if (tileID == 144)
-				{
-					if (respawnPosition == false)
+					if (x > item_layer->data->width || y > item_layer->data->height)
 					{
-						iPoint position = App->map->MapToWorld(x, y);
-						App->entity_m->AddEntity(ENTITY_PLAYER, position.x, position.y);
+						tileID = 0;
 					}
 					else
 					{
-						App->entity_m->AddEntity(ENTITY_PLAYER, App->entity_m->player->position.x, App->entity_m->player->position.y);
-						respawnPosition = false;
+						tileID = item_layer->data->Get(x, y);
 					}
+					if (tileID == 145)
+					{
+						iPoint position = App->map->MapToWorld(x, y);
+
+						App->entity_m->AddEntity(ENEMY_FLY, position.x, position.y);
+
+					}
+					else if (tileID == 146)
+					{
+						iPoint position = App->map->MapToWorld(x, y);
+
+						App->entity_m->AddEntity(ENEMY_WALK, position.x, position.y);
+
+					}
+
+					else if (tileID == 144)
+					{
+						if (respawnPosition == false)
+						{
+							iPoint position = App->map->MapToWorld(x, y);
+							App->entity_m->AddEntity(ENTITY_PLAYER, position.x, position.y);
+						}
+						else
+						{
+							App->entity_m->AddEntity(ENTITY_PLAYER, App->entity_m->player->position.x, App->entity_m->player->position.y);
+							respawnPosition = false;
+						}
+					}
+					else if (tileID == 147)
+					{
+						iPoint position = App->map->MapToWorld(x, y);
+
+						App->entity_m->AddEntity(COIN, position.x, position.y);
+
+					}
+
 				}
-				else if (tileID == 147)
-				{
-					iPoint position = App->map->MapToWorld(x, y);
-
-					App->entity_m->AddEntity(COIN, position.x, position.y);
-
-				}
-
 			}
-		}
 
+		}
 	}
 }
 

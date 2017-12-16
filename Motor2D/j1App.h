@@ -7,6 +7,12 @@
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
 
+enum actual_level {
+	none = 0,
+	start_screen,
+	level_1,
+	level_2,
+};
 // Modules
 class j1Window;
 class j1Input;
@@ -100,6 +106,7 @@ public:
 	j1FadeToBlack*		fade = NULL;
 	j1MainMenu*			mainMenu = NULL;
 
+	actual_level		level = none;
 	bool				pause = false;
 	int					capped_ms = -1;
 	int					cap;
