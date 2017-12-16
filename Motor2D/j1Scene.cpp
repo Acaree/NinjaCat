@@ -79,15 +79,16 @@ bool j1Scene::Start()
 
 bool j1Scene::PreUpdate()
 {
-
+	if (App->entity_m->player_life > 0)
+	{
 		if (pauseMenu == false) {
 			App->pause = false;
 		}
 		if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
 		{
-				App->pause = true;
-				CreatePauseMenu();
-				pauseMenu = true;
+			App->pause = true;
+			CreatePauseMenu();
+			pauseMenu = true;
 		}
 		if (App->entity_m->player != nullptr) {
 			std::string m = std::to_string(App->entity_m->player->score);
@@ -96,12 +97,23 @@ bool j1Scene::PreUpdate()
 			level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
 			SetLife(App->entity_m->player_life);
 		}
+	}
+	else
+	{
+		level_pauseButton->toDelete = true;
+		//DeletePauseMenu();
+		App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
+		//CreateMainScene();
+		pauseMenu = false;
+		App->entity_m->Disable();
+	}
 			return true;
-		}
+}
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
+	
 	if (pauseMenu == true) {
 			if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
 			{
@@ -116,17 +128,17 @@ bool j1Scene::Update(float dt)
 				if (App->level = level_1) {
 					App->entity_m->player->needRespawn1 = true;
 				}
-
 				else {
 					App->entity_m->player->needRespawn2 = true;
 				}
 				DeletePauseMenu();
 				App->pause = false;
+				pauseMenu = false;
 			}
 			else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 			{
-				//CreateSettingsScene();
-				//level = settings_screen;
+				App->mainMenu->CreateSettingsScene();
+				
 			}
 			else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 			{

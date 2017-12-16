@@ -5,7 +5,9 @@
 #include "j1Audio.h"
 
 Entity::Entity(int x, int y) : position(x, y)
-{}
+{
+	
+}
 
 Entity::~Entity()
 {

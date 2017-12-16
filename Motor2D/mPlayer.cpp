@@ -13,6 +13,7 @@
 #include "j1Scene.h"
 #include "j1Entities.h"
 #include "j1FadeToBlack.h"
+#include "j1Gui.h"
 
 Player::Player(int x, int y) : Entity(x, y)
 {
@@ -51,6 +52,17 @@ Player::Player(int x, int y) : Entity(x, y)
 	collider = App->collision->AddCollider({ (int)position.x,(int)position.y,80,110 }, COLLIDER_PLAYER, App->entity_m);
 	animation = &idleRight;
 
+	
+	if (App->scene->level_lifesImage[0] == nullptr) {
+		for (int i = 0; i < App->entity_m->player_life; i++)
+		{
+				App->scene->level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), App->scene, true);
+		}
+
+		for (int i = 3; i > App->entity_m->player_life; i--) {
+				App->scene->level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), App->scene, true);
+		}
+	}
 	
 
 	death = false;

@@ -5,6 +5,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "j1Entities.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -38,7 +39,8 @@ bool j1MainMenu::PreUpdate()
 			App->level = level_1;
 			DeleteMainMenuSettings();
 			App->scene->buttons.clear();
-			App->scene->CreateLevelScene();
+			//App->scene->CreateLevelScene();
+			App->entity_m->Enable();
 
 		}
 		else if (start_settingsButton->eventElement == MouseLeftClickEvent)

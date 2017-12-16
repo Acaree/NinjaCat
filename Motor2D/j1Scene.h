@@ -45,6 +45,7 @@ public:
 
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
+	UIImage* level_lifesImage[3];
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
@@ -67,7 +68,7 @@ private:
 	//level gui
 	UIButton* level_pauseButton = nullptr;
 	UILabel* level_scoreLabel = nullptr;
-	UIImage* level_lifesImage[3];
+	
 	
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;
