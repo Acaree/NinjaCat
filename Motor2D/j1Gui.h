@@ -39,7 +39,7 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 	UIImage* CreateImage(iPoint, SDL_Rect, const SDL_Texture*, j1Module*, bool);
-	UILabel* CreateLabel(iPoint, char*, SDL_Color, _TTF_Font*, j1Module*, bool);
+	UILabel* CreateLabel(iPoint, char*, SDL_Color, _TTF_Font*, j1Module*, bool, uint wrap_length= 100);
 	UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, const SDL_Texture*, j1Module*, bool);
 	void SortByDrawOrder();
 	const SDL_Texture* GetAtlas() const;
