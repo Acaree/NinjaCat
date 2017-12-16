@@ -20,6 +20,7 @@ bool j1MainMenu::Awake(pugi::xml_node& config)
 bool j1MainMenu::Start()
 {
 	background = App->tex->Load("maps/Background.png");
+	App->audio->PlayMusic("audio/intro.ogg");
 	//Main Scene
 	CreateMainScene();
 
@@ -39,6 +40,7 @@ bool j1MainMenu::PreUpdate()
 			App->scene->buttons.clear();
 			//App->scene->CreateLevelScene();
 			App->entity_m->Enable();
+			App->audio->PlayMusic("audio/14.ogg");
 
 		}
 		else if (start_continueButton->eventElement == MouseLeftClickEvent)
