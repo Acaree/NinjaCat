@@ -8,10 +8,12 @@
 #include "Entity.h"
 #include "Enemy_Fly.h"
 #include "j1Map.h"
+#include "j1MainMenu.h"
 #include "Enemy_Walk.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
 #include "Coin.h"
+#include "j1FadeToBlack.h"
 
 #define SPAWN_MARGIN 140
 #define DESPAWN_MARGIN 1400
@@ -34,8 +36,6 @@ bool j1Entities::Start()
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("maps/enemySprites.png");
 	player_life = 3;
-	
-
 	return true;
 }
 
@@ -249,7 +249,10 @@ bool j1Entities::Save(pugi::xml_node& config) const
 	player_node.append_attribute("x") = player->position.x;
 	player_node.append_attribute("y") = player->position.y;
 	//fadecommit: need to change how to save the lvl
-	//player_node.append_attribute("level1") = App->map->isLevel1;
+	if(App->level == level_1)
+	player_node.append_attribute("level1") = true;
+	else
+	player_node.append_attribute("level1") = false;
 	return true;
 }
 
@@ -257,6 +260,14 @@ bool j1Entities::Load(pugi::xml_node& data)
 {
 	bool tmp = data.child("player").attribute("level1").as_bool();
 
+	if (tmp == true)
+	{
+		App->fade->FadeToBlack(App->mainMenu,App->scene,level_1,2.0);
+	}
+	else
+	{
+		App->fade->FadeToBlack(App->mainMenu, App->scene, level_2, 2.0);
+	}
 	//fadecommit: same as save
 	/*if (tmp != App->map->isLevel1)
 	{
@@ -265,10 +276,9 @@ bool j1Entities::Load(pugi::xml_node& data)
 		App->map->respawnPosition = true;
 	}
 	*/
-	player->position.x = data.child("player").attribute("x").as_int();
-	player->position.y = data.child("player").attribute("y").as_int();
+	// ERROR : CONTINUE BUTTON
+	loadPositionPlayer.x = data.child("player").attribute("x").as_int();
+	loadPositionPlayer.y = data.child("player").attribute("y").as_int();
 	
-	
-
 	return true;
 }

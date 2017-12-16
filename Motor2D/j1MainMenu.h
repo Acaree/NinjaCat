@@ -43,8 +43,9 @@ public:
 	void DeleteSettings();
 	private:
 		//main menu gui
+		SDL_Texture* background;
 		UIImage* start_mainImage = nullptr;
-		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr;
+		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr, *start_continueButton = nullptr;
 		UISlider* start_volumeslider = nullptr;
 
 		//settings main menu

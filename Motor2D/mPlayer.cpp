@@ -64,6 +64,11 @@ Player::Player(int x, int y) : Entity(x, y)
 		}
 	}
 	
+	if (App->entity_m->loadPositionPlayer.x != 0 || App->entity_m->loadPositionPlayer.y != 0)
+	{
+		position.x = App->entity_m->loadPositionPlayer.x;
+		position.y = App->entity_m->loadPositionPlayer.y;
+	}
 
 	death = false;
 }
@@ -71,9 +76,6 @@ Player::Player(int x, int y) : Entity(x, y)
 Player::~Player()
 {
 	App->tex->UnLoad(graphics);
-	
-
-
 }
 	//App->tex->UnLoad(graphics);
 

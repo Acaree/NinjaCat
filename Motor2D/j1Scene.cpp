@@ -113,12 +113,13 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
-	
-	if (pauseMenu == true) {
+	if (settingsIsOpen == false)
+	{
+		if (pauseMenu == true) {
 			if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
 			{
 				if (App->pause == true)
-				App->pause = false;
+					App->pause = false;
 				DeletePauseMenu();
 				pauseMenu = false;
 			}
@@ -137,23 +138,54 @@ bool j1Scene::Update(float dt)
 			}
 			else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 			{
-				App->mainMenu->CreateSettingsScene();
-				
+				CreateSettingsScene();
+				settingsIsOpen = true;
+
 			}
 			else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 			{
 				level_pauseButton->toDelete = true;
 				DeletePauseMenu();
-				App->fade->FadeToBlack(this,App->mainMenu,start_screen, 2.0f);
+				App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
 				//CreateMainScene();
 				pauseMenu = false;
 			}
+		}
 	}
-	//guarrada : for test
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	else
 	{
-		int i = 0;
+		if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
+		{
+			if (App->audio->volume < 100)
+				App->audio->volume += 10;
+			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+		}
+		else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
+		{
+			if (App->audio->volume > 0)
+				App->audio->volume -= 10;
+			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+		}
+		else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
+		{
+			settingsIsOpen = false;
+			DeleteSettings();
+			//ERROR,BUG need think
+
+			if (App->pause == true)
+				App->level = level_1;
+			else
+				App->level = start_screen;
+
+			App->level = start_screen;
+		}
+		std::string s = std::to_string(App->audio->volume);
+		char* s2 = (char *)alloca(s.size() + 1);
+		memcpy(s2, s.c_str(), s.size() + 1);
+		settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+
 	}
+	
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
 	if (App->entity_m->player != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->entity_m->player->animation != &App->entity_m->player->dead && App->entity_m->player->jumping == false)
@@ -224,7 +256,7 @@ bool j1Scene::PostUpdate()
 {
 	
 	bool ret = true;
-
+	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 	
@@ -273,10 +305,20 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 	
 }*/
 
-/*void j1Scene::CreateSettingsScene()
+void j1Scene::CreateSettingsScene()
 {
-	
-}*/
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
+
+	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 }, { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
+	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
+	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
+}
+
 
 /*void j1Scene::DeleteSettings()
 {
@@ -289,7 +331,7 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 
 void j1Scene::CreateLevelScene()
 {
-	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 138,1280,69,70 }, { 69,1280,69,70 }, { 0,1280,69,70 }, App->gui->GetAtlas(), this, false);
+	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
 
 	if (App->entity_m->player != nullptr)
@@ -297,11 +339,11 @@ void j1Scene::CreateLevelScene()
 		if (level_lifesImage[0] == nullptr) {
 			for (int i = 0; i < App->entity_m->player_life; i++)
 			{
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, true);
 			}
 
 			for (int i = 3; i > App->entity_m->player_life; i--) {
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, true);
 			}
 		}
 	}
@@ -311,15 +353,15 @@ void j1Scene::CreateLevelScene()
 
 void j1Scene::CreatePauseMenu()
 {
-	pause_settingsImage = App->gui->CreateImage({ 0,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
+	pause_settingsImage = App->gui->CreateImage({ 0,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
 	pause_settingsImage->SetParent(level_pauseButton);
-	pause_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	pause_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 }, { 407,798,81,82 },  { 407, 713, 81, 82 }, App->gui->GetAtlas(), this, false);
 	pause_crossButton->SetParent(pause_settingsImage);
 
-	pause_playButton = App->gui->CreateButton({ 100,30 }, { 380,1575,189,67 }, { 189,1575,189,68 }, { 0,1575,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_replayButton = App->gui->CreateButton({100,130 }, { 380,1643,189,67 }, { 189,1643,189,68 }, { 0,1643,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_settingsButton = App->gui->CreateButton({ 100,230 }, { 380,1711,189,67 }, { 189,1711,189,68 }, { 0,1711,189,68 }, App->gui->GetAtlas(), this, false);
-	pause_returnButton = App->gui->CreateButton({ 100,330 }, { 380,1779,189,67 }, { 189,1779,189,68 }, { 0,1779,189,68 }, App->gui->GetAtlas(), this, false);
+	pause_playButton = App->gui->CreateButton({ 50,30 }, { 380,276,190,69 }, { 190,276,190,69 }, { 0,276,190,69 }, App->gui->GetAtlas(), this, false);
+	pause_replayButton = App->gui->CreateButton({50,130 }, { 380,345,190,69 }, { 190,345,190,69 }, { 0,345,190,69 }, App->gui->GetAtlas(), this, false);
+	pause_settingsButton = App->gui->CreateButton({ 50,230 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, false);
+	pause_returnButton = App->gui->CreateButton({50,330 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, false);
 
 	pause_playButton->SetParent(pause_settingsImage);
 	pause_replayButton->SetParent(pause_settingsImage);
@@ -343,16 +385,24 @@ void j1Scene::SetLife(uint life)
 	if (level_lifesImage[0] != nullptr) {
 		for (int i = 0; i < life; i++)
 		{
-			level_lifesImage[i]->ChangeTextureRect({ 537,0,76,75 });
+			level_lifesImage[i]->ChangeTextureRect({ 493,484,76,75 });
 		}
 
 		for (int i = 3; i > life; i--) {
-			level_lifesImage[i-1]->ChangeTextureRect({ 460, 0, 76, 75 });
+			level_lifesImage[i-1]->ChangeTextureRect({ 417,484,76,75 });
 		}
 	}
 }
 
 
+void j1Scene::DeleteSettings()
+{
+	settingsmm_settingsImage->toDelete = true;
+	settingsmm_minusVolume->toDelete = true;
+	settingsmm_plusVolume->toDelete = true;
+	settingsmm_crossButton->toDelete = true;
+	settingsmm_volumeLabel->toDelete = true;
+}
 
 
 

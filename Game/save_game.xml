@@ -6,12 +6,16 @@
 	<audio />
 	<map />
 	<scene />
+	<gui />
+	<mainMenu />
 	<pathfinding />
 	<:anonymous />
 	<entities>
-		<player x="610.000305" y="922.72699" level1="false" />
+		<player x="376.300018" y="1189.95935" level1="true" />
 	</entities>
+	<fonts />
+	<fade />
 	<renderer>
-		<camera x="-410" y="-622" />
+		<camera x="-176" y="-889" />
 	</renderer>
 </game_state>

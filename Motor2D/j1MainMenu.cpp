@@ -19,9 +19,10 @@ bool j1MainMenu::Awake(pugi::xml_node& config)
 
 bool j1MainMenu::Start()
 {
-	const SDL_Texture* background = App->tex->Load("maps/Background.png");
+	background = App->tex->Load("maps/Background.png");
 	//Main Scene
 	CreateMainScene();
+
 
 	return true;
 }
@@ -39,6 +40,11 @@ bool j1MainMenu::PreUpdate()
 			//App->scene->CreateLevelScene();
 			App->entity_m->Enable();
 
+		}
+		else if (start_continueButton->eventElement == MouseLeftClickEvent)
+		{
+
+			App->LoadGame();
 		}
 		else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 		{
@@ -142,32 +148,47 @@ void j1MainMenu::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 
 void j1MainMenu::DeleteMainMenuSettings()
 {
+	App->tex->UnLoad(background);
 	start_mainImage->toDelete = true;
 	start_playButton->toDelete = true;
 	start_settingsButton->toDelete = true;
 	start_quitButton->toDelete = true;
+	start_continueButton->toDelete = true;
 }
 
 void j1MainMenu::CreateMainScene()
 {
-	const SDL_Texture* background = App->tex->Load("maps/Background.png");
+	background = App->tex->Load("maps/Background.png");
+	//Main Scene
 	start_mainImage = App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	start_playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true);
-	start_settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true);
-	start_quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true);
-	start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 46,1501,221,19 }, { 267,1503,28,30 }, App->gui->GetAtlas(), this, 0.5f);
-	
+	pugi::xml_document config_file;
+	if (pugi::xml_parse_result result = config_file.load_file("save_game.xml"))
+	{
+		start_playButton = App->gui->CreateButton({ 100,600 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
+		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
+		start_settingsButton = App->gui->CreateButton({ 500,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
+		start_quitButton = App->gui->CreateButton({ 700,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
+		start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 46,1501,221,19 }, { 267,1503,28,30 }, App->gui->GetAtlas(), this, 0.5f);
+
+	}
+	else
+	{
+		start_playButton = App->gui->CreateButton({ 200,600 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
+		start_settingsButton = App->gui->CreateButton({ 400,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
+		start_quitButton = App->gui->CreateButton({ 600,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
+	}
+
 }
 
 void j1MainMenu::CreateSettingsScene()
 {
-	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,426,414,426 }, App->gui->GetAtlas(), this, true);
-
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
+	
 	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
 	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
 	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
 	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
-	settingsmm_crossButton = App->gui->CreateButton({ 330,10 }, { 345,1350,69,70 }, { 276,1350,69,70 }, { 207,1350,69,70 }, App->gui->GetAtlas(), this, false);
+	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 } , { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
 	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
 	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
