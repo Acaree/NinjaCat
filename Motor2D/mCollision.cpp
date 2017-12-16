@@ -319,15 +319,15 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 									if (player->type == COLLIDER_ENEMY)
 									{
-										App->entity_m->player->score += 20;
+										App->scene->score += 20;
 									}
 									else if (player->type == COLLIDER_WALKENEMY)
 									{
-										App->entity_m->player->score += 10;
+										App->scene->score += 10;
 									}
 									else if (player->type == COLLIDER_COIN)
 									{
-										App->entity_m->player->score += 5;
+										App->scene->score += 5;
 									
 									}
 								}
