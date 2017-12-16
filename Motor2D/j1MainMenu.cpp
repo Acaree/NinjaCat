@@ -21,10 +21,7 @@ bool j1MainMenu::Start()
 {
 	const SDL_Texture* background = App->tex->Load("maps/Background.png");
 	//Main Scene
-	start_mainImage = App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
-	start_playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true);
-	start_settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true);
-	start_quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true);
+	CreateMainScene();
 
 	return true;
 }
@@ -158,6 +155,8 @@ void j1MainMenu::CreateMainScene()
 	start_playButton = App->gui->CreateButton({ 100,600 }, { 276,0,138,142 }, { 138,0,138,142 }, { 0,0,138,142 }, App->gui->GetAtlas(), this, true);
 	start_settingsButton = App->gui->CreateButton({ 800,0 }, { 276,284,138,142 }, { 138,284,138,142 }, { 0,284,138,142 }, App->gui->GetAtlas(), this, true);
 	start_quitButton = App->gui->CreateButton({ 800,600 }, { 276,142,138,142 }, { 138,142,138,142 }, { 0,142,138,142 }, App->gui->GetAtlas(), this, true);
+	start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 46,1501,221,19 }, { 267,1503,28,30 }, App->gui->GetAtlas(), this, 0.5f);
+	
 }
 
 void j1MainMenu::CreateSettingsScene()

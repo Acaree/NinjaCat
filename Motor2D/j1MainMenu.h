@@ -45,11 +45,13 @@ public:
 		//main menu gui
 		UIImage* start_mainImage = nullptr;
 		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr;
+		UISlider* start_volumeslider = nullptr;
 
 		//settings main menu
 		UIImage* settingsmm_settingsImage = nullptr;
 		UIButton* settingsmm_minusVolume = nullptr, *settingsmm_plusVolume = nullptr, *settingsmm_crossButton = nullptr;
 		UILabel* settingsmm_volumeLabel = nullptr;
+		
 
 		SDL_Texture* current_volume_tex = nullptr;
 		UILabel* current_volume_label = nullptr;

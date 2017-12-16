@@ -35,6 +35,7 @@ public:
 	virtual void Update(float);
 	virtual void Draw();
 	virtual void DebugDraw() const;
+	virtual void SetSliderButtonPos(int);
 	void SetParent(UIElement*);
 	void SetLocalPosition(iPoint);
 	void ChangeTexture(const SDL_Texture*);

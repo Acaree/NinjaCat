@@ -18,7 +18,6 @@ UIElement::~UIElement()
 void UIElement::Update(float dt)
 {
 	//set the position for all childs
-	//falta que se mueva con la camara
 	if (parent != nullptr)
 		positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
 	else
@@ -40,16 +39,29 @@ void UIElement::Update(float dt)
 			{
 				int tmp_mx2, tmp_my2;
 				App->input->GetMouseMotion(tmp_mx2, tmp_my2);
+				if (type == SliderElement) {
+					{
+						if (mouse.x >= positionUi.x && mouse.x >= positionUi.x) {
+							SetSliderButtonPos(mouse.x);
+							
+							//localPosition.x = mouse.x;
+							//positionUi.x = mouse.x;
+						}
+					}
+				}
 
-				if (mousePositionDragX != tmp_mx2 || mousePositionDragY != tmp_my2)
-				{
-					mousePositionDragX = tmp_mx2;
-					mousePositionDragY = tmp_my2;
-					localPosition.x += mousePositionDragX;
-					localPosition.y += mousePositionDragY;
+				else {
+					if (mousePositionDragX != tmp_mx2 || mousePositionDragY != tmp_my2)
+					{
+						mousePositionDragX = tmp_mx2;
+						mousePositionDragY = tmp_my2;
+						localPosition.x += mousePositionDragX;
+						localPosition.y += mousePositionDragY;
+					}
 				}
 			}
 	}
+
 	else if (eventElement == MouseEnterEvent)
 		eventElement = MouseLeaveEvent;
 	else
@@ -93,4 +105,8 @@ void UIElement::ChangeTexture(const SDL_Texture* tex)
 void UIElement::ChangeTextureRect(SDL_Rect new_rect)
 {
 	rectUi = new_rect;
+}
+
+void UIElement::SetSliderButtonPos(int position) {
+
 }

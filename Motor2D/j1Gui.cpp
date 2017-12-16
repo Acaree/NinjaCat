@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Gui.h"
 
+
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
@@ -146,6 +147,14 @@ UIButton* j1Gui::CreateButton(iPoint position, SDL_Rect default_rect, SDL_Rect m
 	UiElement.add((UIElement*)newButton);
 	needOrderList = true;
 	return newButton;
+}
+
+UISlider* j1Gui::CreateSlider(iPoint position, SDL_Rect bar, SDL_Rect button, const SDL_Texture* texture, j1Module* listener, float initial_value)
+{
+	UISlider* newSlider = new UISlider(position, bar, button, texture, ElementType::SliderElement, listener, initial_value);
+	UiElement.add((UIElement*)newSlider);
+	needOrderList = true;
+	return newSlider;
 }
 
 void j1Gui::SortByDrawOrder()
