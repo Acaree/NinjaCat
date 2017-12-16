@@ -245,7 +245,7 @@ void j1Entities::OnCollision(Collider* c1, Collider* c2)
 bool j1Entities::Save(pugi::xml_node& config) const
 {
 	pugi::xml_node player_node = config.append_child("player");
-
+	player_node.append_attribute("lastScore") = player->score;
 	player_node.append_attribute("x") = player->position.x;
 	player_node.append_attribute("y") = player->position.y;
 	//fadecommit: need to change how to save the lvl
