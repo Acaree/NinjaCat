@@ -34,6 +34,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
 	//void CreateMainScene();
 	void CreateSettingsScene();
@@ -48,6 +51,8 @@ public:
 	p2List<UIButton*> buttons;
 	UIImage* level_lifesImage[3];
 	uint score = 0;
+	uint scoreRecord = 0;
+	uint coinCount = 0;
 private:
 	p2SString map;
 	iPoint mouseCoordenates;

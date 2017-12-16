@@ -113,6 +113,16 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 { 
+	//SCORE Record and restore life
+	if (scoreRecord < score)
+	{
+		scoreRecord = score;
+		if (coinCount > 10 && App->entity_m->player_life < 3)
+		{
+			App->entity_m->player_life++;
+			coinCount = 0;
+		}
+	}
 	if (settingsIsOpen == false)
 	{
 		if (pauseMenu == true) {
@@ -300,10 +310,6 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 	}
 }
 
-/*void j1Scene::CreateMainScene()
-{
-	
-}*/
 
 void j1Scene::CreateSettingsScene()
 {
@@ -405,8 +411,20 @@ void j1Scene::DeleteSettings()
 }
 
 
+bool j1Scene::Save(pugi::xml_node& config) const
+{
+	pugi::xml_node scene_node = config.append_child("score");
+	scene_node.append_attribute("score") = App->scene->score;
+	scene_node.append_attribute("scoreRecord") = App->scene->scoreRecord;
+	return true;
+}
 
-
+bool j1Scene::Load(pugi::xml_node& data)
+{
+	score = data.child("score").attribute("score").as_int();
+	scoreRecord = data.child("score").attribute("scoreRecord").as_int();
+	return true;
+}
 
 //previous preupdate
 

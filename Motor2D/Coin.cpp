@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "mCollision.h"
 #include "j1Entities.h"
+#include "j1Scene.h"
 #include "mCollision.h"
 #include "j1Audio.h"
 Coin::Coin(int x, int y) : Entity(x, y)
@@ -21,6 +22,7 @@ void Coin::Move(float dt)
 
 		if (isDead = App->collision->CollisionToWorld(collider, movement))
 		{
+			App->scene->coinCount++;
 			Dead(dt);
 			App->audio->PlayFx(sound, 0);
 		}

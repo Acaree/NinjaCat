@@ -68,6 +68,8 @@ Player::Player(int x, int y) : Entity(x, y)
 	{
 		position.x = App->entity_m->loadPositionPlayer.x;
 		position.y = App->entity_m->loadPositionPlayer.y;
+		App->entity_m->loadPositionPlayer.x = 0;
+		App->entity_m->loadPositionPlayer.y = 0;
 	}
 
 	death = false;
@@ -136,10 +138,6 @@ void Player::InputsPlayer(bool* movement, float dt)
 	}
 
 	if (animation != &dead && dt != 0) {
-
-
-
-	
 
 			if (collider->to_delete==false)
 			CalculateGravity(dt);

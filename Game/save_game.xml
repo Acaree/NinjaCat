@@ -5,17 +5,19 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<score score="5" scoreRecord="5" />
+	</scene>
 	<gui />
 	<mainMenu />
 	<pathfinding />
 	<:anonymous />
 	<entities>
-		<player x="376.300018" y="1189.95935" level1="true" />
+		<player x="678.40033" y="1193.50842" level1="true" />
 	</entities>
 	<fonts />
 	<fade />
 	<renderer>
-		<camera x="-176" y="-889" />
+		<camera x="-478" y="-893" />
 	</renderer>
 </game_state>
