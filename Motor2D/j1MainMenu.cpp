@@ -58,6 +58,7 @@ bool j1MainMenu::PreUpdate()
 		}
 		else if (start_continueButton->eventElement == MouseLeftClickEvent)
 		{
+
 			App->LoadGame();
 		}
 		else if (start_settingsButton->eventElement == MouseLeftClickEvent)

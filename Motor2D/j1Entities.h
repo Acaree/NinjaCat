@@ -61,7 +61,7 @@ private:
 	p2DynArray<iPoint> walkPositions;
 public:
 	uint player_life = 3;
-
+	iPoint loadPositionPlayer = { 0,0 };
 	
 };
 
