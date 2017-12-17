@@ -49,7 +49,13 @@ private:
 	//main menu gui
 	SDL_Texture* background = nullptr;
 	UIImage* score_mainImage = nullptr;
-	UILabel* score_score = nullptr;
+	UILabel* score_timer = nullptr, *score_textTimer = nullptr;
+	UILabel* score_coins = nullptr, *score_textcoins = nullptr;
+	UILabel* score_level = nullptr, *score_textlevel = nullptr;
+	UILabel* score_life = nullptr, *score_textlife= nullptr;
+	UILabel* score_record = nullptr, *score_textrecord = nullptr;
+	UILabel* score_total = nullptr, *score_texttotal = nullptr;
+
 	UIButton* score_backToMenu = nullptr;
 	
 };
