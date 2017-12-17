@@ -24,7 +24,7 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/intro.ogg");
 	//Main Scene
 	CreateMainScene();
-
+	font_credits = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf", 20);
 
 	return true;
 }
@@ -35,9 +35,9 @@ bool j1MainMenu::PreUpdate()
 	animationsFinish=AnimationsScence();
 	else
 	{
-		if (!settingsIsOpen)
+		if (!settingsIsOpen && !creditsIsOpen)
 		{
-			if (start_playButton->eventElement == MouseLeftClickEvent)
+			if(start_playButton->eventElement == MouseLeftClickEvent)
 			{
 				App->fade->FadeToBlack(this, App->scene, level_1, 2.0);
 				App->level = level_1;
@@ -60,8 +60,14 @@ bool j1MainMenu::PreUpdate()
 			}
 			else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
 				return false;
+			else if (start_creditsButton->eventElement == MouseLeftClickEvent)
+			{
+				DeleteMainMenuSettings();
+				creditsIsOpen = true;
+				CreateCredits();
+			}
 		}
-		else
+		else if(settingsIsOpen)
 		{
 			if (settingsmm_volumeslider->eventElement == MouseLeftClickEvent)
 			{
@@ -82,11 +88,16 @@ bool j1MainMenu::PreUpdate()
 
 				App->level = start_screen;
 			}
-			/*
-			std::string s = std::to_string(App->audio->volume);
-			char* s2 = (char *)alloca(s.size() + 1);
-			memcpy(s2, s.c_str(), s.size() + 1);
-			*/
+		}
+		else if (creditsIsOpen)
+		{
+			if (start_quitButton->eventElement == MouseLeftClickEvent)
+			{
+				DeleteCredits();
+				CreateMainScene();
+				creditsIsOpen = false;
+				animationsFinish = false;
+			}
 		}
 	}
 	return true;
@@ -155,6 +166,8 @@ void j1MainMenu::DeleteMainMenuSettings()
 	start_settingsButton->toDelete = true;
 	start_quitButton->toDelete = true;
 	start_continueButton->toDelete = true;
+	start_title->toDelete = true;
+	start_creditsButton->toDelete = true;
 }
 
 void j1MainMenu::CreateMainScene()
@@ -164,6 +177,7 @@ void j1MainMenu::CreateMainScene()
 	//Main Scene
 	start_mainImage = App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
 	start_title= App->gui->CreateImage({150,-295 }, { 643,13,909,295 }, App->gui->GetAtlas(), this, false);
+	start_creditsButton = App->gui->CreateButton({1364,10}, { 380,414,190,69 }, { 190,414,190,69 }, { 0,414,190,69 },App->gui->GetAtlas(),this,false);
 	pugi::xml_document config_file;
 	if (pugi::xml_parse_result result = config_file.load_file("save_game.xml"))
 	{
@@ -207,6 +221,8 @@ bool j1MainMenu::AnimationsScence()
 		start_title->localPosition.y += 2;
 		ret = false;
 	}
+	if(start_creditsButton->localPosition.x >= 800)
+	start_creditsButton->localPosition.x -= 4;
 
 	if (start_continueButton == nullptr)
 	{
@@ -263,6 +279,18 @@ bool j1MainMenu::AnimationsScence()
 	return ret;
 }
 
+void j1MainMenu::CreateCredits()
+{
+	char* authors = "AUTHORS: Alex Campamar and Alfonso Sanchez-Cortes\nACopyright JS Foundation and other contributors, https://js.foundation/\nThis software consists of voluntary contributions made by many individuals.\nFor exact contribution history, see the revision history available at https : \n//github.com/Acaree/NinjaCat.\nThe following license applies to all parts of this software except as documented below : \nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the 'Software'), \nto deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, \nand/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions : \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, \nWHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\nAll files located in the node_modules and external directories are externally maintained libraries used by this software which have their own licenses; \nwe recommend you read them, as their terms may differ from the terms above.\n ";
+	credit_label = App->gui->CreateLabel({ 0,0 }, authors, {255,255,255},font_credits,this,false,1000);
+	start_quitButton = App->gui->CreateButton({900,650}, { 407, 883, 81, 82 }, { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
+}
+
+void j1MainMenu::DeleteCredits()
+{
+	start_quitButton->toDelete = true;
+	credit_label->toDelete = true;
+}
 /*		start_playButton = App->gui->CreateButton({ 0,0 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
 		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
 		start_settingsButton = App->gui->CreateButton({ 500,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
