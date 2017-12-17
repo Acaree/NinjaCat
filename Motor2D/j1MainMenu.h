@@ -44,7 +44,7 @@ public:
 	private:
 		//main menu gui
 		SDL_Texture* background;
-		UIImage* start_mainImage = nullptr;
+		UIImage* start_mainImage = nullptr, *start_title=nullptr;
 		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr, *start_continueButton = nullptr;
 		UISlider* start_volumeslider = nullptr;
 

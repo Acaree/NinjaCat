@@ -167,6 +167,7 @@ void j1MainMenu::CreateMainScene()
 	background = App->tex->Load("maps/Background.png");
 	//Main Scene
 	start_mainImage = App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
+	start_title= App->gui->CreateImage({150,0 }, { 643,13,909,295 }, App->gui->GetAtlas(), this, false);
 	pugi::xml_document config_file;
 	if (pugi::xml_parse_result result = config_file.load_file("save_game.xml"))
 	{
