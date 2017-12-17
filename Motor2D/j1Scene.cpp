@@ -114,6 +114,9 @@ bool j1Scene::PreUpdate()
 		//CreateMainScene();
 		pauseMenu = false;
 		App->entity_m->Disable();
+		App->scoreBoard->coinCount = 0;
+		App->scoreBoard->score = 0;
+		App->scoreBoard->coinforLife = 0;
 	}
 			return true;
 }
