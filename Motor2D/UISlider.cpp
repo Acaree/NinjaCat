@@ -18,6 +18,7 @@ UISlider::UISlider(iPoint position, SDL_Rect rectBar, SDL_Rect rectButton, const
 
 float UISlider::getValue()
 {
+	currentValue = (float)((button_position.x - positionUi.x) / rect_bar.w);
 	return currentValue;
 }
 
@@ -26,7 +27,7 @@ void UISlider::Draw()
 	//slider
 	App->render->Blit(texture, positionUi.x, positionUi.y, &rect_bar);
 	//button
-	App->render->Blit(texture, button_position.x, button_position.y, &rect_button);
+	App->render->Blit(texture,button_position.x, button_position.y, &rect_button);
 }
 
 void UISlider::SetSliderButtonPos(int position) {

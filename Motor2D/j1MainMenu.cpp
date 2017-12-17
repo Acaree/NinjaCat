@@ -5,6 +5,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "j1Input.h"
 #include "j1Entities.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -94,8 +95,11 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_0)==KEY_DOWN) {
+		float i=start_volumeslider->getValue();
+		float x = i;
+	}
 	
-
 	return true;
 }
 
@@ -170,7 +174,7 @@ void j1MainMenu::CreateMainScene()
 		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
 		start_settingsButton = App->gui->CreateButton({ 500,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
 		start_quitButton = App->gui->CreateButton({ 700,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
-		start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 0,916,221,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, 0.5f);
+		start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, 0.5f);
 
 	}
 	else
