@@ -91,6 +91,9 @@
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1ScoreBoard.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -202,6 +205,9 @@
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClInclude>
     <ClInclude Include="j1MainMenu.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1ScoreBoard.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

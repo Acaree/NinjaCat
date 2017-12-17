@@ -12,6 +12,7 @@ enum actual_level {
 	start_screen,
 	level_1,
 	level_2,
+	score_board,
 };
 // Modules
 class j1Window;
@@ -28,6 +29,7 @@ class j1Fonts;
 class j1Gui;
 class j1FadeToBlack;
 class j1MainMenu;
+class j1ScoreBoard;
 
 class j1App
 {
@@ -105,6 +107,7 @@ public:
 	j1Gui*				gui = NULL;
 	j1FadeToBlack*		fade = NULL;
 	j1MainMenu*			mainMenu = NULL;
+	j1ScoreBoard*		scoreBoard = NULL;
 
 	actual_level		level = none;
 	bool				pause = false;
