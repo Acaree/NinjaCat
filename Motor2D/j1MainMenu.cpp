@@ -59,18 +59,12 @@ bool j1MainMenu::PreUpdate()
 	}
 	else
 	{
-		if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
+		if (settingsmm_volumeslider->eventElement == MouseLeftClickEvent)
 		{
-			if (App->audio->volume < 100)
-				App->audio->volume += 10;
+			App->audio->volume = settingsmm_volumeslider->getValue() * 100;
 			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 		}
-		else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
-		{
-			if (App->audio->volume > 0)
-				App->audio->volume -= 10;
-			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-		}
+		
 		else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
 		{
 			settingsIsOpen = false;
@@ -84,21 +78,17 @@ bool j1MainMenu::PreUpdate()
 
 			App->level = start_screen;
 		}
+		/*
 		std::string s = std::to_string(App->audio->volume);
 		char* s2 = (char *)alloca(s.size() + 1);
 		memcpy(s2, s.c_str(), s.size() + 1);
-		settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
-
+		*/
 	}
 	return true;
 }
 
 bool j1MainMenu::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_0)==KEY_DOWN) {
-		float i=start_volumeslider->getValue();
-		float x = i;
-	}
 	
 	return true;
 }
@@ -175,7 +165,7 @@ void j1MainMenu::CreateMainScene()
 		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
 		start_settingsButton = App->gui->CreateButton({ 500,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
 		start_quitButton = App->gui->CreateButton({ 700,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
-		start_volumeslider = App->gui->CreateSlider({ 400,400 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, 0.5f);
+		
 
 	}
 	else
@@ -189,23 +179,17 @@ void j1MainMenu::CreateMainScene()
 
 void j1MainMenu::CreateSettingsScene()
 {
-	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
-	
-	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
-	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, false);
+
+	settingsmm_volumeslider = App->gui->CreateSlider({ 100,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
+	settingsmm_volumeslider->SetParent(settingsmm_settingsImage);
 	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 } , { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
-	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
-	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
 }
 
 void j1MainMenu::DeleteSettings()
 {
 	settingsmm_settingsImage->toDelete = true;
-	settingsmm_minusVolume->toDelete = true;
-	settingsmm_plusVolume->toDelete = true;
 	settingsmm_crossButton->toDelete = true;
-	settingsmm_volumeLabel->toDelete = true;
+	settingsmm_volumeslider->toDelete = true;
 }

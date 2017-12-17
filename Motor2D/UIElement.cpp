@@ -18,9 +18,14 @@ UIElement::~UIElement()
 void UIElement::Update(float dt)
 {
 	//set the position for all childs
-	if (parent != nullptr)
-		positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
-	else
+	if (parent != nullptr) {
+		if (type == SliderElement) {
+			positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
+		}
+		else
+			positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
+	}
+		else
 		positionUi = {localPosition.x, localPosition.y};
 
 
@@ -107,6 +112,4 @@ void UIElement::ChangeTextureRect(SDL_Rect new_rect)
 	rectUi = new_rect;
 }
 
-void UIElement::SetSliderButtonPos(int position) {
-
-}
+void UIElement::SetSliderButtonPos(int position) {}

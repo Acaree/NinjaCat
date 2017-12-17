@@ -12,6 +12,7 @@ public:
 	float getValue();
 	void Draw();
 	void SetSliderButtonPos(int);
+	void CalculateSliderButtonPos();
 	iPoint button_position;
 
 private:

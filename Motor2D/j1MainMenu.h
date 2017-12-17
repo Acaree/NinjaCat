@@ -46,12 +46,11 @@ public:
 		SDL_Texture* background;
 		UIImage* start_mainImage = nullptr, *start_title=nullptr;
 		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr, *start_continueButton = nullptr;
-		UISlider* start_volumeslider = nullptr;
 
 		//settings main menu
 		UIImage* settingsmm_settingsImage = nullptr;
-		UIButton* settingsmm_minusVolume = nullptr, *settingsmm_plusVolume = nullptr, *settingsmm_crossButton = nullptr;
-		UILabel* settingsmm_volumeLabel = nullptr;
+		UIButton* settingsmm_crossButton = nullptr;
+		UISlider* settingsmm_volumeslider = nullptr;
 		
 
 		SDL_Texture* current_volume_tex = nullptr;

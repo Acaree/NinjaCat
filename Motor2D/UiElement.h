@@ -46,11 +46,11 @@ public:
 	EventElement eventElement = EventElement::NoEventElement;
 	SDL_Rect rectUi = { 0,0,0,0 };
 	uint positionToDraw = 0;
+	iPoint positionUi = { 0,0 };
 	bool dragable = false;
 	bool toDelete = false;
 protected:
 	UIElement* parent = nullptr;
-	iPoint positionUi = { 0,0 };
 	iPoint localPosition = { 0,0 };
 	const SDL_Texture *texture = nullptr;
 	j1Module* listener = nullptr;
