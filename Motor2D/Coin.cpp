@@ -6,6 +6,7 @@
 #include "j1Scene.h"
 #include "mCollision.h"
 #include "j1Audio.h"
+#include "j1ScoreBoard.h"
 Coin::Coin(int x, int y) : Entity(x, y)
 {
 	rotateAnimation = App->tex->CreateAnimation("coin","rotate",true);
@@ -22,8 +23,8 @@ void Coin::Move(float dt)
 
 		if (isDead = App->collision->CollisionToWorld(collider, movement))
 		{
-			App->scene->coinCount++;
-			App->scene->coinforLife++;
+			App->scoreBoard->coinCount++;
+			App->scoreBoard->coinforLife++;
 			Dead(dt);
 			App->audio->PlayFx(sound, 0);
 		}

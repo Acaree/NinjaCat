@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "SDL_ttf\include\SDL_ttf.h"
 
+
 class UILabel;
 class UIButton;
 class UIImage;
@@ -45,6 +46,12 @@ public:
 	bool AnimationsScence();
 
 	int score_value=0;
+	uint score = 0;
+	uint scoreRecord = 0;
+	uint coinforLife = 0;
+	uint coinCount = 0;
+	int timescore;
+	int  timerlvl1 = 0 , timerlvl2 = 0;
 private:
 	//main menu gui
 	SDL_Texture* background = nullptr;

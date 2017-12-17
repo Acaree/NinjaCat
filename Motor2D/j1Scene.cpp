@@ -78,8 +78,7 @@ bool j1Scene::Start()
 			CreateLevelScene();
 		timer.Start();
 
-		coinCount = 0;
-		score = 0;
+		
 	}
 
 	soundClick = App->audio->LoadFx("audio/click.wav");
@@ -123,15 +122,15 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 { 
 	//SCORE Record and restore life
-	if (scoreRecord < score)
+	if (App->scoreBoard->scoreRecord < App->scoreBoard->score)
 	{
-		scoreRecord = score;
+		App->scoreBoard->scoreRecord = App->scoreBoard->score;
 	}
 
-	if (coinforLife > 10 && App->entity_m->player_life < 3)
+	if (App->scoreBoard->coinforLife > 10 && App->entity_m->player_life < 3)
 	{
 		App->entity_m->player_life++;
-		coinforLife = 0;
+		App->scoreBoard->coinforLife = 0;
 	}
 
 	if (settingsIsOpen == false)
@@ -242,9 +241,11 @@ bool j1Scene::Update(float dt)
 			App->fade->FadeToBlack(this, App->scoreBoard, score_board, 2.0);
 			App->entity_m->Disable();
 			DeleteLevelUI();
+			App->scoreBoard->timerlvl2 = (int)timer.ReadSec();
 		}
 		else if (App->level == level_1) {
 			App->fade->FadeToBlack(this,this,level_2, 2.0);
+			App->scoreBoard->timerlvl1 = (int)timer.ReadSec();
 		}
 	}
 
@@ -348,7 +349,7 @@ void j1Scene::CreateSettingsScene()
 
 void j1Scene::CreateLevelScene()
 {
-	std::string s = std::to_string(coinCount);
+	std::string s = std::to_string(App->scoreBoard->coinCount);
 	p2SString s2 = s.c_str();
 	level_coinNumber = App->gui->CreateLabel({ 950,20 },(char*) s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
@@ -450,26 +451,26 @@ void j1Scene::DeleteSettings()
 bool j1Scene::Save(pugi::xml_node& config) const
 {
 	pugi::xml_node scene_node = config.append_child("score");
-	scene_node.append_attribute("score") = App->scene->score;
-	scene_node.append_attribute("scoreRecord") = App->scene->scoreRecord;
+	scene_node.append_attribute("score") = App->scoreBoard->score;
+	scene_node.append_attribute("scoreRecord") = App->scoreBoard->scoreRecord;
 	return true;
 }
 
 bool j1Scene::Load(pugi::xml_node& data)
 {
-	score = data.child("score").attribute("score").as_int();
-	scoreRecord = data.child("score").attribute("scoreRecord").as_int();
+	App->scoreBoard->score = data.child("score").attribute("score").as_int();
+	App->scoreBoard->scoreRecord = data.child("score").attribute("scoreRecord").as_int();
 	return true;
 }
 
 void j1Scene::UpdateGUI() {
 
-	std::string s = std::to_string(score);
+	std::string s = std::to_string(App->scoreBoard->score);
 	p2SString s2 = s.c_str();
 	App->font->CalcSize(s2.GetString(), level_scoreLabel->rectUi.w, level_scoreLabel->rectUi.h, App->font->default);
 	level_scoreLabel->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default, level_scoreLabel->rectUi.w));
 
-	std::string s3 = std::to_string(coinCount);
+	std::string s3 = std::to_string(App->scoreBoard->coinCount);
 	p2SString s4 = s3.c_str();
 	App->font->CalcSize(s4.GetString(), level_coinNumber->rectUi.w, level_coinNumber->rectUi.h, App->font->default);
 	level_coinNumber->ChangeTexture(App->font->Print(s4.GetString(), { 0,0,0 }, App->font->default, level_coinNumber->rectUi.w));

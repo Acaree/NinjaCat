@@ -6,6 +6,7 @@
 #include "j1Scene.h"
 #include "j1Entities.h"
 #include "Brofiler\Brofiler.h"
+#include "j1ScoreBoard.h"
 
 
 ModuleCollision::ModuleCollision()
@@ -321,23 +322,23 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 									{
 										//SCORE MULTIPLY
 										if(App->entity_m->player_life == 3)
-										App->scene->score += 20;
+											App->scoreBoard->score += 20;
 										else
-										App->scene->score += 10;
+											App->scoreBoard->score += 10;
 									}
 									else if (player->type == COLLIDER_WALKENEMY)
 									{
 										if (App->entity_m->player_life == 3)
-											App->scene->score += 10;
+											App->scoreBoard->score += 10;
 										else
-											App->scene->score += 5;
+											App->scoreBoard->score += 5;
 									}
 									else if (player->type == COLLIDER_COIN)
 									{
 										if (App->entity_m->player_life == 3)
-											App->scene->score += 5;
+											App->scoreBoard->score += 5;
 										else
-											App->scene->score += 2;
+											App->scoreBoard->score += 2;
 									}
 								}
 							}

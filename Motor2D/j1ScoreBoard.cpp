@@ -21,6 +21,7 @@ bool j1ScoreBoard::Awake(pugi::xml_node& config)
 
 bool j1ScoreBoard::Start()
 {
+	
 	if (enabled)
 	{
 		App->audio->PlayMusic("audio/intro.ogg");
@@ -139,13 +140,14 @@ void j1ScoreBoard::CreateUI(){
 
 	score_mainImage = App->gui->CreateImage({ 0,0 }, { 0,0,1200,800 }, background, this, false);
 	
-	std::string s = std::to_string(App->scene->score);
+	std::string s = std::to_string(score);
 	p2SString s2 = s.c_str();
 	//App->font->CalcSize(s2.GetString(), score_level->rectUi.w, score_level->rectUi.h, App->font->default);
 	score_textlevel= App->gui->CreateLabel({ 400,10 }, "Score Level:", { 0,0,0 }, App->font->default, this, false);
 	score_level = App->gui->CreateLabel({90,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default,this,false);
 
-	s = std::to_string((int)App->scene->timer.ReadSec());
+	 timescore=timerlvl1 + timerlvl2;
+	s = std::to_string(timescore);
 	s2 = s.c_str();
 	//App->font->CalcSize(s2.GetString(), score_timer->rectUi.w, score_timer->rectUi.h, App->font->default);
 	score_textTimer = App->gui->CreateLabel({ 0,70 }, "Score Time:", { 0,0,0 }, App->font->default, this, false);
@@ -157,13 +159,13 @@ void j1ScoreBoard::CreateUI(){
 	score_textlife = App->gui->CreateLabel({ 0,70 }, "Score Lifes:", { 0,0,0 }, App->font->default, this, false);
 	score_life = App->gui->CreateLabel({ 90,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
-	s = std::to_string(App->scene->coinCount);
+	s = std::to_string(coinCount);
 	s2 = s.c_str();
 	//App->font->CalcSize(s2.GetString(), score_coins->rectUi.w, score_coins->rectUi.h, App->font->default);
 	score_textcoins = App->gui->CreateLabel({ 0,70 }, "Score Coints:", { 0,0,0 }, App->font->default, this, false);
 	score_coins = App->gui->CreateLabel({ 90,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
-	int totalscore = (int)(App->entity_m->player_life*(App->scene->score - (App->scene->timer.ReadSec()/10) + 3 * App->scene->coinCount));
+	int totalscore = (int)(App->entity_m->player_life*(score - (App->scene->timer.ReadSec()/3) + 3 * coinCount));
 	if (totalscore < 0)
 		totalscore = 0;
 
@@ -173,10 +175,10 @@ void j1ScoreBoard::CreateUI(){
 	score_texttotal = App->gui->CreateLabel({ 0,70 }, "Total:", { 0,0,0 }, App->font->default, this, false);
 	score_total = App->gui->CreateLabel({ 90,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
-	if (App->scene->scoreRecord < totalscore)
-		App->scene->scoreRecord = totalscore;
+	if (scoreRecord < totalscore)
+		scoreRecord = totalscore;
 
-	s = std::to_string(App->scene->scoreRecord);
+	s = std::to_string(scoreRecord);
 	s2 = s.c_str();
 	//App->font->CalcSize(s2.GetString(), score_textrecord->rectUi.w, score_textrecord->rectUi.h, App->font->default);
 	score_textrecord = App->gui->CreateLabel({ 0,70 }, "Record:", { 0,0,0 }, App->font->default, this, false);
@@ -190,8 +192,9 @@ void j1ScoreBoard::CreateUI(){
 	score_life->SetParent(score_textlife);
 	score_textcoins->SetParent(score_textlife);
 	score_coins->SetParent(score_textcoins);
-	score_total->SetParent(score_textcoins);
-	score_texttotal->SetParent(score_total);
+	score_texttotal->SetParent(score_textcoins);
+	score_total->SetParent(score_texttotal);
+	
 	score_textrecord->SetParent(score_texttotal);
 	score_record->SetParent(score_textrecord);
 
