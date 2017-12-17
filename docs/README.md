@@ -6,6 +6,10 @@ It's a videogame made in the subject of development in Citm (Centre de la imatge
 
 We made this project in 4 months, and the objective was learning new programation techniques.
 
+## Download the latest version of NinjaCat [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
+
+## Link to [our repositorie](https://github.com/Acaree/NinjaCat)
+
 ## Members
 
 ![](foto_carnet.jpg)
@@ -87,8 +91,6 @@ F10: God Mode
 
 F11: Cap to 30/60 FPS
 
-## Download the latest version of gunbird [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
-
 ## Links to Game art
 
 -[GUI](https://www.gameart2d.com/free-game-gui.html)
@@ -102,6 +104,8 @@ F11: Cap to 30/60 FPS
 -[Zombie](http://www.gameart2d.com/the-zombies-free-sprites.html)
 
 -[Flying Girl](http://www.gameart2d.com/ninja-girl---free-sprites.html)
+
+-[Music](https://www.youtube.com/watch?v=mwIvDKxcO4g)
 
 ## License
 
