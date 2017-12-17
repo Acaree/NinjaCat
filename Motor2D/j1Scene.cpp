@@ -331,7 +331,7 @@ void j1Scene::CreateSettingsScene()
 	p2SString s2 = s.c_str();
 	settingsmm_volumeNumber = App->gui->CreateLabel({ 40,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 	settingsmm_volumeNumber->SetParent(settingsmm_volumeLabel);
-	settingsmm_volumeslider = App->gui->CreateSlider({ 100,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
+	settingsmm_volumeslider = App->gui->CreateSlider({ 0,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
 	settingsmm_volumeslider->SetParent(settingsmm_settingsImage);
 	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 }, { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
@@ -351,29 +351,31 @@ void j1Scene::CreateLevelScene()
 {
 	std::string s = std::to_string(App->scoreBoard->coinCount);
 	p2SString s2 = s.c_str();
-	level_coinNumber = App->gui->CreateLabel({ 950,20 },(char*) s2.GetString(), { 0,0,0 }, App->font->default, this, false);
+	level_coinNumber = App->gui->CreateLabel({ 385,30 },(char*) s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
-	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
-	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
-	level_time = App->gui->CreateLabel({ 300,20 }, "00", { 0,0,0 }, App->font->default, this, false);
-	level_coinIcon = App->gui->CreateImage({ 900,20 }, { 430,570,53,53 }, App->gui->GetAtlas(), this, false);
+	level_pauseButton = App->gui->CreateButton({ 450,10 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
+	level_scoreLabel = App->gui->CreateLabel({ 960,10 }, "000000", { 0,0,0 }, App->font->default, this, false);
+	level_scoreText = App->gui->CreateLabel({ 900,10 }, "score:", { 0,0,0 }, App->font->default, this, false);
+	level_time = App->gui->CreateLabel({ 650,10 }, "000", { 0,0,0 }, App->font->default, this, false);
+	level_text = App->gui->CreateLabel({ 600,10 }, "time:", { 0,0,0 }, App->font->default, this, false);
+	level_coinIcon = App->gui->CreateImage({ 325,10 }, { 430,570,53,53 }, App->gui->GetAtlas(), this, false);
 
 	switch (App->entity_m->player_life)
 	{
 	case 3:
-		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life2 = App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life3 = App->gui->CreateImage({ 228 ,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life1 = App->gui->CreateImage({ 0,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 76,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 152 ,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
 		break;
 	case 2:
-		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life2 = App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life3 = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life1 = App->gui->CreateImage({ 0,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 76,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 152 ,10 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
 		break;
 	case 1:
-		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life2 = App->gui->CreateImage({ 152,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
-		life3 = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life1 = App->gui->CreateImage({ 0,10 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 76,10 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 152 ,10 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
 		break;
 	}
 	
@@ -502,6 +504,8 @@ void j1Scene::DeleteLevelUI()
 	life1->toDelete = true;
 	life2->toDelete = true;
 	life3->toDelete = true;
+	level_scoreText->toDelete = true;
+	level_text->toDelete = true;
 }
 
 void j1Scene::UpdateVolumeLabel()

@@ -83,7 +83,7 @@ private:
 
 	//level gui
 	UIButton* level_pauseButton = nullptr;
-	UILabel* level_scoreLabel = nullptr, *level_coinNumber = nullptr, *level_time = nullptr;
+	UILabel* level_scoreLabel = nullptr, *level_coinNumber = nullptr, *level_time = nullptr, *level_scoreText=nullptr, *level_text=nullptr;
 	UIImage* level_coinIcon = nullptr;
 	
 	SDL_Texture* current_volume_tex = nullptr;
