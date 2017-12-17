@@ -13,6 +13,7 @@
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
 #include "j1MainMenu.h"
+#include "j1ScoreBoard.h"
 #include "j1Gui.h"
 #include <stdio.h>
 
@@ -236,7 +237,9 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		if (App->level == level_2) {
-			//fade to score, main menu or level 1. to decide
+			App->fade->FadeToBlack(this, App->scoreBoard, score_board, 2.0);
+			App->entity_m->Disable();
+			DeleteLevelUI();
 		}
 		else if (App->level == level_1) {
 			App->fade->FadeToBlack(this,this,level_2, 2.0);

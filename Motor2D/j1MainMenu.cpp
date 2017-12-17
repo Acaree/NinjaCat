@@ -6,6 +6,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Input.h"
+#include "j1ScoreBoard.h"
 #include "j1Entities.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -20,7 +21,7 @@ bool j1MainMenu::Awake(pugi::xml_node& config)
 
 bool j1MainMenu::Start()
 {
-	background = App->tex->Load("maps/Background.png");
+	//background = App->tex->Load("maps/Background.png");
 	App->audio->PlayMusic("audio/intro.ogg");
 	//Main Scene
 	CreateMainScene();

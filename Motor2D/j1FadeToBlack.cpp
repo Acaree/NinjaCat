@@ -69,69 +69,6 @@ bool j1FadeToBlack::Update(float dt)
 	return true;
 }
 
-//previous update
-/*if (current_step == fade_step::none)
-return true;
-
-Uint32 now = SDL_GetTicks() - start_time;
-float normalized = MIN(1.0f, (float)now / (float)total_time);
-
-switch (current_step)
-{
-case fade_step::fade_to_black:
-{
-if (now >= total_time)
-{
-total_time += total_time;
-start_time = SDL_GetTicks();
-current_step = fade_step::fade_from_black;
-
-
-App->map->CleanUp();
-
-if (App->map->Load(map_on) == true)
-{
-int w, h;
-uchar* data = NULL;
-if (App->map->CreateWalkabilityMap(w, h, &data))
-App->pathfinding->SetMap(w, h, data);
-RELEASE_ARRAY(data);
-App->map->CreateEnemies();
-App->gui->DeleteUIElements();
-}
-
-if (App->entity_m->player != nullptr) {
-App->entity_m->player->Respawn();
-
-if (App->level == level_1)
-{
-App->entity_m->player->needRespawn1 = true;
-}
-else if (App->level == level_2)
-{
-App->entity_m->player->needRespawn2 = true;
-}
-App->entity_m->player->animation = &App->entity_m->player->idleRight;
-}
-}
-} break;
-
-case fade_step::fade_from_black:
-{
-normalized = 1.0f - normalized;
-
-if (now >= total_time)
-current_step = fade_step::none;
-} break;
-}
-
-// Finally render the black square with alpha on the screen
-SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
-SDL_RenderFillRect(App->render->renderer, &screen);
-
-return true;*/
-
-// Fade to black. At mid point deactivate one module, then activate the other
 bool j1FadeToBlack::FadeToBlack(j1Module *module_off, j1Module *module_on, actual_level level_to_fade, float time)
 {
 	bool ret = false;

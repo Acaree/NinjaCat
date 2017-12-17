@@ -19,6 +19,7 @@
 #include "j1FadeToBlack.h"
 #include "mCollision.h"
 #include "j1MainMenu.h"
+#include "j1ScoreBoard.h"
 #include "Brofiler\Brofiler.h"
 
 // Constructor
@@ -40,6 +41,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	gui = new j1Gui();
 	fade = new j1FadeToBlack();
 	mainMenu = new j1MainMenu();
+	scoreBoard = new j1ScoreBoard();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -48,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(scoreBoard);
 	AddModule(gui);
 	AddModule(mainMenu);
 	AddModule(pathfinding);
@@ -83,11 +86,12 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
-
 	scene->Disable();
 	entity_m->Disable();
 	pathfinding->Disable();
 	map->Disable();
+	App->scoreBoard->Disable();
+	
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -128,6 +132,7 @@ bool j1App::Awake()
 // Called before the first frame
 bool j1App::Start()
 {
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -137,6 +142,7 @@ bool j1App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+	
 	startup_time.Start();
 	return ret;
 }
