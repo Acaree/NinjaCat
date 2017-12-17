@@ -6,7 +6,7 @@ It's a videogame made in the subject of development in Citm (Centre de la imatge
 
 We made this project in 4 months, and the objective was learning new programation techniques.
 
-## Download the latest version of NinjaCat [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
+## Download the latest version of NinjaCat [here](https://github.com/Acaree/NinjaCat/releases)
 
 ## Link to [our repositorie](https://github.com/Acaree/NinjaCat)
 
