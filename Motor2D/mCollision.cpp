@@ -7,7 +7,7 @@
 #include "j1Entities.h"
 #include "Brofiler\Brofiler.h"
 #include "j1ScoreBoard.h"
-
+#include "j1FadeToBlack.h"
 
 ModuleCollision::ModuleCollision()
 {
@@ -354,11 +354,14 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 						App->entity_m->player->changeLevel = true;
 						if (App->level == level_1)
 						{
-							App->level = level_2;
+							App->fade->FadeToBlack(App->scene, App->scene, level_2, 1.0);
+							movement[down] = false;
 						}
-						else
+						else if (App->level == level_2 && changeLvl == false)
 						{
-							App->level = level_1;
+							App->level = score_board;
+							App->fade->FadeToBlack(App->scene, App->scoreBoard, App->level, 1.0);
+							movement[down] = false;
 						}
 					}
 				}
