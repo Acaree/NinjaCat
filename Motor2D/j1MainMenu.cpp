@@ -25,6 +25,9 @@ bool j1MainMenu::Start()
 	//Main Scene
 	CreateMainScene();
 	font_credits = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf", 20);
+	settingsIsOpen = false;
+	animationsFinish = false;
+	creditsIsOpen = false;
 
 	return true;
 }

@@ -92,10 +92,7 @@ bool j1Scene::PreUpdate()
 			pauseMenu = true;
 		}
 		if (App->entity_m->player != nullptr) {
-			std::string m = std::to_string(score);
-			char* m2 = (char *)alloca(m.size() + 1);
-			memcpy(m2, m.c_str(), m.size() + 1);
-			level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
+	
 			UpdateGUI();
 		}
 	}
