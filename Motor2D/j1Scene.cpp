@@ -332,9 +332,9 @@ void j1Scene::CreateSettingsScene()
 
 	std::string s = std::to_string((int)App->audio->volume);
 	p2SString s2 = s.c_str();
-	settingsmm_volumeNumber = App->gui->CreateLabel({ 40,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeNumber = App->gui->CreateLabel({ 70,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 	settingsmm_volumeNumber->SetParent(settingsmm_volumeLabel);
-	settingsmm_volumeslider = App->gui->CreateSlider({ 0,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
+	settingsmm_volumeslider = App->gui->CreateSlider({ 50,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
 	settingsmm_volumeslider->SetParent(settingsmm_settingsImage);
 	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 }, { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);

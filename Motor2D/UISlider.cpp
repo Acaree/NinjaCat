@@ -28,12 +28,12 @@ float UISlider::getValue()
 void UISlider::Draw()
 {
 	//slider
-	App->render->Blit(texture, positionUi.x, positionUi.y, &rect_bar);
+	App->render->Blit(texture, positionUi.x, positionUi.y, &rect_bar,0.0f);
 	//button
 	if(parent==nullptr)
-		App->render->Blit(texture,button_position.x, button_position.y, &rect_button);
+		App->render->Blit(texture,button_position.x, button_position.y, &rect_button,0.0f);
 	else
-		App->render->Blit(texture, button_position.x, button_position.y + parent->positionUi.y, &rect_button);
+		App->render->Blit(texture, button_position.x, button_position.y + parent->positionUi.y, &rect_button,0.0f);
 }
 
 void UISlider::SetSliderButtonPos(int position) {

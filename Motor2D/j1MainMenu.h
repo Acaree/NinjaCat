@@ -56,7 +56,7 @@ public:
 		UIImage* settingsmm_settingsImage = nullptr;
 		UILabel* settingsmm_volumeLabel = nullptr, *settingsmm_volumeNumber = nullptr;
 		UIButton* settingsmm_crossButton = nullptr;
-		UISlider* settingsmm_volumeslider = nullptr;
+		UISlider* settingsmm_volumeslider = nullptr, *settingsmm_volumeslider2 = nullptr;;
 		
 		//credits
 		UILabel *credit_label = nullptr;
