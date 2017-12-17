@@ -198,5 +198,5 @@ void j1ScoreBoard::CreateUI(){
 	score_textrecord->SetParent(score_texttotal);
 	score_record->SetParent(score_textrecord);
 
-	score_backToMenu = App->gui->CreateButton({ 500,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
+	score_backToMenu = App->gui->CreateButton({ 500,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, false);
 }

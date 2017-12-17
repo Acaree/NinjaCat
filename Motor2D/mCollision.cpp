@@ -77,6 +77,7 @@ void ModuleCollision::DebugDraw()
 {
 	
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		if(App->level==level_1|| App->level == level_1)
 		debug = !debug;
 
 	if (debug == false)

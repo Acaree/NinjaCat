@@ -198,24 +198,24 @@ void j1MainMenu::CreateMainScene()
 	pugi::xml_document config_file;
 	if (pugi::xml_parse_result result = config_file.load_file("save_game.xml"))
 	{
-		start_playButton = App->gui->CreateButton({ -160,-70 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
+		start_playButton = App->gui->CreateButton({ -160,-70 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, false);
 		start_continueButton = App->gui->CreateButton({ -160,-70 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
-		start_settingsButton = App->gui->CreateButton({ -160,-70 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
-		start_quitButton = App->gui->CreateButton({ -160,-70 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
+		start_settingsButton = App->gui->CreateButton({ -160,-70 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, false);
+		start_quitButton = App->gui->CreateButton({ -160,-70 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, false);
 		
 	}
 	else
 	{
-		start_playButton = App->gui->CreateButton({ -160,-70 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
-		start_settingsButton = App->gui->CreateButton({ -160,-70 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
-		start_quitButton = App->gui->CreateButton({ -160,-70 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);
+		start_playButton = App->gui->CreateButton({ -160,-70 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, false);
+		start_settingsButton = App->gui->CreateButton({ -160,-70 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, false);
+		start_quitButton = App->gui->CreateButton({ -160,-70 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, false);
 	}
 
 }
 
 void j1MainMenu::CreateSettingsScene()
 {
-	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, false);
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
 
 	settingsmm_volumeLabel = App->gui->CreateLabel({ 50,100 },"Volume:" ,{0,0,0},App->font->default,this,false);
 	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
