@@ -34,17 +34,11 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 
 	collider = App->collision->AddCollider({(int)position.x, (int)position.y,86,119 }, COLLIDER_WALKENEMY, App->entity_m);
 	timer.Start();
-	soundtimer.Start();
 }
 
 void Enemy_Walk::Move(float dt)
 {
 	NormalizeAnimations(dt);
-
-	if (soundtimer.Read() > 6000) {
-		App->audio->PlayFx(zombiesound, 1);
-		soundtimer.Start();
-	}
 
 	speed = 30 * dt;
 
@@ -164,7 +158,7 @@ void Enemy_Walk::Dead()
 
 	if (now == 0) {
 		now = SDL_GetTicks();
-
+		App->audio->PlayFx(zombiesound, 1);
 	}
 	if (now + 1000 > SDL_GetTicks()) {
 		if (movingLeft)

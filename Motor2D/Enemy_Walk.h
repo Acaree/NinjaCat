@@ -31,7 +31,6 @@ public:
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 	j1Timer timer;
-	j1Timer soundtimer;
 	bool movingLeft = false;
 	void NormalizeAnimations(float dt);
 	
