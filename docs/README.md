@@ -2,15 +2,41 @@
 
 Ninja Cat is a platformer Game where you can be a NINJA CAT!
 
+It's a videogame made in the subject of development in Citm (Centre de la imatge i la Tecnologia Multimèdia)
+
+We made this project in 4 months, and the objective was learning new programation techniques.
+
 ## Members
 
 ![](foto_carnet.jpg)
 
 [Alfonso Sanchez](https://github.com/AlfonsoSanchez)
+### Work Done:
+-Charge of maps & collisions with tiled
+-Pathfinding
+-GUI
+-Profiling
 
 ![](foto.jpg)
 
 [Alex Campamar](https://github.com/Acaree)
+### Work Done:
+-Save & Load
+-Pathfinding
+-Framerate control
+-Entities system 
+
+##Code Explanation
+
+###Our code contains:
+
+-Charging maps from tiled with different layers: background with parallax, map, reespawns...
+-Entity system to control all the entities of the game like player or enemies.
+-Save and load methods using and xml and animations charged from an xml also
+-A Ui system that supports buttons, labels, images and sliders.
+-FPS control variable to 30 fps or 60 fps (Animations and moves are normalized to framerate)
+-Profiling system included
+-Pathfinding from enemies with A* method
 
 ## Gameplay
 
@@ -22,5 +48,36 @@ Ninja Cat is a platformer Game where you can be a NINJA CAT!
 
 ## Download the latest version of gunbird [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
 
+##Links to Game art
+-[GUI](https://www.gameart2d.com/free-game-gui.html)
+-[Face cat](http://www.gameart2d.com/cat-and-dog-free-sprites.html)	
+-[Ninja](http://www.gameart2d.com/ninja-adventure---free-sprites.html)
+-[Map](http://www.gameart2d.com/free-platformer-game-tileset.html)
+-[Zombie](http://www.gameart2d.com/the-zombies-free-sprites.html)
+-[Flying Girl](http://www.gameart2d.com/ninja-girl---free-sprites.html)
+
+##License
+
+MIT License
+
+Copyright (c) 2017 NinjaCat
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.	
 
 
