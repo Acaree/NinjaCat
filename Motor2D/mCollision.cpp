@@ -302,7 +302,7 @@ bool ModuleCollision::CollisionToWorld(Collider* player, bool* movement)
 
 				case death:
 					//check all positions 
-					if (App->entity_m->player->godMode == false)
+					if (App->entity_m->player->godMode == false && App->entity_m->player->death == false)
 					{
 						if ((leftUpPlayer == dead || rightUpPlayer == dead || leftDownPlayer == dead || rightDownPlayer == dead) && player->type == COLLIDER_PLAYER && App->entity_m->player->death == false)
 						{

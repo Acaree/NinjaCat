@@ -6,18 +6,19 @@
 	<audio />
 	<map />
 	<scene>
-		<score score="45" scoreRecord="45" />
+		<score score="10" scoreRecord="10" />
 	</scene>
+	<scoreBoard />
 	<gui />
 	<mainMenu />
 	<pathfinding />
 	<:anonymous />
 	<entities>
-		<player x="1893.09973" y="918.93396" level1="false" />
+		<player x="256" y="1174.87854" level1="false" />
 	</entities>
 	<fonts />
 	<fade />
 	<renderer>
-		<camera x="-1693" y="-618" />
+		<camera x="-56" y="-874" />
 	</renderer>
 </game_state>
