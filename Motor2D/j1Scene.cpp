@@ -73,6 +73,7 @@ bool j1Scene::Start()
 		App->entity_m->player->animation = &App->entity_m->player->idleRight;
 	}
 	CreateLevelScene();
+	timer.Start();
 	return true;
 }
 
@@ -341,6 +342,7 @@ void j1Scene::CreateLevelScene()
 
 	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
+	level_time = App->gui->CreateLabel({ 300,20 }, "00", { 0,0,0 }, App->font->default, this, false);
 	level_coinIcon = App->gui->CreateImage({ 900,20 }, { 430,570,53,53 }, App->gui->GetAtlas(), this, false);
 	if (App->entity_m->player != nullptr)
 	{
@@ -434,10 +436,15 @@ void j1Scene::UpdateGUI() {
 	memcpy(s2, s.c_str(), s.size() + 1);
 	level_scoreLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
 
-	std::string s_ = std::to_string(coinCount);
-	char* s2_ = (char *)alloca(s_.size() + 1);
-	memcpy(s2_, s_.c_str(), s_.size() + 1);
-	level_coinNumber->ChangeTexture(App->font->Print(s2_, { 0,0,0 }, App->font->default));
+	std::string s3 = std::to_string(coinCount);
+	char* s4 = (char *)alloca(s3.size() + 1);
+	memcpy(s4, s3.c_str(), s3.size() + 1);
+	level_coinNumber->ChangeTexture(App->font->Print(s4, { 0,0,0 }, App->font->default));
+
+	std::string s5 = std::to_string(timer.ReadSec());
+	char* s6 = (char *)alloca(s5.size() + 1);
+	memcpy(s6, s5.c_str(), s5.size() + 1);
+	level_time->ChangeTexture(App->font->Print(s6, { 0,0,0 }, App->font->default));
 
 	SetLife(App->entity_m->player_life);
 }

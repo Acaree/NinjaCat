@@ -5,7 +5,9 @@
 #include "UiButton.h"
 #include "UiImage.h"
 #include "UiLabel.h"
+#include "j1Timer.h"
 struct SDL_Texture;
+
 
 class j1Scene : public j1Module
 {
@@ -54,6 +56,7 @@ public:
 	uint score = 0;
 	uint scoreRecord = 0;
 	uint coinCount = 0;
+	j1Timer timer;
 private:
 	p2SString map;
 	iPoint mouseCoordenates;
@@ -75,7 +78,7 @@ private:
 
 	//level gui
 	UIButton* level_pauseButton = nullptr;
-	UILabel* level_scoreLabel = nullptr, *level_coinNumber = nullptr;
+	UILabel* level_scoreLabel = nullptr, *level_coinNumber = nullptr, *level_time = nullptr;
 	UIImage* level_coinIcon = nullptr;
 	
 	SDL_Texture* current_volume_tex = nullptr;
