@@ -41,11 +41,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void onUiTriggered(UIElement* UIelement, EventElement EventElement);
-	//void CreateMainScene();
 	void CreateSettingsScene();
 	void CreateLevelScene();
-	//void DeleteSettings();
-	//void DeleteMainMenuSettings();
 	void CreatePauseMenu();
 	void DeletePauseMenu();
 	void DeleteSettings();
@@ -56,10 +53,6 @@ public:
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
 	UIImage* life1 = nullptr, *life2 = nullptr, *life3 = nullptr;
-	/*uint score = 0;
-	uint scoreRecord = 0;
-	uint coinforLife = 0;
-	uint coinCount = 0;*/
 	j1Timer timer;
 private:
 	p2SString map;

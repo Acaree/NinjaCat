@@ -326,7 +326,3 @@ void j1MainMenu::UpdateVolumeLabel()
 	App->font->CalcSize(s2.GetString(), w, h, App->font->default);
 	settingsmm_volumeNumber->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default));
 }
-/*		start_playButton = App->gui->CreateButton({ 0,0 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
-		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);
-		start_settingsButton = App->gui->CreateButton({ 500,600 }, { 380,138,190,69 }, { 190,138,190,69 }, { 0,138,190,69 }, App->gui->GetAtlas(), this, true);
-		start_quitButton = App->gui->CreateButton({ 700,600 }, { 380,207,190,69 }, { 190,207,190,69 }, { 0,207,190,69 }, App->gui->GetAtlas(), this, true);*/

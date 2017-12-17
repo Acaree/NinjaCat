@@ -42,15 +42,6 @@ bool j1Entities::Start()
 
 bool j1Entities::Awake(pugi::xml_node& config)
 {
-	//COMPROBAR
-	/*for (pugi::xml_node it = config.child("fly"); it; it = it.next_sibling())
-	{
-		flyPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
-	}
-	for (pugi::xml_node it = config.child("zombie"); it; it = it.next_sibling())
-	{
-		walkPositions.PushBack({ it.attribute("posx").as_int(),it.attribute("posy").as_int() });
-	}*/
 	return true;
 
 }
@@ -140,10 +131,6 @@ bool j1Entities::PostUpdate()
 bool j1Entities::CleanUp()
 {
 	App->tex->UnLoad(sprites);
-	// No unload for fxs
-	/*
-	App->audio->UnloadFX(audio_explosion5);
-	*/
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
@@ -268,15 +255,7 @@ bool j1Entities::Load(pugi::xml_node& data)
 	{
 		App->fade->FadeToBlack(App->mainMenu, App->scene, level_2, 2.0);
 	}
-	//fadecommit: same as save
-	/*if (tmp != App->map->isLevel1)
-	{
-		player->changeLevel = true;
-		player->loadRespawn = true;
-		App->map->respawnPosition = true;
-	}
-	*/
-	// ERROR : CONTINUE BUTTON
+	
 	loadPositionPlayer.x = data.child("player").attribute("x").as_int();
 	loadPositionPlayer.y = data.child("player").attribute("y").as_int();
 

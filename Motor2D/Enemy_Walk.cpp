@@ -47,17 +47,7 @@ void Enemy_Walk::Move(float dt)
 	
 	if (movement[down] == true)
 		CalculateGravity(dt);
-	/*if (movement[death] == true)  //need think
-	{
-	if (now == 0) {
-	now = SDL_GetTicks();
 
-	}
-	if (now + 800 > SDL_GetTicks()) {
-	animation = &deadFly;
-	}
-	collider->to_delete = true;
-	}*/
 
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entity_m->player->position.x, App->entity_m->player->position.y);

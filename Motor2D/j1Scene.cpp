@@ -221,7 +221,7 @@ bool j1Scene::Update(float dt)
 			}
 			else
 			{
-				App->entity_m->player->needRespawn2 = true;
+				App->fade->FadeToBlack(this, App->scene, level_1, 2.0f);
 			}
 		}
 
@@ -346,15 +346,6 @@ void j1Scene::CreateSettingsScene()
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
 }
 
-
-/*void j1Scene::DeleteSettings()
-{
-	settingsmm_settingsImage->toDelete = true;
-	settingsmm_minusVolume->toDelete = true;
-	settingsmm_plusVolume->toDelete = true;
-	settingsmm_crossButton->toDelete = true;
-	settingsmm_volumeLabel->toDelete = true;
-}*/
 
 void j1Scene::CreateLevelScene()
 {
@@ -537,149 +528,3 @@ void j1Scene::UpdateVolumeLabel()
 	App->font->CalcSize(s2.GetString(), w, h, App->font->default);
 	settingsmm_volumeNumber->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default));
 }
-//previous preupdate
-
-/*
-//change volume to a char* from int
-//std::string s = std::to_string(App->audio->volume);
-//char* s2 = (char *)alloca(s.size() + 1);
-//memcpy(s2, s.c_str(), s.size() + 1);
-
-
-switch (App->level)
-{
-case start_screen:
-	/if (start_playButton->eventElement == MouseLeftClickEvent)
-	{
-	App->fade->FadeToBlack(level_1, 2.0);
-	level = level_1;
-	DeleteMainMenuSettings();
-	buttons.clear();
-	CreateLevelScene();
-
-	}
-	else if (start_settingsButton->eventElement == MouseLeftClickEvent)
-	{
-	CreateSettingsScene();
-	level = settings_screen;
-	}
-	else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
-	return false;/
-	break;
-
-case settings_screen:
-	/if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
-	{
-	if (App->audio->volume < 100)
-	App->audio->volume += 10;
-	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-	}
-	else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
-	{
-	if (App->audio->volume > 0)
-	App->audio->volume -= 10;
-	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-	}
-	else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
-	{
-	DeleteSettings();
-	//ERROR,BUG need think
-
-	if (App->pause == true)
-	level = level_1;
-	else
-	level = start_screen;
-
-	level = start_screen;
-	}
-
-	settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));/
-	break;
-
-case level_1:
-	if (pauseMenu == false) {
-		App->pause = false;
-	}
-	if (level_pauseButton->eventElement == MouseLeftClickEvent && pauseMenu == false)
-	{
-		if (App->pause == true)
-			App->pause = false;
-		else
-		{
-			App->pause = true;
-			CreatePauseMenu();
-			level = pause_screen;
-		}
-		pauseMenu = true;
-	}
-	if (App->entity_m->player != nullptr)
-	{
-		if (level_lifesImage[0] == nullptr) {
-			for (int i = 0; i < App->entity_m->player_life; i++)
-			{
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), this, true);
-			}
-
-			for (int i = 3; i > App->entity_m->player_life; i--) {
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), this, true);
-			}
-		}
-		std::string m = std::to_string(App->entity_m->player->score);
-		char* m2 = (char *)alloca(m.size() + 1);
-		memcpy(m2, m.c_str(), m.size() + 1);
-		level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
-		SetLife(App->entity_m->player_life);
-	}
-
-	break;
-case pause_screen:
-	//need new scene or restructured
-	if (pause_playButton != nullptr)
-	{
-		if (pause_playButton->eventElement == MouseLeftClickEvent || pause_crossButton->eventElement == MouseLeftClickEvent)
-		{
-			if (App->pause == true)
-				App->pause = false;
-			DeletePauseMenu();
-			pauseMenu = false;
-			level = level_1;
-		}
-		else if (level_pauseButton->eventElement != MouseLeftClickEvent)
-			pauseMenu = false;
-
-		if (pause_replayButton->eventElement == MouseLeftClickEvent)
-		{
-			App->entity_m->player->needRespawn1 = true;
-			DeletePauseMenu();
-			App->pause = false;
-			level = level_1;
-		}
-		else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
-		{
-			//CreateSettingsScene();
-			level = settings_screen;
-		}
-		else if (pause_returnButton->eventElement == MouseLeftClickEvent)
-		{
-			level_pauseButton->toDelete = true;
-			DeletePauseMenu();
-			level = start_screen;
-			App->fade->FadeToBlack(level, 2.0f);
-			//CreateMainScene();
-			pauseMenu = false;
-		}
-
-	}
-
-
-
-	break;
-
-case level_2:
-	//	pauseButton->SetLocalPosition(p);
-	break;
-}
-
-//Menu options
-
-return true;*/
