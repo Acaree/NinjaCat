@@ -431,21 +431,23 @@ bool j1Scene::Load(pugi::xml_node& data)
 }
 
 void j1Scene::UpdateGUI() {
+
 	std::string s = std::to_string(score);
-	char* s2 = (char *)alloca(s.size() + 1);
-	memcpy(s2, s.c_str(), s.size() + 1);
-	level_scoreLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+	p2SString s2 = s.c_str();
+	App->font->CalcSize(s2.GetString(), level_scoreLabel->rectUi.w, level_scoreLabel->rectUi.h, App->font->default);
+	level_scoreLabel->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default, level_scoreLabel->rectUi.w));
 
 	std::string s3 = std::to_string(coinCount);
-	char* s4 = (char *)alloca(s3.size() + 1);
-	memcpy(s4, s3.c_str(), s3.size() + 1);
-	level_coinNumber->ChangeTexture(App->font->Print(s4, { 0,0,0 }, App->font->default));
+	p2SString s4 = s3.c_str();
+	App->font->CalcSize(s4.GetString(), level_coinNumber->rectUi.w, level_coinNumber->rectUi.h, App->font->default);
+	level_coinNumber->ChangeTexture(App->font->Print(s4.GetString(), { 0,0,0 }, App->font->default, level_coinNumber->rectUi.w));
 
-	std::string s5 = std::to_string(timer.ReadSec());
-	char* s6 = (char *)alloca(s5.size() + 1);
-	memcpy(s6, s5.c_str(), s5.size() + 1);
-	level_time->ChangeTexture(App->font->Print(s6, { 0,0,0 }, App->font->default));
-
+	std::string s5 = std::to_string((int)timer.ReadSec());
+	p2SString s6 = s5.c_str();
+	App->font->CalcSize(s6.GetString(), level_time->rectUi.w, level_time->rectUi.h, App->font->default);
+	level_time->ChangeTexture(App->font->Print(s6.GetString(), { 0,0,0 }, App->font->default, level_time->rectUi.w));
+	
+	
 	SetLife(App->entity_m->player_life);
 }
 

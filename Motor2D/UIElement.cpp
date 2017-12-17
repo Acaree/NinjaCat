@@ -104,6 +104,9 @@ void UIElement::SetLocalPosition(iPoint p)
 
 void UIElement::ChangeTexture(const SDL_Texture* tex)
 {
+	if (texture != nullptr)
+		App->tex->UnLoad((SDL_Texture*)texture);
+
 	texture = tex;
 }
 
