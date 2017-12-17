@@ -12,30 +12,44 @@ We made this project in 4 months, and the objective was learning new programatio
 
 [Alfonso Sanchez](https://github.com/AlfonsoSanchez)
 ### Work Done:
+
 -Charge of maps & collisions with tiled
+
 -Pathfinding
+
 -GUI
+
 -Profiling
 
 ![](foto.jpg)
 
 [Alex Campamar](https://github.com/Acaree)
 ### Work Done:
+
 -Save & Load
+
 -Pathfinding
+
 -Framerate control
+
 -Entities system 
 
-##Code Explanation
+## Code Explanation
 
-###Our code contains:
+### Our code contains:
 
 -Charging maps from tiled with different layers: background with parallax, map, reespawns...
+
 -Entity system to control all the entities of the game like player or enemies.
+
 -Save and load methods using and xml and animations charged from an xml also
+
 -A Ui system that supports buttons, labels, images and sliders.
+
 -FPS control variable to 30 fps or 60 fps (Animations and moves are normalized to framerate)
+
 -Profiling system included
+
 -Pathfinding from enemies with A* method
 
 ## Gameplay
@@ -48,15 +62,21 @@ We made this project in 4 months, and the objective was learning new programatio
 
 ## Download the latest version of gunbird [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
 
-##Links to Game art
+## Links to Game art
+
 -[GUI](https://www.gameart2d.com/free-game-gui.html)
+
 -[Face cat](http://www.gameart2d.com/cat-and-dog-free-sprites.html)	
+
 -[Ninja](http://www.gameart2d.com/ninja-adventure---free-sprites.html)
+
 -[Map](http://www.gameart2d.com/free-platformer-game-tileset.html)
+
 -[Zombie](http://www.gameart2d.com/the-zombies-free-sprites.html)
+
 -[Flying Girl](http://www.gameart2d.com/ninja-girl---free-sprites.html)
 
-##License
+## License
 
 MIT License
 
