@@ -159,6 +159,9 @@ bool j1Scene::Update(float dt)
 				DeletePauseMenu();
 				App->pause = false;
 				pauseMenu = false;
+				App->scoreBoard->coinCount = 0;
+				App->scoreBoard->score = 0;
+				App->scoreBoard->coinforLife = 0;
 				App->audio->PlayFx(soundClick, 0);
 			}
 			else if (pause_settingsButton->eventElement == MouseLeftClickEvent)

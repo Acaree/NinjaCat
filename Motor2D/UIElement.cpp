@@ -81,7 +81,7 @@ void UIElement::Draw()
 void UIElement::DebugDraw() const
 {
 	SDL_Rect rect = { positionUi.x,positionUi.y,rectUi.w,rectUi.h };
-	App->render->DrawQuad(rect, 150, 150, 150, 60);
+	App->render->DrawQuad(rect, 0, 0, 0, 100,false,false);
 }
 
 void UIElement::SetParent(UIElement* parent)
