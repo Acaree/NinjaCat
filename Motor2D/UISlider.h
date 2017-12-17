@@ -12,8 +12,7 @@ public:
 	float getValue();
 	void Draw();
 	void SetSliderButtonPos(int);
-	void CalculateSliderButtonPos();
-	iPoint button_position;
+	iPoint button_position = {0,0};
 
 private:
 	SDL_Rect rect_bar = { 0,0,0,0 };

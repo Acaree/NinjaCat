@@ -57,16 +57,16 @@ public:
 	bool lookingleft;
 	bool attacking = false;
 
-	int backgroundspeed;
+	int backgroundspeed=0;
 
 	bool godMode = false;
-	bool needRespawn1;
-	bool needRespawn2;
+	bool needRespawn1=false;
+	bool needRespawn2=false;
 	
 	bool changeLevel =false;
 	bool loadRespawn = false;
 	int started_attack = 0;
-	Collider* attack_collider;
+	Collider* attack_collider=nullptr;
 	int now = 0;
 	
 	

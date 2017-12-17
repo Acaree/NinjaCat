@@ -172,6 +172,9 @@ bool j1Scene::Update(float dt)
 				App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
 				//CreateMainScene();
 				pauseMenu = false;
+				App->scoreBoard->coinCount = 0;
+				App->scoreBoard->score = 0;
+				App->scoreBoard->coinforLife = 0;
 				App->SaveGame();
 				App->audio->PlayFx(soundClick, 0);
 			}

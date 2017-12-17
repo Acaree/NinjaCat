@@ -34,8 +34,8 @@ private:
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
-	j1Module* m_on;
-	j1Module* m_off;
+	j1Module* m_on = nullptr;
+	j1Module* m_off = nullptr;
 };
 
 #endif //__MODULEFADETOBLACK_H__

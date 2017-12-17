@@ -48,7 +48,7 @@ public:
 	bool AnimationsScence();
 	private:
 		//main menu gui
-		SDL_Texture* background;
+		SDL_Texture* background = nullptr;
 		UIImage* start_mainImage = nullptr, *start_title=nullptr;
 		UIButton *start_playButton = nullptr, *start_settingsButton = nullptr, *start_quitButton = nullptr, *start_continueButton = nullptr,*start_creditsButton;
 

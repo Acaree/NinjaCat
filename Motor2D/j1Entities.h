@@ -47,7 +47,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	Player* player;
+	Player* player = nullptr;
 private:
 
 	void SpawnEntity(const EntityInfo& info);
@@ -55,7 +55,7 @@ private:
 private:
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
-	SDL_Texture* sprites;
+	SDL_Texture* sprites = nullptr;
 	
 	p2DynArray<iPoint> flyPositions;
 	p2DynArray<iPoint> walkPositions;

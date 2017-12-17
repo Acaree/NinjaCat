@@ -6,7 +6,7 @@
 	<audio />
 	<map />
 	<scene>
-		<score score="5" scoreRecord="5" />
+		<score score="0" scoreRecord="20" />
 	</scene>
 	<scoreBoard />
 	<gui />
@@ -14,11 +14,11 @@
 	<pathfinding />
 	<:anonymous />
 	<entities>
-		<player x="528.099976" y="1180.4325" level1="false" />
+		<player x="337.300079" y="923.793335" level1="false" />
 	</entities>
 	<fonts />
 	<fade />
 	<renderer>
-		<camera x="-328" y="-880" />
+		<camera x="-137" y="-623" />
 	</renderer>
 </game_state>

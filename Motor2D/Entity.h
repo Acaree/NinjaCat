@@ -16,14 +16,13 @@ class Entity
 protected:
 	
 	float gravity = 1.0f;
-	float speed_jump;
-	float speed;
+	float speed_jump=0;
+	float speed=0;
 
 
 public:
 	fPoint position;
 	Animation* animation = nullptr;
-	float hitpoints;
 	bool death = false;
 	uint enemy;
 	Collider* collider = nullptr;
