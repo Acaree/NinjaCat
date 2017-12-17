@@ -110,7 +110,7 @@ bool j1Scene::PreUpdate()
 		DeleteLevelUI();
 		//level_pauseButton->toDelete = true;
 		//DeletePauseMenu();
-		App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
+		App->fade->FadeToBlack(this, App->scoreBoard, score_board, 2.0f);
 		//CreateMainScene();
 		pauseMenu = false;
 		App->entity_m->Disable();
@@ -221,7 +221,7 @@ bool j1Scene::Update(float dt)
 			}
 			else
 			{
-				App->entity_m->player->changeLevel = true;
+				App->entity_m->player->needRespawn2 = true;
 			}
 		}
 
