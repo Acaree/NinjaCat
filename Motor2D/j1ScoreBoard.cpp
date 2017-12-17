@@ -21,9 +21,12 @@ bool j1ScoreBoard::Awake(pugi::xml_node& config)
 
 bool j1ScoreBoard::Start()
 {
-
+	if (enabled)
+	{
 		App->audio->PlayMusic("audio/intro.ogg");
+
 		CreateUI();
+	}
 	return true;
 }
 
@@ -36,7 +39,8 @@ bool j1ScoreBoard::PreUpdate()
 		{
 			if (score_backToMenu->eventElement == MouseLeftClickEvent)
 			{
-				App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
+				App->fade->FadeToBlack(this, App->mainMenu, start_screen, 0.5f);
+				DeleteUI();
 			}
 		}
 	}
@@ -109,11 +113,13 @@ bool j1ScoreBoard::AnimationsScence()
 }
 
 void j1ScoreBoard::DeleteUI(){
-	//App->tex->UnLoad(background);
-
-	//score_mainImage->toDelete = true;
-	//score_score->toDelete = true;
-	//score_backToMenu->toDelete = true;
+	App->tex->UnLoad(background);
+	if (score_mainImage != nullptr)
+	{
+		score_mainImage->toDelete = true;
+		score_score->toDelete = true;
+		score_backToMenu->toDelete = true;
+	}
 }
 
 void j1ScoreBoard::CreateUI(){

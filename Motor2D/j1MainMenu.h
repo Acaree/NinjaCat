@@ -68,6 +68,7 @@ public:
 		bool settingsIsOpen = false;
 		bool animationsFinish = false;
 		bool creditsIsOpen = false;
+		uint soundClick;
 };
 
 

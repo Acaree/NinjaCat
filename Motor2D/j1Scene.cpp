@@ -81,6 +81,8 @@ bool j1Scene::Start()
 		coinCount = 0;
 		score = 0;
 	}
+
+	soundClick = App->audio->LoadFx("audio/click.wav");
 	return true;
 }
 
@@ -141,6 +143,7 @@ bool j1Scene::Update(float dt)
 					App->pause = false;
 				DeletePauseMenu();
 				pauseMenu = false;
+				App->audio->PlayFx(soundClick, 0);
 			}
 
 			if (pause_replayButton->eventElement == MouseLeftClickEvent)
@@ -154,12 +157,13 @@ bool j1Scene::Update(float dt)
 				DeletePauseMenu();
 				App->pause = false;
 				pauseMenu = false;
+				App->audio->PlayFx(soundClick, 0);
 			}
 			else if (pause_settingsButton->eventElement == MouseLeftClickEvent)
 			{
 				CreateSettingsScene();
 				settingsIsOpen = true;
-
+				App->audio->PlayFx(soundClick, 0);
 			}
 			else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 			{
@@ -170,6 +174,7 @@ bool j1Scene::Update(float dt)
 				//CreateMainScene();
 				pauseMenu = false;
 				App->SaveGame();
+				App->audio->PlayFx(soundClick, 0);
 			}
 		}
 	}
@@ -193,6 +198,7 @@ bool j1Scene::Update(float dt)
 				App->level = start_screen;
 
 			App->level = start_screen;
+			App->audio->PlayFx(soundClick, 0);
 		}
 		 UpdateVolumeLabel();
 	}
