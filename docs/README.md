@@ -54,11 +54,38 @@ We made this project in 4 months, and the objective was learning new programatio
 
 ## Gameplay
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zH_dhQdL6cw" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HeRESgrKg3Q" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
 
 ## Game Controls
 
+-A/D: Move
 
+-P: Attack
+
+-W: Jump
+
+-Space: Glide
+
+### Debug controls
+
+F1: Start from first level
+
+F2: Start from begining of current level
+
+F3: Next Map
+
+F5: Save Game
+
+F6: Load Game
+
+F8: Debug UI
+
+F9: Debug Colisions
+
+F10: God Mode
+
+F11: Cap to 30/60 FPS
 
 ## Download the latest version of gunbird [here](https://github.com/Acaree/WatermelonSquad/releases/download/1.0/Gunbird.1.0.zip)
 
