@@ -268,7 +268,6 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	
 	bool ret = true;
 	Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -349,19 +348,26 @@ void j1Scene::CreateLevelScene()
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
 	level_time = App->gui->CreateLabel({ 300,20 }, "00", { 0,0,0 }, App->font->default, this, false);
 	level_coinIcon = App->gui->CreateImage({ 900,20 }, { 430,570,53,53 }, App->gui->GetAtlas(), this, false);
-	if (App->entity_m->player != nullptr)
-	{
-		if (level_lifesImage[0] == nullptr) {
-			for (int i = 0; i < App->entity_m->player_life; i++)
-			{
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
-			}
 
-			for (int i = 3; i > App->entity_m->player_life; i--) {
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
-			}
-		}
+	switch (App->entity_m->player_life)
+	{
+	case 3:
+		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 228 ,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
+	case 2:
+		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
+	case 1:
+		life1 = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2 = App->gui->CreateImage({ 152,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3 = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
 	}
+	
 }
 
 
@@ -397,15 +403,28 @@ void j1Scene::DeletePauseMenu()
 void j1Scene::SetLife(uint life)
 {
 
-	if (level_lifesImage[0] != nullptr) {
-		for (int i = 0; i < life; i++)
-		{
-			level_lifesImage[i]->ChangeTextureRect({ 493,484,76,75 });
-		}
-
-		for (int i = 3; i > life; i--) {
-			level_lifesImage[i-1]->ChangeTextureRect({ 417,484,76,75 });
-		}
+	switch (App->entity_m->player_life)
+	{
+	case 3:
+		life1->ChangeTextureRect({ 493,484,76,75 });// = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2->ChangeTextureRect({ 493,484,76,75 }); //= App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3->ChangeTextureRect({ 493,484,76,75 });// = App->gui->CreateImage({ 228 ,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
+	case 2:
+		life1->ChangeTextureRect({ 493,484,76,75 });// = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2->ChangeTextureRect({ 493,484,76,75 });// = App->gui->CreateImage({ 152,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
+	case 1:
+		life1->ChangeTextureRect({ 493,484,76,75 });// = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 152,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
+	case 0:
+		life1->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 76,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life2->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 152,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		life3->ChangeTextureRect({ 417,484,76,75 });// = App->gui->CreateImage({ 228 ,50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
+		break;
 	}
 }
 
@@ -463,10 +482,9 @@ void j1Scene::DeleteLevelUI()
 	level_coinNumber->toDelete = true;
 	level_time->toDelete = true;
 	level_coinIcon->toDelete = true;
-	for (uint i = 0; i < 3; i++)
-	{
-		level_lifesImage[i]->toDelete = true;
-	}
+	life1->toDelete = true;
+	life2->toDelete = true;
+	life3->toDelete = true;
 }
 //previous preupdate
 

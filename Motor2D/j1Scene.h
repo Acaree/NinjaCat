@@ -53,7 +53,7 @@ public:
 
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
-	UIImage* level_lifesImage[3];
+	UIImage* life1 = nullptr, *life2 = nullptr, *life3 = nullptr;
 	uint score = 0;
 	uint scoreRecord = 0;
 	uint coinforLife = 0;

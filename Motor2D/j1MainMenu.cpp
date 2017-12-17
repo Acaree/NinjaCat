@@ -46,7 +46,7 @@ bool j1MainMenu::PreUpdate()
 				App->level = level_1;
 				DeleteMainMenuSettings();
 				App->scene->buttons.clear();
-				App->scene->CreateLevelScene();
+				//App->scene->CreateLevelScene();
 				App->entity_m->Enable();
 				App->audio->PlayMusic("audio/level.ogg");
 				if (App->entity_m->player != nullptr)

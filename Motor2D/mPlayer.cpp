@@ -53,7 +53,7 @@ Player::Player(int x, int y) : Entity(x, y)
 	animation = &idleRight;
 
 	
-	if (App->scene->level_lifesImage[0] == nullptr) {
+	/*if (App->scene->level_lifesImage[0] == nullptr) {
 		for (int i = 0; i < App->entity_m->player_life; i++)
 		{
 				App->scene->level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 537,0,76,75 }, App->gui->GetAtlas(), App->scene, true);
@@ -62,7 +62,7 @@ Player::Player(int x, int y) : Entity(x, y)
 		for (int i = 3; i > App->entity_m->player_life; i--) {
 				App->scene->level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 460,0,76,75 }, App->gui->GetAtlas(), App->scene, true);
 		}
-	}
+	}*/
 	
 	if (App->entity_m->loadPositionPlayer.x != 0 || App->entity_m->loadPositionPlayer.y != 0)
 	{
