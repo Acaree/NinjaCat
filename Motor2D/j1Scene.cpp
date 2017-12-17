@@ -455,6 +455,12 @@ bool j1Scene::Save(pugi::xml_node& config) const
 	pugi::xml_node scene_node = config.append_child("score");
 	scene_node.append_attribute("score") = App->scoreBoard->score;
 	scene_node.append_attribute("scoreRecord") = App->scoreBoard->scoreRecord;
+
+	if (App->level == level_1)
+		scene_node.append_attribute("timelvl1") = App->scoreBoard->timerlvl1;
+	else if(App->level == level_2)
+		scene_node.append_attribute("timelvl2") = App->scoreBoard->timerlvl2;
+
 	return true;
 }
 
@@ -462,6 +468,12 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	App->scoreBoard->score = data.child("score").attribute("score").as_int();
 	App->scoreBoard->scoreRecord = data.child("score").attribute("scoreRecord").as_int();
+
+	if (App->level == level_1)
+		App->scoreBoard->timerlvl1 = data.child("score").attribute("timelvl1").as_int();
+	else if (App->level == level_2)
+		App->scoreBoard->timerlvl2 = data.child("score").attribute("timelvl2").as_int();
+
 	return true;
 }
 
