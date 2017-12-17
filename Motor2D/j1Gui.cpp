@@ -6,7 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
-
+#include "Brofiler\Brofiler.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -44,6 +44,7 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateGUI: All Updates", Profiler::Color::Black);
 	if (needOrderList == true)
 	{
 		//Order List to draw;
@@ -69,6 +70,7 @@ bool j1Gui::Update(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdateGUI: Draw && Delete", Profiler::Color::Green);
 	for (uint i = 0; i < UiElement.count(); i++)
 	{
 		if (UiElement[i] != nullptr)
