@@ -23,6 +23,7 @@ void Coin::Move(float dt)
 		if (isDead = App->collision->CollisionToWorld(collider, movement))
 		{
 			App->scene->coinCount++;
+			App->scene->coinforLife++;
 			Dead(dt);
 			App->audio->PlayFx(sound, 0);
 		}

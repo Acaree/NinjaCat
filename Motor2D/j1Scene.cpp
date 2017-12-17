@@ -72,8 +72,13 @@ bool j1Scene::Start()
 		App->entity_m->player->Respawn();
 		App->entity_m->player->animation = &App->entity_m->player->idleRight;
 	}
+	if((App->level == level_1 || App->level == level_2))
 	CreateLevelScene();
 	timer.Start();
+
+	coinCount = 0;
+	score = 0;
+	
 	return true;
 }
 
@@ -98,7 +103,9 @@ bool j1Scene::PreUpdate()
 	}
 	else
 	{
-		level_pauseButton->toDelete = true;
+		//test
+		DeleteLevelUI();
+		//level_pauseButton->toDelete = true;
 		//DeletePauseMenu();
 		App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
 		//CreateMainScene();
@@ -117,10 +124,10 @@ bool j1Scene::Update(float dt)
 		scoreRecord = score;
 	}
 
-	if (coinCount > 10 && App->entity_m->player_life < 3)
+	if (coinforLife > 10 && App->entity_m->player_life < 3)
 	{
 		App->entity_m->player_life++;
-		coinCount = 0;
+		coinforLife = 0;
 	}
 
 	if (settingsIsOpen == false)
@@ -154,11 +161,13 @@ bool j1Scene::Update(float dt)
 			}
 			else if (pause_returnButton->eventElement == MouseLeftClickEvent)
 			{
-				level_pauseButton->toDelete = true;
+				DeleteLevelUI();
+				//level_pauseButton->toDelete = true;
 				DeletePauseMenu();
 				App->fade->FadeToBlack(this, App->mainMenu, start_screen, 2.0f);
 				//CreateMainScene();
 				pauseMenu = false;
+				App->SaveGame();
 			}
 		}
 	}
@@ -333,9 +342,8 @@ void j1Scene::CreateSettingsScene()
 void j1Scene::CreateLevelScene()
 {
 	std::string s = std::to_string(coinCount);
-	char* s2 = (char *)alloca(s.size() + 1);
-	memcpy(s2, s.c_str(), s.size() + 1);
-	level_coinNumber = App->gui->CreateLabel({ 950,20 }, s2, { 0,0,0 }, App->font->default, this, false);
+	p2SString s2 = s.c_str();
+	level_coinNumber = App->gui->CreateLabel({ 950,20 },(char*) s2.GetString(), { 0,0,0 }, App->font->default, this, false);
 
 	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
@@ -448,6 +456,18 @@ void j1Scene::UpdateGUI() {
 	SetLife(App->entity_m->player_life);
 }
 
+void j1Scene::DeleteLevelUI()
+{
+	level_pauseButton->toDelete = true;
+	level_scoreLabel->toDelete = true;
+	level_coinNumber->toDelete = true;
+	level_time->toDelete = true;
+	level_coinIcon->toDelete = true;
+	for (uint i = 0; i < 3; i++)
+	{
+		level_lifesImage[i]->toDelete = true;
+	}
+}
 //previous preupdate
 
 /*

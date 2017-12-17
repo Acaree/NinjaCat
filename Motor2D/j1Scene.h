@@ -48,6 +48,7 @@ public:
 	void CreatePauseMenu();
 	void DeletePauseMenu();
 	void DeleteSettings();
+	void DeleteLevelUI();
 	void UpdateGUI();
 
 	void SetLife(uint);
@@ -55,6 +56,7 @@ public:
 	UIImage* level_lifesImage[3];
 	uint score = 0;
 	uint scoreRecord = 0;
+	uint coinforLife = 0;
 	uint coinCount = 0;
 	j1Timer timer;
 private:

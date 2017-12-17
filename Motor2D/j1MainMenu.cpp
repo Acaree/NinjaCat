@@ -46,14 +46,15 @@ bool j1MainMenu::PreUpdate()
 				App->level = level_1;
 				DeleteMainMenuSettings();
 				App->scene->buttons.clear();
-				//App->scene->CreateLevelScene();
+				App->scene->CreateLevelScene();
 				App->entity_m->Enable();
 				App->audio->PlayMusic("audio/level.ogg");
+				if (App->entity_m->player != nullptr)
+					App->entity_m->player_life = 3;
 
 			}
 			else if (start_continueButton->eventElement == MouseLeftClickEvent)
 			{
-
 				App->LoadGame();
 			}
 			else if (start_settingsButton->eventElement == MouseLeftClickEvent)
