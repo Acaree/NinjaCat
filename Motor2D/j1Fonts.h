@@ -5,7 +5,7 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/hand.ttf"
-#define DEFAULT_FONT_SIZE 18
+#define DEFAULT_FONT_SIZE 24
 
 struct SDL_Texture;
 struct _TTF_Font;
