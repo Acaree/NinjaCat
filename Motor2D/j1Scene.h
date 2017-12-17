@@ -46,6 +46,7 @@ public:
 	void CreatePauseMenu();
 	void DeletePauseMenu();
 	void DeleteSettings();
+	void UpdateGUI();
 
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
@@ -74,8 +75,8 @@ private:
 
 	//level gui
 	UIButton* level_pauseButton = nullptr;
-	UILabel* level_scoreLabel = nullptr;
-	
+	UILabel* level_scoreLabel = nullptr, *level_coinNumber = nullptr;
+	UIImage* level_coinIcon = nullptr;
 	
 	SDL_Texture* current_volume_tex = nullptr;
 	UILabel* current_volume_label = nullptr;

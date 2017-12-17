@@ -95,7 +95,7 @@ bool j1Scene::PreUpdate()
 			char* m2 = (char *)alloca(m.size() + 1);
 			memcpy(m2, m.c_str(), m.size() + 1);
 			level_scoreLabel->ChangeTexture(App->font->Print(m2, { 0,0,0 }, App->font->default));
-			SetLife(App->entity_m->player_life);
+			UpdateGUI();
 		}
 	}
 	else
@@ -117,12 +117,14 @@ bool j1Scene::Update(float dt)
 	if (scoreRecord < score)
 	{
 		scoreRecord = score;
-		if (coinCount > 10 && App->entity_m->player_life < 3)
-		{
-			App->entity_m->player_life++;
-			coinCount = 0;
-		}
 	}
+
+	if (coinCount > 10 && App->entity_m->player_life < 3)
+	{
+		App->entity_m->player_life++;
+		coinCount = 0;
+	}
+
 	if (settingsIsOpen == false)
 	{
 		if (pauseMenu == true) {
@@ -189,11 +191,6 @@ bool j1Scene::Update(float dt)
 
 			App->level = start_screen;
 		}
-		std::string s = std::to_string(App->audio->volume);
-		char* s2 = (char *)alloca(s.size() + 1);
-		memcpy(s2, s.c_str(), s.size() + 1);
-		settingsmm_volumeLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
-
 	}
 	
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
@@ -337,19 +334,24 @@ void j1Scene::CreateSettingsScene()
 
 void j1Scene::CreateLevelScene()
 {
+	std::string s = std::to_string(coinCount);
+	char* s2 = (char *)alloca(s.size() + 1);
+	memcpy(s2, s.c_str(), s.size() + 1);
+	level_coinNumber = App->gui->CreateLabel({ 950,20 }, s2, { 0,0,0 }, App->font->default, this, false);
+
 	level_pauseButton = App->gui->CreateButton({ App->render->camera.w / 2, 5 }, { 489,883,81,82 }, { 489,798,81,82 }, { 489,713,81,82 }, App->gui->GetAtlas(), this, false);
 	level_scoreLabel = App->gui->CreateLabel({ 30,20 }, "000000", { 0,0,0 }, App->font->default, this, false);
-
+	level_coinIcon = App->gui->CreateImage({ 900,20 }, { 430,570,53,53 }, App->gui->GetAtlas(), this, false);
 	if (App->entity_m->player != nullptr)
 	{
 		if (level_lifesImage[0] == nullptr) {
 			for (int i = 0; i < App->entity_m->player_life; i++)
 			{
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, true);
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * i,50 }, { 493,484,76,75 }, App->gui->GetAtlas(), this, false);
 			}
 
 			for (int i = 3; i > App->entity_m->player_life; i--) {
-				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, true);
+				level_lifesImage[i] = App->gui->CreateImage({ 76 * (i - 1),50 }, { 417,484,76,75 }, App->gui->GetAtlas(), this, false);
 			}
 		}
 	}
@@ -424,6 +426,20 @@ bool j1Scene::Load(pugi::xml_node& data)
 	score = data.child("score").attribute("score").as_int();
 	scoreRecord = data.child("score").attribute("scoreRecord").as_int();
 	return true;
+}
+
+void j1Scene::UpdateGUI() {
+	std::string s = std::to_string(score);
+	char* s2 = (char *)alloca(s.size() + 1);
+	memcpy(s2, s.c_str(), s.size() + 1);
+	level_scoreLabel->ChangeTexture(App->font->Print(s2, { 0,0,0 }, App->font->default));
+
+	std::string s_ = std::to_string(coinCount);
+	char* s2_ = (char *)alloca(s_.size() + 1);
+	memcpy(s2_, s_.c_str(), s_.size() + 1);
+	level_coinNumber->ChangeTexture(App->font->Print(s2_, { 0,0,0 }, App->font->default));
+
+	SetLife(App->entity_m->player_life);
 }
 
 //previous preupdate
