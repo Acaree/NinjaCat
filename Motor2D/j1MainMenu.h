@@ -41,6 +41,8 @@ public:
 	void CreateMainScene();
 	void CreateSettingsScene();
 	void DeleteSettings();
+
+	bool AnimationsScence();
 	private:
 		//main menu gui
 		SDL_Texture* background;
@@ -57,6 +59,7 @@ public:
 		UILabel* current_volume_label = nullptr;
 
 		bool settingsIsOpen = false;
+		bool animationsFinish = false;
 };
 
 

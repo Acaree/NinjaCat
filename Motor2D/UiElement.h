@@ -49,9 +49,9 @@ public:
 	iPoint positionUi = { 0,0 };
 	bool dragable = false;
 	bool toDelete = false;
+	iPoint localPosition = { 0,0 };
 protected:
 	UIElement* parent = nullptr;
-	iPoint localPosition = { 0,0 };
 	const SDL_Texture *texture = nullptr;
 	j1Module* listener = nullptr;
 	iPoint mouse = { 0,0 };
