@@ -41,44 +41,46 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	
-		
-	if (App->level == level_1) {
-		App->map->Load("level1ND.tmx");
-	}
+	if (App->level != none)
+	{
 
-	else if (App->level == level_2) {
-		App->map->Load("level2ND.tmx");
-	}
-
-	if (App->map != nullptr) {
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-		RELEASE_ARRAY(data);
-		App->map->CreateEnemies();
-		App->gui->DeleteUIElements();
-	}
-	if (App->entity_m->player != nullptr) {
-		if (App->level == level_1)
-		{
-			App->entity_m->player->needRespawn1 = true;
+		if (App->level == level_1) {
+			App->map->Load("level1ND.tmx");
 		}
-		else if (App->level == level_2)
-		{
-			App->entity_m->player->needRespawn2 = true;
-		}
-		App->entity_m->player->Respawn();
-		App->entity_m->player->animation = &App->entity_m->player->idleRight;
-	}
-	if((App->level == level_1 || App->level == level_2))
-	CreateLevelScene();
-	timer.Start();
 
-	coinCount = 0;
-	score = 0;
-	
+		else if (App->level == level_2) {
+			App->map->Load("level2ND.tmx");
+		}
+
+		if (App->map != nullptr) {
+			int w, h;
+			uchar* data = NULL;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+				App->pathfinding->SetMap(w, h, data);
+			RELEASE_ARRAY(data);
+			App->map->CreateEnemies();
+			App->gui->DeleteUIElements();
+		}
+
+		if (App->entity_m->player != nullptr) {
+			if (App->level == level_1)
+			{
+				App->entity_m->player->needRespawn1 = true;
+			}
+			else if (App->level == level_2)
+			{
+				App->entity_m->player->needRespawn2 = true;
+			}
+			App->entity_m->player->Respawn();
+			App->entity_m->player->animation = &App->entity_m->player->idleRight;
+		}
+		if ((App->level == level_1 || App->level == level_2))
+			CreateLevelScene();
+		timer.Start();
+
+		coinCount = 0;
+		score = 0;
+	}
 	return true;
 }
 

@@ -29,6 +29,7 @@ j1Entities::j1Entities()
 // Destructor
 j1Entities::~j1Entities()
 {
+	App->tex->UnLoad(sprites);
 }
 
 bool j1Entities::Start()
@@ -158,8 +159,7 @@ bool j1Entities::CleanUp()
 bool j1Entities::ResetEntities()
 {
 	
-	
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	for (uint i= 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
 		{
@@ -226,8 +226,8 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i] = new Enemy_Walk(info.x, info.y);
 			break;
 		case ENTITY_TYPES::ENTITY_PLAYER:
-			entities[i] = player = new Player(info.x, info.y);
-			entities[i]->isPlayer = true;
+				entities[i] = player = new Player(info.x, info.y);
+				entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::COIN:
 			entities[i] = new Coin(info.x, info.y);

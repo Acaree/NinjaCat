@@ -12,7 +12,7 @@ UIElement::UIElement(iPoint position, j1Module* listener, bool drag) : localPosi
 
 UIElement::~UIElement()
 {
-
+	App->tex->UnLoad((SDL_Texture*)texture);
 }
 
 void UIElement::Update(float dt)
@@ -86,7 +86,7 @@ void UIElement::Draw()
 void UIElement::DebugDraw() const
 {
 	SDL_Rect rect = { positionUi.x,positionUi.y,rectUi.w,rectUi.h };
-	App->render->DrawQuad(rect, 150, 150, 150, 40);
+	App->render->DrawQuad(rect, 150, 150, 150, 60);
 }
 
 

@@ -87,10 +87,9 @@ bool j1Gui::PostUpdate()
 			{
 			if (UiElement[i]->toDelete == true)
 			{
-				delete UiElement[i];
-				UiElement[i] = nullptr;
-				/*p2List_item<UIElement*>*tmp = UiElement.At(i);
-				UiElement.del(tmp);*/
+				
+				p2List_item<UIElement*>*tmp = UiElement.At(i);
+				UiElement.del(tmp);
 					
 				}
 			}
