@@ -18,14 +18,9 @@ UIElement::~UIElement()
 void UIElement::Update(float dt)
 {
 	//set the position for all childs
-	if (parent != nullptr) {
-		if (type == SliderElement) {
+	if (parent != nullptr) 
 			positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
-		}
-		else
-			positionUi = { localPosition.x + parent->positionUi.x,localPosition.y + parent->positionUi.y };
-	}
-		else
+	else
 		positionUi = {localPosition.x, localPosition.y};
 
 
@@ -88,7 +83,6 @@ void UIElement::DebugDraw() const
 	SDL_Rect rect = { positionUi.x,positionUi.y,rectUi.w,rectUi.h };
 	App->render->DrawQuad(rect, 150, 150, 150, 60);
 }
-
 
 void UIElement::SetParent(UIElement* parent)
 {

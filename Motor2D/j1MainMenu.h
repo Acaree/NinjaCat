@@ -44,7 +44,7 @@ public:
 	void DeleteSettings();
 	void CreateCredits();
 	void DeleteCredits();
-
+	void UpdateVolumeLabel();
 	bool AnimationsScence();
 	private:
 		//main menu gui
@@ -54,6 +54,7 @@ public:
 
 		//settings main menu
 		UIImage* settingsmm_settingsImage = nullptr;
+		UILabel* settingsmm_volumeLabel = nullptr, *settingsmm_volumeNumber = nullptr;
 		UIButton* settingsmm_crossButton = nullptr;
 		UISlider* settingsmm_volumeslider = nullptr;
 		

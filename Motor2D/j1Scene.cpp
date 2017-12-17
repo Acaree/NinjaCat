@@ -43,7 +43,6 @@ bool j1Scene::Start()
 {
 	if (App->level != none)
 	{
-
 		if (App->level == level_1) {
 			App->map->Load("level1ND.tmx");
 		}
@@ -175,19 +174,13 @@ bool j1Scene::Update(float dt)
 	}
 	else
 	{
-		if (settingsmm_plusVolume->eventElement == MouseLeftClickEvent)
+		if (settingsmm_volumeslider->eventElement == MouseLeftClickEvent)
 		{
-			if (App->audio->volume < 100)
-				App->audio->volume += 10;
+			App->audio->volume = settingsmm_volumeslider->getValue() * 100;
 			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
 		}
-		else if (settingsmm_minusVolume->eventElement == MouseLeftClickEvent)
-		{
-			if (App->audio->volume > 0)
-				App->audio->volume -= 10;
-			Mix_VolumeMusic((int)(App->audio->volume * 1.28));
-		}
-		else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
+
+		 if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
 		{
 			settingsIsOpen = false;
 			DeleteSettings();
@@ -200,6 +193,7 @@ bool j1Scene::Update(float dt)
 
 			App->level = start_screen;
 		}
+		 UpdateVolumeLabel();
 	}
 	
 	//Check if player are dead or jumping , resolve bug player respawn and die for save and load
@@ -318,16 +312,19 @@ void j1Scene::onUiTriggered(UIElement* UIelement, EventElement EventElement)
 
 void j1Scene::CreateSettingsScene()
 {
-	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, true);
+	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, false);
 
-	settingsmm_minusVolume = App->gui->CreateButton({ 50,100 }, { 138,1350,69,70 }, { 69,1350,69,70 }, { 0,1350,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_plusVolume = App->gui->CreateButton({ 250,100 }, { 138,1420,69,70 }, { 69,1420,69,70 }, { 0,1420,69,70 }, App->gui->GetAtlas(), this, false);
-	settingsmm_minusVolume->SetParent(settingsmm_settingsImage);
-	settingsmm_plusVolume->SetParent(settingsmm_settingsImage);
+	settingsmm_volumeLabel = App->gui->CreateLabel({ 50,100 }, "Volume:", { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
+
+	std::string s = std::to_string((int)App->audio->volume);
+	p2SString s2 = s.c_str();
+	settingsmm_volumeNumber = App->gui->CreateLabel({ 40,0 }, (char*)s2.GetString(), { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeNumber->SetParent(settingsmm_volumeLabel);
+	settingsmm_volumeslider = App->gui->CreateSlider({ 100,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
+	settingsmm_volumeslider->SetParent(settingsmm_settingsImage);
 	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 }, { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
 	settingsmm_crossButton->SetParent(settingsmm_settingsImage);
-	settingsmm_volumeLabel = App->gui->CreateLabel({ 150,100 }, "100", { 0,0,0 }, App->font->default, this, false);
-	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
 }
 
 
@@ -434,10 +431,10 @@ void j1Scene::SetLife(uint life)
 void j1Scene::DeleteSettings()
 {
 	settingsmm_settingsImage->toDelete = true;
-	settingsmm_minusVolume->toDelete = true;
-	settingsmm_plusVolume->toDelete = true;
-	settingsmm_crossButton->toDelete = true;
 	settingsmm_volumeLabel->toDelete = true;
+	settingsmm_volumeNumber->toDelete = true;
+	settingsmm_crossButton->toDelete = true;
+	settingsmm_volumeslider->toDelete = true;
 }
 
 
@@ -472,6 +469,14 @@ void j1Scene::UpdateGUI() {
 	p2SString s6 = s5.c_str();
 	App->font->CalcSize(s6.GetString(), level_time->rectUi.w, level_time->rectUi.h, App->font->default);
 	level_time->ChangeTexture(App->font->Print(s6.GetString(), { 0,0,0 }, App->font->default, level_time->rectUi.w));
+
+	if (settingsIsOpen)
+	{
+		std::string s7 = std::to_string((int)timer.ReadSec());
+		p2SString s8 = s7.c_str();
+		App->font->CalcSize(s8.GetString(), level_time->rectUi.w, level_time->rectUi.h, App->font->default);
+		level_time->ChangeTexture(App->font->Print(s8.GetString(), { 0,0,0 }, App->font->default, level_time->rectUi.w));
+	}
 	
 	
 	SetLife(App->entity_m->player_life);
@@ -487,6 +492,15 @@ void j1Scene::DeleteLevelUI()
 	life1->toDelete = true;
 	life2->toDelete = true;
 	life3->toDelete = true;
+}
+
+void j1Scene::UpdateVolumeLabel()
+{
+	int w, h;
+	std::string s = std::to_string(App->audio->volume);
+	p2SString s2 = s.c_str();
+	App->font->CalcSize(s2.GetString(), w, h, App->font->default);
+	settingsmm_volumeNumber->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default));
 }
 //previous preupdate
 

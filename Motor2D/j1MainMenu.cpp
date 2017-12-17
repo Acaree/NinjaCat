@@ -92,6 +92,7 @@ bool j1MainMenu::PreUpdate()
 
 				App->level = start_screen;
 			}
+			UpdateVolumeLabel();
 		}
 		else if (creditsIsOpen)
 		{
@@ -204,6 +205,13 @@ void j1MainMenu::CreateSettingsScene()
 {
 	settingsmm_settingsImage = App->gui->CreateImage({ 100,100 }, { 0,486,363,429 }, App->gui->GetAtlas(), this, false);
 
+	settingsmm_volumeLabel = App->gui->CreateLabel({ 50,100 },"Volume:" ,{0,0,0},App->font->default,this,false);
+	settingsmm_volumeLabel->SetParent(settingsmm_settingsImage);
+
+	std::string s = std::to_string((int)App->audio->volume);
+	p2SString s2 = s.c_str();
+	settingsmm_volumeNumber= App->gui->CreateLabel({ 40,0 },(char*) s2.GetString(), { 0,0,0 }, App->font->default, this, false);
+	settingsmm_volumeNumber->SetParent(settingsmm_volumeLabel);
 	settingsmm_volumeslider = App->gui->CreateSlider({ 100,200 }, { 0,916,219,19 }, { 221,917,28,30 }, App->gui->GetAtlas(), this, App->audio->volume / 128);
 	settingsmm_volumeslider->SetParent(settingsmm_settingsImage);
 	settingsmm_crossButton = App->gui->CreateButton({ 270,10 }, { 407,883,81,82 } , { 407,798,81,82 }, { 407,713,81,82 }, App->gui->GetAtlas(), this, false);
@@ -213,6 +221,8 @@ void j1MainMenu::CreateSettingsScene()
 void j1MainMenu::DeleteSettings()
 {
 	settingsmm_settingsImage->toDelete = true;
+	settingsmm_volumeLabel->toDelete = true;
+	settingsmm_volumeNumber->toDelete = true;
 	settingsmm_crossButton->toDelete = true;
 	settingsmm_volumeslider->toDelete = true;
 }
@@ -294,6 +304,15 @@ void j1MainMenu::DeleteCredits()
 {
 	start_quitButton->toDelete = true;
 	credit_label->toDelete = true;
+}
+
+void j1MainMenu::UpdateVolumeLabel()
+{
+	int w, h;
+	std::string s = std::to_string(App->audio->volume);
+	p2SString s2 = s.c_str();
+	App->font->CalcSize(s2.GetString(), w, h, App->font->default);
+	settingsmm_volumeNumber->ChangeTexture(App->font->Print(s2.GetString(), { 0,0,0 }, App->font->default));
 }
 /*		start_playButton = App->gui->CreateButton({ 0,0 }, { 380,0,190,69 }, { 190,0,190,69 }, { 0,0,190,69 }, App->gui->GetAtlas(), this, true);
 		start_continueButton = App->gui->CreateButton({ 300,600 }, { 380,69,190,69 }, { 190,69,190,69 }, { 0,69,190,69 }, App->gui->GetAtlas(), this, false);

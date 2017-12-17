@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "UiButton.h"
 #include "UiImage.h"
+#include "UISlider.h"
 #include "UiLabel.h"
 #include "j1Timer.h"
 struct SDL_Texture;
@@ -50,6 +51,7 @@ public:
 	void DeleteSettings();
 	void DeleteLevelUI();
 	void UpdateGUI();
+	void UpdateVolumeLabel();
 
 	void SetLife(uint);
 	p2List<UIButton*> buttons;
@@ -75,8 +77,9 @@ private:
 
 	//settings main menu
 	UIImage* settingsmm_settingsImage = nullptr;
-	UIButton* settingsmm_minusVolume = nullptr, *settingsmm_plusVolume = nullptr, *settingsmm_crossButton = nullptr;
-	UILabel* settingsmm_volumeLabel = nullptr;
+	UILabel* settingsmm_volumeLabel = nullptr, *settingsmm_volumeNumber = nullptr;
+	UIButton* settingsmm_crossButton = nullptr;
+	UISlider* settingsmm_volumeslider = nullptr;
 
 	//level gui
 	UIButton* level_pauseButton = nullptr;
