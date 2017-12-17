@@ -136,7 +136,14 @@ void Player::InputsPlayer(bool* movement, float dt)
 	if (death == true) {
 		Dead();
 	}
-
+	if (godMode == true)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			position.y -= speed;
+		
+		if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			position.y += speed;
+	}
 	if (animation != &dead && dt != 0) {
 
 			if (collider->to_delete==false)
@@ -226,7 +233,7 @@ void Player::InputsPlayer(bool* movement, float dt)
 				gliding = false;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && jumping == false && movement[down] == false && dt != 0 && godMode == false)
 			{
 				jumping = true;
 				speed_jump = original_speed_jump;
@@ -316,25 +323,27 @@ void Player::ResetAnimations()
 
 void Player::CalculateGravity(float dt) {
 	//Trap for colliders work "good" 
-
-	gravity = 58 * dt;
-	if (movement[down] == true) {
-		if (speed_jump < 10)
-		{
-			speed_jump += gravity;
-		}
-		else
-		{
-			speed_jump = 10;
-		}
-
-		position.y += speed_jump*dt*58;
-	}
-	if (movement[down] == false && speed_jump > 0)
+	if (godMode == false)
 	{
-		jumping = false;
-		gliding = false;
-		speed_jump = 0;
+		gravity = 58 * dt;
+		if (movement[down] == true) {
+			if (speed_jump < 10)
+			{
+				speed_jump += gravity;
+			}
+			else
+			{
+				speed_jump = 10;
+			}
+
+			position.y += speed_jump*dt * 58;
+		}
+		if (movement[down] == false && speed_jump > 0)
+		{
+			jumping = false;
+			gliding = false;
+			speed_jump = 0;
+		}
 	}
 }
 
