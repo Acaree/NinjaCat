@@ -21,9 +21,12 @@ bool j1ScoreBoard::Awake(pugi::xml_node& config)
 
 bool j1ScoreBoard::Start()
 {
-
+	if (enabled)
+	{
 		App->audio->PlayMusic("audio/intro.ogg");
+
 		CreateUI();
+	}
 	return true;
 }
 
