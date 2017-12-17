@@ -30,6 +30,7 @@ bool j1MainMenu::Start()
 	animationsFinish = false;
 	creditsIsOpen = false;
 
+	soundClick = App->audio->LoadFx("audio/click.wav");
 	return true;
 }
 
@@ -52,24 +53,31 @@ bool j1MainMenu::PreUpdate()
 				App->audio->PlayMusic("audio/level.ogg");
 				if (App->entity_m->player != nullptr)
 					App->entity_m->player_life = 3;
+				App->audio->PlayFx(soundClick, 0);
 
 			}
 			else if (start_continueButton->eventElement == MouseLeftClickEvent)
 			{
 				App->LoadGame();
+				App->audio->PlayFx(soundClick, 0);
 			}
 			else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 			{
 				CreateSettingsScene();
 				settingsIsOpen = true;
+				App->audio->PlayFx(soundClick, 0);
 			}
-			else if (start_quitButton->eventElement == MouseLeftClickEvent) //quit button
+			else if (start_quitButton->eventElement == MouseLeftClickEvent)
+			{//quit button
 				return false;
+				App->audio->PlayFx(soundClick, 0);
+			}
 			else if (start_creditsButton->eventElement == MouseLeftClickEvent)
 			{
 				DeleteMainMenuSettings();
 				creditsIsOpen = true;
 				CreateCredits();
+				App->audio->PlayFx(soundClick, 0);
 			}
 		}
 		else if(settingsIsOpen)
@@ -78,10 +86,12 @@ bool j1MainMenu::PreUpdate()
 			{
 				App->audio->volume = settingsmm_volumeslider->getValue() * 100;
 				Mix_VolumeMusic((int)(App->audio->volume * 1.28));
+				App->audio->PlayFx(soundClick, 0);
 			}
 
 			else if (settingsmm_crossButton->eventElement == MouseLeftClickEvent)
 			{
+				App->audio->PlayFx(soundClick, 0);
 				settingsIsOpen = false;
 				DeleteSettings();
 				//ERROR,BUG need think
@@ -99,6 +109,7 @@ bool j1MainMenu::PreUpdate()
 		{
 			if (start_quitButton->eventElement == MouseLeftClickEvent)
 			{
+				App->audio->PlayFx(soundClick, 0);
 				DeleteCredits();
 				CreateMainScene();
 				creditsIsOpen = false;
