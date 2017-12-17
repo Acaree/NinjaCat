@@ -2,7 +2,7 @@
 
 Ninja Cat is a platformer Game where you can be a NINJA CAT!
 
-It's a videogame made in the subject of development in Citm (Centre de la imatge i la Tecnologia Multimèdia)
+It's a videogame made in the subject of development in Citm (Centre de la imatge i la Tecnologia Multimedia)
 
 We made this project in 4 months, and the objective was learning new programation techniques.
 
