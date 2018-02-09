@@ -56,10 +56,13 @@ bool j1MainMenu::PreUpdate()
 				App->audio->PlayFx(soundClick, 0);
 
 			}
-			else if (start_continueButton->eventElement == MouseLeftClickEvent)
+			else if(start_continueButton != nullptr)
 			{
-				App->LoadGame();
-				App->audio->PlayFx(soundClick, 0);
+				if (start_continueButton->eventElement == MouseLeftClickEvent)
+				{
+					App->LoadGame();
+					App->audio->PlayFx(soundClick, 0);
+				}
 			}
 			else if (start_settingsButton->eventElement == MouseLeftClickEvent)
 			{
@@ -182,7 +185,10 @@ void j1MainMenu::DeleteMainMenuSettings()
 	start_playButton->toDelete = true;
 	start_settingsButton->toDelete = true;
 	start_quitButton->toDelete = true;
+
+	if(start_continueButton != nullptr)
 	start_continueButton->toDelete = true;
+
 	start_title->toDelete = true;
 	start_creditsButton->toDelete = true;
 }
@@ -255,12 +261,12 @@ bool j1MainMenu::AnimationsScence()
 		if (start_playButton->localPosition.x <= 200)
 			start_playButton->localPosition.x += 10;
 		if(start_playButton->localPosition.y <= 600)
-			start_playButton += 10;
+			start_playButton->localPosition.y += 10;
 
 		if (start_settingsButton->localPosition.x <= 400)
 			start_settingsButton->localPosition.x += 10;
-		if (start_settingsButton->localPosition.y != 600)
-			start_settingsButton->localPosition.y <= 10;
+		if (start_settingsButton->localPosition.y <= 600)
+			start_settingsButton->localPosition.y += 10;
 
 		if (start_quitButton->localPosition.x <= 600)
 		{
